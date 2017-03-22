@@ -1,16 +1,17 @@
 import React, { PropTypes } from 'react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Navigation from './Navigation'
+import Breadcrumbs from './Breadcrumbs'
 
 const AppWrapper = props =>
-  <div className="page--wrapper">
+  <div className="page">
     <Grid fluid>
       <Row>
-        <Col xs={12} sm={9}>
-          <Navigation />
-        </Col>
-        <Col xs={12} sm={3}>
-          USER PROFILE - todo: to the nav
+        <Navigation />
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <Breadcrumbs/>
         </Col>
       </Row>
       <Row>
