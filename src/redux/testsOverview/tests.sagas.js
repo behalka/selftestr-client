@@ -26,7 +26,6 @@ function * getTestDetail(action) {
     if (!selectedTest) {
       const test = yield call(Api.getTestById, id)
       const normalized = normalize(test, testDetailSchema)
-      console.log(normalized.entities)
       yield put(saveTestDetailEntities(normalized.entities.testDetails))
       // todo: stejny problem jako predtim vlastne -> unikatnost klicu v items poli
       yield put({ type: actions.tests.GET_TEST_RES, payload: [normalized.result] })

@@ -46,6 +46,11 @@ export default {
         id: 'fae88bd6-a6a0-4f58-9464-abe79b3732ab',
         name: 'Jmeno druheho testu',
         description: 'Popis druheho testu',
+        ranking: {
+          value: 4.2,
+          count: 23,
+        },
+        comments: [],
       })
     }
   },

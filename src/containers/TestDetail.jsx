@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetchTestById } from '../redux/testsOverview/tests.actions'
 import { getTestFromParams } from '../redux/testsOverview/tests.selectors'
 
+import TestDetailContainer from '../components/TestsOverview/TestDetail'
 import Loader from '../components/layout/Loader'
 
 class TestDetail extends Component {
@@ -17,16 +18,17 @@ class TestDetail extends Component {
   componentDidMount() {
     const { test_id: testId } = this.props.params
     // todo: nebo chybi detail
-    if (!this.props.test || !this.props.test.comments) {
+    if (!this.props.test) {
       this.props.fetchTestById(testId)
     }
   }
   render() {
     const { test } = this.props
+    console.log(test)
     return (
       <div>
         {!test && <Loader />}
-        {test && test.name}
+        {test && <TestDetailContainer test={test} />}
       </div>
     )
   }
