@@ -23,6 +23,6 @@ module.exports = {
     "capitalized-comments": 0,
     "generator-star-spacing": [1, { "before": true, "after": true }],
     "yield-star-spacing": [1, { "before": true, "after": true }],
-    "brace-style": [1, "stroustrup"],
+    // "brace-style": [1, "stroustrup"],
   }
 }

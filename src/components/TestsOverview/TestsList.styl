@@ -1,0 +1,32 @@
+.tests
+  margin 0
+  padding 0
+  set-font-size 15px
+
+  @media $md-up
+    set-font-size 16px
+  
+  &__search
+    text-align center
+    background-color $color-grey
+    padding 1em 0
+
+  &__item
+    display block
+    background-color $color-grey-light
+    border $color-grey 1px solid
+    list-style-type none
+    margin-top 15px
+    padding 1.5em 1em
+
+    &__meta
+      set-font-size 15px
+
+    &__controls
+      text-align center
+    
+    &__name
+      set-font-size 24px
+
+    button
+      white-space normal

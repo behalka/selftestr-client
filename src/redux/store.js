@@ -1,8 +1,8 @@
 import { createStore, compose, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
-import rootReducer from './reducers/rootReducer'
-// import rootSaga from './sagas'
+import rootReducer from './rootReducer'
+import rootSaga from './rootSaga'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -11,7 +11,7 @@ export function configure() {
   const middleware = [
     sagaMiddleware,
   ]
-  // todo: dev env only
+  // dev env only
   const devTools = window.devToolsExtension ? window.devToolsExtension() : func => func
   const store = createStore(
     rootReducer,
@@ -19,6 +19,6 @@ export function configure() {
     compose(applyMiddleware(...middleware), devTools)
   )
 
-  // sagaMiddleware.run(rootSaga)
+  sagaMiddleware.run(rootSaga)
   return store
 }
