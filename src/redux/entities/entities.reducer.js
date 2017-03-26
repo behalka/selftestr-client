@@ -13,7 +13,7 @@ export default function entitiesReducer(state = initialState, action) {
         .set('tests', state.tests.merge(action.payload))
     case entities.MERGE_TEST_DETAILS:
       return state
-        .set('testDetails', state.tests.merge(action.payload))
+        .set('testDetails', state.testDetails.merge(action.payload))
     default:
       return state
   }

@@ -31,7 +31,7 @@ export default function testsReducer(state = initialState, action) {
     case tests.GET_TEST_RES:
       return state
         .setIn(['testDetails', 'isFetching'], false)
-        .setIn(['testDetails', 'items'], action.payload)
+        .setIn(['testDetails', 'items'], state.testDetails.items.concat(action.payload))
     case tests.GET_TEST_FAIL:
       return state
         .set('isFetching', false)

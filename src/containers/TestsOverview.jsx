@@ -22,7 +22,6 @@ class TestsOverview extends Component {
   }
   render() {
     const { isFetching, items } = this.props.tests
-    console.log(this.props.tests)
     // varianty: error stav -> globalne, loading anebo ne
     return (
       <div>
