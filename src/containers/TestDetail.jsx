@@ -24,7 +24,6 @@ class TestDetail extends Component {
   }
   render() {
     const { test } = this.props
-    console.log(test)
     return (
       <div>
         {!test && <Loader />}

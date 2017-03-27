@@ -5,7 +5,6 @@ import FontAwesome from 'react-fontawesome'
 
 const TestDetail = ({ test }) =>
   <div className="test-detail">
-    {console.log(test)}
     <Row>
       <Col sm={8}>
         <h1>{test.name}</h1>

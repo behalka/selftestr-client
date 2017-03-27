@@ -10,9 +10,16 @@ export const tests = {
   GET_TEST_FAIL: `${prefix}/GET_TEST_FAIL`,
 }
 
+export const tags = {
+  FETCH_POPULAR_REQ: 'TAGS/FETCH_POPULAR_REQ',
+  FETCH_POPULAR_RES: 'TAGS/FETCH_POPULAR_RES',
+  FETCH_POPULAR_FAIL: 'TAGS/FETCH_POPULAR_FAIL',
+}
+
 /* po pouziti normalizr by stacil jeden typ akce ktera by obsahovala "rozpadnute" entity
  podle schemat */
 export const entities = {
   MERGE_TESTS: 'ENTITIES/MERGE_TESTS',
   MERGE_TEST_DETAILS: 'ENTITIES/MERGE_TEST_DETAILS',
+  MERGE_TAGS: 'ENTITIES/MERGE_TAGS',
 }

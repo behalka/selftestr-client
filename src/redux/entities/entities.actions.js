@@ -9,3 +9,8 @@ export const saveTestDetailEntities = testDetails => ({
   type: entities.MERGE_TEST_DETAILS,
   payload: testDetails,
 })
+
+export const savePopularTags = tags => ({
+  type: entities.MERGE_TAGS,
+  payload: tags,
+})

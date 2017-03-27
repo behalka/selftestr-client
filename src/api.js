@@ -17,8 +17,17 @@ export default {
       description: 'Lorem Ipsum je demonstrativní výplňový text používaný v tiskařském a knihařském průmyslu. Lorem Ipsum je považováno za standard v této oblasti už od začátku 16. století.',
     },
   ]),
+  getPopularTags: () => Promise.resolve([
+    {
+      id: 'd27e46fc-e3ae-43ee-8a00-96db74ce6851',
+      text: 'Autoškola',
+    },
+    {
+      id: 'd27e46fc-e3ae-43ee-8a00-96db74ce6853',
+      text: 'Harry Potter',
+    },
+  ]),
   getTestById: id => {
-    console.log(id)
     if (id === 'e646295e-a5f4-41c4-89ad-6258de0df130') {
       return Promise.resolve({
         id: 'e646295e-a5f4-41c4-89ad-6258de0df130',
