@@ -20,6 +20,7 @@ module.exports = {
     browser: true
   },
   rules: {
+    "no-case-declarations": 0,
     "capitalized-comments": 0,
     "generator-star-spacing": [1, { "before": true, "after": true }],
     "yield-star-spacing": [1, { "before": true, "after": true }],

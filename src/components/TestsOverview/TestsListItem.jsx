@@ -2,10 +2,7 @@ import React, { PropTypes } from 'react'
 import { Button, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router'
 import FontAwesome from 'react-fontawesome'
-
-/**
- * todo: do tagu dat font roboto!
- */
+import Tag from '../Tag/Tag'
 
 const TestsListItem = ({ test }) =>
   <li className="tests__item">
@@ -17,8 +14,7 @@ const TestsListItem = ({ test }) =>
           </div>
           <div className="tests__item__meta">Autor: Behalkar, vytvořeno 21.12.2016, naposledy upraveno 22.12.2016</div>
           <div className="tests__item__tags">
-            <Button bsSize="small" className="tag">TAG1</Button>&nbsp;
-            <Button bsSize="small" className="tag">TAG2</Button>&nbsp;
+            {test.tags.map(tag => <Tag sizes="small" value={tag.text} />)}
           </div>
         </header>
         <div className="tests__item__body">

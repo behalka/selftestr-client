@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { fetchTestList } from '../redux/testsOverview/tests.actions'
-import { getTestHeaders } from '../redux/testsOverview/tests.selectors'
+import { fetchTestList } from '../redux/testModels/tests.actions'
+import { getTestHeaders } from '../redux/testModels/tests.selectors'
 import { getPopularTags } from '../redux/tags/tags.selectors'
 import { fetchPopularTags } from '../redux/tags/tags.actions'
 

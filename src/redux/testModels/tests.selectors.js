@@ -23,7 +23,8 @@ export const getTestFromParams = (state, props) => getTestById(state, props.para
 export const getTestHeaders = state => ({
   isFetching: state.tests.testHeaders.isFetching,
   items: state.tests.testHeaders.items.map(testId => {
-    const test = state.entities.tests[testId]
+    let test = state.entities.tests[testId]
+    test = test.set('tags', state.tags.tagsByTest[testId].map(tagId => state.entities.tags[tagId]))
     return test
   }),
 })

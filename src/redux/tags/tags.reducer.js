@@ -23,6 +23,14 @@ export default function tagsReducer(state = initialState, action) {
       return state
         .setIn(['popularTags', 'isFetching'], false)
         .setIn(['popularTags', 'items'], state.popularTags.items.concat(action.payload))
+    case tags.SET_PER_TEST:
+      const { testId, tagIds } = action.payload
+      if (state.tagsByTest[testId]) {
+        state = state.setIn(['tagsByTest', testId], state.tagsByTest[testId].concat(tagIds))
+      } else {
+        state = state.setIn(['tagsByTest', testId], tagIds)
+      }
+      return state
     default:
       return state
   }

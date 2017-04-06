@@ -8,7 +8,8 @@ const PopularTags = ({ tags }) =>
     <Row>
       <Col xs={12}>
         <ul className="popular-tags__list">
-          {tags.map(tag => <li key={tag.id}><Tag value={tag.text} /></li>)}
+          {tags.map(tag => <li key={tag.id} className="popular-tags__list-item">
+          <Tag value={tag.text} sizes="large" /></li>)}
         </ul>
       </Col>
     </Row>

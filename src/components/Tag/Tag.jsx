@@ -1,18 +1,27 @@
 import React, { PropTypes } from 'react'
 import { Button } from 'react-bootstrap'
+import classNames from 'classnames'
 
-const Tag = ({ value, linkTo, btnClass }) =>
-  <Button bsSize="large" className={btnClass} href={linkTo}>
-    {value}
-  </Button>
+const Tag = ({ value, linkTo, sizes }) => {
+  const classes = classNames({
+    'tag--default': true,
+    'tag--large': sizes === 'large',
+    'tag--small': sizes === 'small',
+  })
+  return (
+    <Button bsSize={sizes} className={classes} href={linkTo}>
+      {value}
+    </Button>
+  )
+}
 Tag.propTypes = {
-  btnClass: PropTypes.string,
   linkTo: PropTypes.string,
+  sizes: PropTypes.string,
   value: PropTypes.string.isRequired,
 }
 Tag.defaultProps = {
   linkTo: '#',
-  btnClass: 'tag--default',
+  sizes: 'default',
 }
 
 export default Tag

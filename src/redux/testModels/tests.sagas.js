@@ -3,16 +3,21 @@ import { call, put, select } from 'redux-saga/effects'
 import { schema, normalize } from 'normalizr'
 import * as actions from '../actionTypes'
 import * as selectors from './tests.selectors'
-import { saveTestEntities, saveTestDetailEntities } from '../entities/entities.actions'
+import { setTagsPerTest } from '../tags/tags.actions'
+import { saveTestEntities, saveTestDetailEntities, saveEntities } from '../entities/entities.actions'
 import Api from '../../api'
 
 // ----- Normalizr definitions
-const testSchema = new schema.Entity('tests')
+const tagSchema = new schema.Entity('tags')
+const testSchema = new schema.Entity('tests', {
+  tags: [tagSchema],
+})
 const testListSchema = [testSchema]
 // test detail
 const commentSchema = new schema.Entity('comments')
 const testDetailSchema = new schema.Entity('testDetails', {
   comments: [commentSchema],
+  tags: [tagSchema],
 })
 
 /*
@@ -48,8 +53,17 @@ function * getTestsList() {
     const tests = yield call(Api.listTests, {})
 
     const normalized = normalize(tests, testListSchema)
-    yield put(saveTestEntities(normalized.entities.tests))
+
+    yield put(saveEntities(normalized))
+    for (const test of tests) {
+      yield put(setTagsPerTest(test.id, normalized.entities.tests[test.id].tags))
+    }
     yield put({ type: actions.tests.LIST_RES, payload: normalized.result })
+    // tests.forEach(test => {
+    //   console.log(test.id)
+    // })    
+    // yield put(setTagsPerTest())
+    // todo: save tags, user
   } catch (err) {
     yield put({ type: actions.tests.LIST_FAIL, err })
   }

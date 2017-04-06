@@ -13,7 +13,7 @@ const tagListSchema = [tagSchema]
 
 function * getPopularTags() {
   try {
-    yield delay(1000)
+    yield delay(500)
     const tags = yield call(Api.getPopularTags, {})
     const normalized = normalize(tags, tagListSchema)
     yield put(savePopularTags(normalized.entities.tags))

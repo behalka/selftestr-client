@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import testsReducer from './testsOverview/tests.reducer'
+import testsReducer from './testModels/tests.reducer'
 import entitiesReducer from './entities/entities.reducer'
 import tagsReducer from './tags/tags.reducer'
 
