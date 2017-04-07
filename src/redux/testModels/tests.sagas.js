@@ -5,7 +5,7 @@ import * as actions from '../actionTypes'
 import * as selectors from './tests.selectors'
 import { setTagsPerTest } from '../tags/tags.actions'
 import { setCommentsByTest } from '../comments/comments.actions'
-import { saveTestEntities, saveTestDetailEntities, saveEntities } from '../entities/entities.actions'
+import { saveEntities } from '../entities/entities.actions'
 import Api from '../../api'
 
 // ----- Normalizr definitions
