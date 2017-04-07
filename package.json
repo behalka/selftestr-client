@@ -33,7 +33,7 @@
     "react-router-bootstrap": "^0.23.1",
     "react-select": "^1.0.0-rc.2",
     "redux": "^3.6.0",
-    "redux-form": "^6.2.0",
+    "redux-form": "^6.6.1",
     "redux-saga": "^0.13.0",
     "reselect": "^2.5.4",
     "seamless-immutable": "^7.0.0",
