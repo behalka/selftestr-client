@@ -17,10 +17,15 @@ const TestDetail = ({ test }) =>
       </Col>
     </Row>
     <Row>
-      <h2>Komentáře</h2>
-      <ul>
-        {test.comments.map(comment => <li key={comment.id}><Comment comment={comment} /></li>)}
-      </ul>
+      <Col xs={12}>
+        <h2>Komentáře</h2>
+        <ul>
+          {test.comments.map(comment =>
+            <li key={comment.id}>
+              <Comment comment={comment} />
+            </li>)}
+        </ul>
+      </Col>
     </Row>
   </div>
 

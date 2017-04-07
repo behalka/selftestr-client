@@ -4,7 +4,12 @@ import React, { PropTypes } from 'react'
 
 const Comment = ({ comment }) =>
   <div>
-    {comment.text}
+    <p>
+      Uživatel {comment.author.username} napsal:
+    </p>
+    <p>
+      {comment.text}
+    </p>
   </div>
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
