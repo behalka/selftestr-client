@@ -1,5 +1,8 @@
 import { createSelector } from 'reselect'
 
+import { getCommentsByTest } from '../comments/comments.selectors'
+import { getTagsByTest } from '../tags/tags.selectors'
+
 export const getTestsData = state => state.tests.data
 
 /*
@@ -16,15 +19,11 @@ export const getTestsData = state => state.tests.data
 //    => tests.find(test => test.id === id)
 // )
 
-// todo: jak nalozit s tim kdyz komponenty nejsou jeste poskladany? -> vlastni selektory pro kusy statu
-export const getTestDetail = ({ entities, comments, tags }, id) => {
-  let test = entities.testDetails[id]
+export const getTestDetail = (state, id) => {
+  let test = state.entities.testDetails[id]
   if (test) {
-    const commentsOfTest = comments.commentsByTest[id]
-    test = commentsOfTest
-    ? test.set('comments', comments.commentsByTest[id]
-      .map(commentId => entities.comments[commentId]))
-    : test.set('comments', [])
+    test = test.set('comments', getCommentsByTest(state, id))
+    test = test.set('tags', getTagsByTest(state, id))
   }
   return test
 }
@@ -38,7 +37,8 @@ export const getTestHeaders = state => ({
   isFetching: state.tests.testHeaders.isFetching,
   items: state.tests.testHeaders.items.map(testId => {
     let test = state.entities.tests[testId]
-    test = test.set('tags', state.tags.tagsByTest[testId].map(tagId => state.entities.tags[tagId]))
+    test = test.set('tags', getTagsByTest(state, testId))
+    // test = test.set('tags', state.tags.tagsByTest[testId].map(tagId => state.entities.tags[tagId]))
     return test
   }),
 })
