@@ -10,8 +10,10 @@ import Api from '../../api'
 
 // ----- Normalizr definitions
 const tagSchema = new schema.Entity('tags')
+const userSchema = new schema.Entity('users')
 const testSchema = new schema.Entity('tests', {
   tags: [tagSchema],
+  author: userSchema,
 })
 const testListSchema = [testSchema]
 // test detail
@@ -19,6 +21,7 @@ const commentSchema = new schema.Entity('comments')
 const testDetailSchema = new schema.Entity('testDetails', {
   comments: [commentSchema],
   tags: [tagSchema],
+  author: userSchema,
 })
 
 /*
@@ -32,10 +35,10 @@ function * getTestDetail(action) {
     if (!selectedTest) {
       const test = yield call(Api.getTestById, id)
       const normalized = normalize(test, testDetailSchema)
-      // yield put(saveTestDetailEntities(normalized.entities.testDetails))
       yield put(saveEntities(normalized))
+      console.log(normalized)
       // todo: stejny problem jako predtim vlastne -> unikatnost klicu v items poli
-      yield put(setCommentsByTest(test.id, normalized.entities.testDetails[test.id].comments))      
+      yield put(setCommentsByTest(test.id, normalized.entities.testDetails[test.id].comments))
       yield put({ type: actions.tests.GET_TEST_RES, payload: [normalized.result] })
     } else {
       // todo: uz by tam mel byt, ale jen pro jistotu ... zase duplicity

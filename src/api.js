@@ -53,6 +53,7 @@ const testObjects = {
       _.values(tagObjects)[2],
       _.values(tagObjects)[3],
     ],
+    author: _.values(userObjects)[0],
     comments: _.values(commentObjects),
     ranking: {
       value: 4.7,

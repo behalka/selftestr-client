@@ -12,7 +12,8 @@ const TestsListItem = ({ test }) =>
           <div className="tests__item__name">
             <Link to={`/testy/${test.id}`}>{test.name}</Link>
           </div>
-          <div className="tests__item__meta">Autor: Behalkar, vytvořeno 21.12.2016, naposledy upraveno 22.12.2016</div>
+          <div className="tests__item__meta">Autor: {test.author.username},
+          vytvořeno 21.12.2016, naposledy upraveno 22.12.2016</div>
           <div className="tests__item__tags">
             {test.tags.map(tag => <Tag key={tag.id} sizes="small" value={tag.text} />)}
           </div>
