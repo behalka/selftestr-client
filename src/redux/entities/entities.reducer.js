@@ -30,15 +30,6 @@ export default function entitiesReducer(state = initialState, action) {
         state = state.set('users', state.users.merge(users))
       }
       return state
-    case entities.MERGE_TAGS:
-      return state
-        .set('tags', state.tags.merge(action.payload))
-    case entities.MERGE_TESTS:
-      return state
-        .set('tests', state.tests.merge(action.payload))
-    case entities.MERGE_TEST_DETAILS:
-      return state
-        .set('testDetails', state.testDetails.merge(action.payload))
     default:
       return state
   }

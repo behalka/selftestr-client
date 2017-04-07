@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { fetchTestById } from '../redux/testsOverview/tests.actions'
-import { getTestFromParams } from '../redux/testsOverview/tests.selectors'
+import { fetchTestById } from '../redux/testModels/tests.actions'
+import { getTestFromParams } from '../redux/testModels/tests.selectors'
 
 import TestDetailContainer from '../components/TestsOverview/TestDetail'
 import Loader from '../components/layout/Loader'

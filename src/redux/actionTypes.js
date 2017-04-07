@@ -10,6 +10,10 @@ export const tests = {
   GET_TEST_FAIL: `${prefix}/GET_TEST_FAIL`,
 }
 
+export const comments = {
+  SET_PER_TEST: 'COMMENTS/SET_PER_TEST',
+}
+
 export const tags = {
   FETCH_POPULAR_REQ: 'TAGS/FETCH_POPULAR_REQ',
   FETCH_POPULAR_RES: 'TAGS/FETCH_POPULAR_RES',

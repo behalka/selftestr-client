@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Button, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router'
-import FontAwesome from 'react-fontawesome'
+import Comment from '../Comment/Comment'
 
 const TestDetail = ({ test }) =>
   <div className="test-detail">
@@ -19,7 +19,7 @@ const TestDetail = ({ test }) =>
     <Row>
       <h2>Komentáře</h2>
       <ul>
-        {test.comments.map(comment => <li key={comment}>{comment}</li>)}
+        {test.comments.map(comment => <li key={comment.id}><Comment comment={comment} /></li>)}
       </ul>
     </Row>
   </div>
