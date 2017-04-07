@@ -1,17 +1,26 @@
 import React, { Component, PropTypes } from 'react'
 import AppWrapper from '../components/layout/AppWrapper'
+import { connect } from 'react-redux'
+import { hashHistory } from 'react-router'
 
 class App extends Component {
   static propTypes = {
-    appState: PropTypes.object.isRequired,
-    // auth: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
-    // dispatch: PropTypes.func.isRequired,
   }
   constructor(props) {
     super(props)
-    console.log(this.props.appState)
+    console.log(this.props.auth)
     // todo: handle auth logic
+  }
+  componentWillReceiveProps(nextProps) {
+    const loggedIn = this.props.auth.isLogged
+    const nextLoggedIn = nextProps.auth.isLogged
+    // doslo k prihlaseni! -> todo: poslat na admin homepage
+    if (!loggedIn && nextLoggedIn) {
+      console.log('welcome')
+      hashHistory.push('/')
+    }
   }
   render() {
     return (
@@ -20,4 +29,8 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = state => ({
+  auth: state.auth,
+})
+
+export default connect(mapStateToProps)(App)

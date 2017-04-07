@@ -69,6 +69,7 @@ const testDetail = _.omit(_.values(testObjects)[0], 'comments')
  */
 
 export default {
+  getUser: () => Promise.resolve(_.values(userObjects)[0]),
   listTests: () => Promise.resolve([testDetail]),
   getPopularTags: () => Promise.resolve([_.values(tagObjects)[0]]),
   getTestById: id => testObjects[id],
