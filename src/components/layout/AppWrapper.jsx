@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Navigation from './Navigation'
 import Breadcrumbs from './Breadcrumbs'
+import Notifications from '../../containers/Notifications'
 
 const AppWrapper = props =>
   <div className="page">
@@ -9,6 +10,7 @@ const AppWrapper = props =>
       <Row>
         <Navigation />
       </Row>
+      <Notifications />
       <Row>
         <Col xs={12}>
           <Breadcrumbs/>
