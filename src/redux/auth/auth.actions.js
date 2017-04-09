@@ -9,3 +9,7 @@ export const loginSuccess = userAuth => ({
   type: auth.LOGIN_RES,
   payload: { userAuth },
 })
+
+export const logoutRequest = () => ({
+  type: auth.LOGOUT_REQ,
+})

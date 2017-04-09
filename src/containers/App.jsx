@@ -18,7 +18,8 @@ class App extends Component {
     const nextLoggedIn = nextProps.auth.isLogged
     // doslo k prihlaseni! -> todo: poslat na admin homepage
     if (!loggedIn && nextLoggedIn) {
-      console.log('welcome')
+      hashHistory.push('/')
+    } else if (loggedIn && !nextLoggedIn) {
       hashHistory.push('/')
     }
   }

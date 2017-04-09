@@ -21,6 +21,10 @@ export default function authReducer(state = initialState, action) {
         .set('isFetching', false)
         .set('isLogged', true)
         .set('user', action.payload.userAuth)
+    case auth.LOGOUT_REQ:
+      return state
+        .set('isLogged', false)
+        .set('user', {})
     default:
       return state
   }
