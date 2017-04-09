@@ -15,6 +15,7 @@ function * displayNotification(action) {
   const message = {
     uid: v1(),
     text: input.text,
+    type: input.type,
   }
   yield put(showNotification(message))
   yield call(delay, DISPLAY_NOTIF_TIMEOUT)

@@ -5,9 +5,12 @@ export const displayError = error => ({
   payload: { error },
 })
 
-export const addNotificationReq = text => ({
+export const addNotificationReq = (text, type) => ({
   type: appState.SHOW_NOTIFICATION_REQ,
-  payload: { text },
+  payload: {
+    text,
+    type,
+  },
 })
 
 export const showNotification = message => ({

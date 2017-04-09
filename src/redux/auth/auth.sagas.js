@@ -2,6 +2,7 @@ import { call, put, take } from 'redux-saga/effects'
 import { auth } from '../actionTypes'
 import { loginSuccess, logoutRequest } from './auth.actions'
 import { addNotificationReq } from '../appState/appState.actions'
+import { types as notifTypes } from '../../constants/notifications'
 import Api from '../../api'
 
 function * login(action) {
@@ -10,7 +11,7 @@ function * login(action) {
     // poskytnu username a password
     const user = yield call(Api.getUser, { formValues })
     yield put(loginSuccess(user))
-    yield put(addNotificationReq('Byl jste uspesne prihlasen!'))
+    yield put(addNotificationReq('Byl jste uspesne prihlasen!', notifTypes.SUCCESS))
   } catch (err) {
     console.log(err)
   }

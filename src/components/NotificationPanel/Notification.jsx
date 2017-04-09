@@ -4,7 +4,7 @@ import { Alert } from 'react-bootstrap'
 const Notification = ({ message, removeHandler }) => {
   const removeMe = () => removeHandler(message)
   return (
-    <Alert bsSize="warning" onDismiss={removeMe}>
+    <Alert bsStyle={message.type} onDismiss={removeMe} className="panel__item">
       {message.text}
     </Alert>
   )

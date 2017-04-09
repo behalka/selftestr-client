@@ -3,9 +3,8 @@ import { Row, Col } from 'react-bootstrap'
 import Notification from './Notification'
 
 const Panel = ({ notifications, removeHandler }) =>
-  <Row className="panel">
-    <Col xs={12}>
-      <ul>
+  <div className="panel panel--fixed">
+      <ul className="list list--block list--no-bullets">
         {notifications.map(notification =>
           <li key={notification.uid}>
             <Notification
@@ -15,8 +14,7 @@ const Panel = ({ notifications, removeHandler }) =>
           </li>
           )}
       </ul>
-    </Col>
-  </Row>
+  </div>
 Panel.propTypes = {
   notifications: PropTypes.array.isRequired,
   removeHandler: PropTypes.func.isRequired,
