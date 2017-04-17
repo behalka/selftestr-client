@@ -19,7 +19,7 @@ function * displayNotification(action) {
   }
   yield put(showNotification(message))
   yield call(delay, DISPLAY_NOTIF_TIMEOUT)
-  // todo: tohle se odpali pokazde, i kdyz to uzivatel zrusil uz
+  // todo: tohle by se melo vynechat, pokud mezitim prijde ten hide event s nasim ID
   yield put(hideNotification(message))
 }
 

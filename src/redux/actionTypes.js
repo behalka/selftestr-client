@@ -19,6 +19,9 @@ export const appState = {
 
 export const comments = {
   SET_PER_TEST: 'COMMENTS/SET_PER_TEST',
+  ADD_REQ: 'COMMENTS/ADD_REQ',
+  ADD_RES: 'COMMENTS/ADD_RES',
+  ADD_FAIL: 'COMMENTS/ADD_FAIL',
 }
 
 export const tags = {

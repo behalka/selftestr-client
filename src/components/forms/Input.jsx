@@ -7,7 +7,7 @@ import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap'
  */
 
 const Input = props => {
-  const { input, label, meta, type, placeholder } = props
+  const { input, label, meta, type, placeholder, componentClass } = props
   // todo: validationState - mozne values: error, warning, success, null!
   const hasError = meta.touched && meta.error
   const hasWarning = meta.touched && meta.warning
@@ -25,6 +25,7 @@ const Input = props => {
         placeholder={placeholder}
         onChange={input.onChange}
         type={type}
+        componentClass={componentClass}
       />
       <FormControl.Feedback />
       {messageElem}
@@ -33,10 +34,12 @@ const Input = props => {
 }
 
 Input.defaultProps = {
+  componentClass: 'input',
   type: 'text',
   placeholder: '',
 }
 Input.propTypes = {
+  componentClass: PropTypes.string,
   input: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
   meta: PropTypes.object.isRequired,

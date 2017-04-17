@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import AppWrapper from '../components/layout/AppWrapper'
 import { connect } from 'react-redux'
 import { hashHistory } from 'react-router'
+import { loginRequest } from '../redux/auth/auth.actions.js'
 
 class App extends Component {
   static propTypes = {
@@ -22,6 +23,9 @@ class App extends Component {
     } else if (loggedIn && !nextLoggedIn) {
       hashHistory.push('/')
     }
+  }
+  componentDidMount() {
+    this.props.dispatch(loginRequest({ username: 'behalkar', password: 'abc'}))
   }
   render() {
     return (

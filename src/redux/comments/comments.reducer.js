@@ -2,6 +2,7 @@ import immutable from 'seamless-immutable'
 import { comments } from '../actionTypes'
 
 const initialState = immutable({
+  isSaving: false,
   commentsByTest: {},
 })
 
@@ -14,6 +15,13 @@ export default function commentsReducer(state = initialState, action) {
            ? state.commentsByTest[testId].concat(commentIds)
            : commentIds
         )
+    case comments.ADD_REQ:
+      return state
+        .set('isSaving', true)
+    case comments.ADD_RES:
+    case comments.ADD_FAIL:
+      return state
+        .set('isSaving', false)
     default:
       return state
   }

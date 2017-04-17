@@ -1,15 +1,12 @@
 import React, { PropTypes } from 'react'
-// import { Button, Row, Col } from 'react-bootstrap'
+import { Panel } from 'react-bootstrap'
 // import FontAwesome from 'react-fontawesome'
 
 const Comment = ({ comment }) =>
   <div>
-    <p>
-      Uživatel {comment.author.username} napsal:
-    </p>
-    <p>
+    <Panel header={`Uživatel ${comment.author.username} napsal:`}>
       {comment.text}
-    </p>
+    </Panel>
   </div>
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,

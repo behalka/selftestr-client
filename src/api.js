@@ -73,4 +73,5 @@ export default {
   listTests: () => Promise.resolve([testDetail]),
   getPopularTags: () => Promise.resolve([_.values(tagObjects)[0]]),
   getTestById: id => testObjects[id],
+  saveComment: comment => Promise.resolve(comment),
 }

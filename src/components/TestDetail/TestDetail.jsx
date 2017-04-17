@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 import { Button, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router'
-import Comment from '../Comment/Comment'
+import CommentsPanel from '../Comments/CommentsPanel'
 
-const TestDetail = ({ test }) =>
+const TestDetail = ({ test, user, handleSubmit }) =>
   <div className="test-detail">
     <Row>
       <Col sm={8}>
@@ -19,17 +19,14 @@ const TestDetail = ({ test }) =>
     <Row>
       <Col xs={12}>
         <h2>Komentáře</h2>
-        <ul>
-          {test.comments.map(comment =>
-            <li key={comment.id}>
-              <Comment comment={comment} />
-            </li>)}
-        </ul>
+        <CommentsPanel comments={test.comments} user={user} handleSubmit={handleSubmit} />
       </Col>
     </Row>
   </div>
 
 TestDetail.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
   test: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 }
 export default TestDetail
