@@ -5,9 +5,12 @@ export const loginRequest = formValues => ({
   payload: { formValues },
 })
 
-export const loginSuccess = userAuth => ({
+export const loginSuccess = (userAuth, token) => ({
   type: auth.LOGIN_RES,
-  payload: { userAuth },
+  payload: {
+    userAuth,
+    token,
+  },
 })
 
 export const logoutRequest = () => ({

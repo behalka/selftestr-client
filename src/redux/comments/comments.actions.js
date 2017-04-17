@@ -7,7 +7,7 @@ export const setCommentsByTest = (testId, commentIds) => ({
 
 export const addCommentReq = (text, author, testId) => ({
   type: comments.ADD_REQ,
-  payload: { text, author, testId },
+  payload: { text, testId, author },
 })
 
 export const addCommentRes = comment => ({

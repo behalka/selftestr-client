@@ -17,7 +17,7 @@ export const getTestDetail = (state, id) => {
   if (test) {
     test = test.set('comments', getCommentsByTest(state, id))
     .set('tags', getTagsByTest(state, id))
-    .set('author', getUserById(state, test.author))
+    .set('user', getUserById(state, test.user))
   }
   return test
 }
@@ -32,7 +32,7 @@ export const getTestHeaders = state => ({
   items: state.tests.testHeaders.items.map(testId => {
     let test = state.entities.tests[testId]
     test = test.set('tags', getTagsByTest(state, testId))
-            .set('author', getUserById(state, test.author))
+            .set('user', getUserById(state, test.user))
     return test
   }),
 })

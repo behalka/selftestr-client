@@ -31,7 +31,6 @@ class TestDetail extends Component {
     }
   }
   handleCommentSubmit(data) {
-    console.log(this.props.test)
     const author = {
       id: this.props.auth.user.id,
       username: this.props.auth.user.username,

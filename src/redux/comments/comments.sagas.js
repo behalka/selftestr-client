@@ -4,6 +4,7 @@ import { comments } from '../actionTypes'
 import { schema, normalize } from 'normalizr'
 import { saveEntities } from '../entities/entities.actions'
 import { addCommentRes, setCommentsByTest } from './comments.actions'
+import { authApiCall } from '../restClientSaga'
 import v4 from 'uuid'
 
 import Api from '../../api'
@@ -16,14 +17,15 @@ function * addComment(action) {
     const comment = {
       id: v4(),
       text: action.payload.text,
-      author: action.payload.author,
     }
-    yield call(Api.saveComment, comment)
+    yield authApiCall(Api.addComment, { comment, testModelId: testId })
+    comment.user = action.payload.author
     const normalized = normalize(comment, commentSchema)
     yield put(addCommentRes(comment))
     yield put(saveEntities(normalized))
     yield put(setCommentsByTest(testId, [comment.id]))
   } catch (err) {
+    console.log(err)
     yield put({ type: comments.ADD_FAIL })
   }
 }

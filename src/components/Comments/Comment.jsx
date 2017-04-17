@@ -4,7 +4,7 @@ import { Panel } from 'react-bootstrap'
 
 const Comment = ({ comment }) =>
   <div>
-    <Panel header={`Uživatel ${comment.author.username} napsal:`}>
+    <Panel header={`Uživatel ${comment.user.username} napsal:`}>
       {comment.text}
     </Panel>
   </div>

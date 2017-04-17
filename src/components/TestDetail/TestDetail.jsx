@@ -13,7 +13,7 @@ const TestDetail = ({ test, user, handleSubmit }) =>
         </div>
       </Col>
       <Col sm={4}>
-        Hodnocení: {test.ranking.value} (počet hodnotících: {test.ranking.count})
+        Hodnocení: {test.ratingValue} (počet hodnotících: {test.ratingCount})
       </Col>
     </Row>
     <Row>

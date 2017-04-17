@@ -7,13 +7,14 @@ import { setTagsPerTest } from '../tags/tags.actions'
 import { setCommentsByTest } from '../comments/comments.actions'
 import { saveEntities } from '../entities/entities.actions'
 import Api from '../../api'
+import * as client from '../restClientSaga'
 
 // ----- Normalizr definitions
 const tagSchema = new schema.Entity('tags')
 const userSchema = new schema.Entity('users')
 const testSchema = new schema.Entity('tests', {
   tags: [tagSchema],
-  author: userSchema,
+  user: userSchema,
 })
 const testListSchema = [testSchema]
 // test detail
@@ -21,7 +22,7 @@ const commentSchema = new schema.Entity('comments')
 const testDetailSchema = new schema.Entity('testDetails', {
   comments: [commentSchema],
   tags: [tagSchema],
-  author: userSchema,
+  user: userSchema,
 })
 
 /*
@@ -33,10 +34,9 @@ function * getTestDetail(action) {
     const { id } = action.payload
     const selectedTest = yield select(selectors.getTestDetail, id)
     if (!selectedTest) {
-      const test = yield call(Api.getTestById, id)
+      const test = yield client.apiCall(Api.getTestById, { id })
       const normalized = normalize(test, testDetailSchema)
       yield put(saveEntities(normalized))
-      console.log(normalized)
       // todo: stejny problem jako predtim vlastne -> unikatnost klicu v items poli
       yield put(setCommentsByTest(test.id, normalized.entities.testDetails[test.id].comments))
       yield put({ type: actions.tests.GET_TEST_RES, payload: [normalized.result] })
@@ -45,6 +45,7 @@ function * getTestDetail(action) {
       // yield put({ type: actions.tests.GET_TEST_RES, payload: [selectedTest.id] })
     }
   } catch (err) {
+    console.log(err)
     yield put({ type: actions.tests.GET_TEST_FAIL })
   }
 }
@@ -56,8 +57,8 @@ export function * getTestDetailWatcher() {
 function * getTestsList() {
   try {
     yield delay(2000)
-    const tests = yield call(Api.listTests, {})
-
+    const tests = yield client.apiCall(Api.listTests)
+    console.log(tests)
     const normalized = normalize(tests, testListSchema)
     yield put(saveEntities(normalized))
     for (const test of tests) {
@@ -65,6 +66,7 @@ function * getTestsList() {
     }
     yield put({ type: actions.tests.LIST_RES, payload: normalized.result })
   } catch (err) {
+    console.log(err)
     yield put({ type: actions.tests.LIST_FAIL, err })
   }
 }

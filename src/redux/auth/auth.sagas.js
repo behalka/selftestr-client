@@ -9,8 +9,8 @@ function * login(action) {
   const { formValues } = action.payload
   try {
     // poskytnu username a password
-    const user = yield call(Api.getUser, { formValues })
-    yield put(loginSuccess(user))
+    const { user, token } = yield call(Api.getUser, { formValues })
+    yield put(loginSuccess(user, token))
     yield put(addNotificationReq('Byl jste uspesne prihlasen!', notifTypes.SUCCESS))
   } catch (err) {
     console.log(err)
