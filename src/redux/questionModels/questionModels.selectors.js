@@ -6,3 +6,10 @@ export const getQuestionsByTest = (state, testId) => {
   : []
   return result
 }
+
+export const getQuestionById = (state, questionId) => {
+  if (!questionId) {
+    return null
+  }
+  return state.entities.questionModels[questionId]
+}
