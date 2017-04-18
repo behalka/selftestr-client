@@ -66,24 +66,24 @@ const testObjects = {
 const testDetail = _.omit(_.values(testObjects)[0], 'comments')
 
 const URL = 'http://localhost:3000'
-const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNmVmZTQ5YS02NTRmLTRhNjQtYWJhOC05YWI0NGJjNmZmZTEiLCJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE0OTI0MzQ5NzMsImV4cCI6MTQ5MjQ0MjE3M30.TjODJQxP2N7-IvOpx7JzqOXsxalWgDi0EOkX4m1aiK0'
-const user = {
-  username: 'john',
-  id: 'b6efe49a-654f-4a64-aba8-9ab44bc6ffe1',
-}
 
 export default {
   getUser: () => Promise.resolve({
     user,
     token: TOKEN,
   }),
+  login: payload => axios
+    .post(`${URL}/login`, payload),
   // listTests: () => Promise.resolve([testDetail]),
   listTests: () => axios
     .get(`${URL}/testModels`),
+  listTestsOfUser: ({ token }) => axios
+    .get(`${URL}/editor/`, {
+      headers: { Authorization: token },
+    }),
   getPopularTags: () => Promise.resolve([_.values(tagObjects)[0]]),
   getTestById: ({ id }) => axios
     .get(`${URL}/testModels/${id}`),
-  saveComment: comment => Promise.resolve(comment),
   addComment: ({ payload, token }) => axios
     .post(`${URL}/testModels/${payload.testModelId}/comments`,
       payload.comment, {

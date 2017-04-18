@@ -3,17 +3,18 @@ import { auth } from '../actionTypes'
 import { loginSuccess, logoutRequest } from './auth.actions'
 import { addNotificationReq } from '../appState/appState.actions'
 import { types as notifTypes } from '../../constants/notifications'
+import * as client from '../restClientSaga'
 import Api from '../../api'
 
 function * login(action) {
   const { formValues } = action.payload
   try {
     // poskytnu username a password
-    const { user, token } = yield call(Api.getUser, { formValues })
+    const { user, token } = yield client.apiCall(Api.login, formValues)
     yield put(loginSuccess(user, token))
     yield put(addNotificationReq('Byl jste uspesne prihlasen!', notifTypes.SUCCESS))
   } catch (err) {
-    console.log(err)
+    console.log(err.response)
   }
 }
 
