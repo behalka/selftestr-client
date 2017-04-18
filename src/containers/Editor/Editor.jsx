@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { fetchByUser } from '../../redux/testModels/tests.actions'
+import { clearEditor, initEditor } from '../../redux/editor/editor.actions'
 
 import { Button, Row, Col } from 'react-bootstrap'
 import Sidebar from './Sidebar'
@@ -9,12 +10,15 @@ import ContentWrapper from './ContentWrapper'
 
 class Editor extends Component {
   static propTypes = {
+    clearEditor: PropTypes.func.isRequired,
     editor: PropTypes.object.isRequired,
     fetchByUser: PropTypes.func.isRequired,
+    initEditor: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
   }
   componentDidMount() {
-    // todo: je potreba pokud pristoupime primo na url
+    this.props.clearEditor()
+    this.props.initEditor(this.props.params.test_model_id)
     // this.props.fetchByUser()
   }
   /*
@@ -56,5 +60,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = {
   fetchByUser,
+  clearEditor,
+  initEditor,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)

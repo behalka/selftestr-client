@@ -4,6 +4,7 @@ import { editor } from '../actionTypes'
 const initialState = immutable({
   testModelId: null,
   questionModelId: null,
+  isQuestionNew: false,
 })
 
 export default function editorReducer(state = initialState, action) {
@@ -14,6 +15,11 @@ export default function editorReducer(state = initialState, action) {
     case editor.SET_QUESTION_REQ:
       return state
         .set('questionModelId', action.payload.questionModelId)
+        .set('isQuestionNew', false)
+    case editor.SET_NEW_QUESTION_RES:
+      return state
+        .set('questionModelId', action.payload.questionModelId)
+        .set('isQuestionNew', true)
     case editor.CLEAR:
       return initialState
     default:

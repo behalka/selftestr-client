@@ -1,11 +1,12 @@
 const validate = (values = {}) => {
   const errors = {}
-  if (!values.question) {
-    errors.question = 'Povinná položka'
+  if (!values.text) {
+    errors.text = 'Povinná položka'
   }
-  if (!values.answer) {
-    errors.answer = 'Povinná položka'
-  }
+  // todo:
+  // if (!values.answerModels[0].text) {
+  //   errors.answerModels[0].text = 'Povinná položka'
+  // }
   return errors
 }
 export default validate

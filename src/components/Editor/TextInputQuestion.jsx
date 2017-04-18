@@ -7,10 +7,10 @@ import validate from './TextInputQuestionValidator'
 
 const TextInputQuestion = ({ handleSubmit }) =>
   <Form onSubmit={handleSubmit}>
-  <Field name="text" label="Znění otázky" component={Input} componentClass="textarea"/>
-  <Field name="answerModels[0].text" label="Správná odpověď" component={Input} componentClass="textarea"/>
-  <Field name="explanation" label="Krátké vysvětlení" component={Input} componentClass="textarea"/>
-  <Button type="submit">Uložit</Button>
+    <Field name="text" label="Znění otázky" component={Input} componentClass="textarea"/>
+    <Field name="answer" label="Správná odpověď" component={Input} componentClass="textarea"/>
+    <Field name="explanation" label="Krátké vysvětlení" component={Input} componentClass="textarea"/>
+    <Button type="submit" bsStyle="primary">Uložit otázku</Button>
   </Form>
 
 TextInputQuestion.propTypes = {

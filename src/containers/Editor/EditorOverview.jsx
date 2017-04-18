@@ -28,6 +28,8 @@ class EditorOverview extends Component {
     this.editTestHandler = this.editTestHandler.bind(this)
   }
   componentDidMount() {
+    console.log(this.props.auth)
+    console.log(this.props.params)
     const { testModels } = this.props
     // todo: stav, kdy uzivatel nema zadne testy!
     if (!testModels.fetched && !testModels.isFetching) {
@@ -39,7 +41,7 @@ class EditorOverview extends Component {
   }
   editTestHandler(testModelId) {
     console.log(testModelId)
-    this.props.initEditor(testModelId)
+    // this.props.initEditor(testModelId)
     this.props.router.push(`/editor/${testModelId}`)
   }
   render() {

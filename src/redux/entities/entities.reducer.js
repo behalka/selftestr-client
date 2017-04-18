@@ -40,7 +40,7 @@ export default function entitiesReducer(state = initialState, action) {
         state = state.set('comments', state.comments.merge(comments))
       }
       if (questionModels) {
-        state = state.set('questionModels', state.comments.merge(questionModels))
+        state = state.set('questionModels', state.questionModels.merge(questionModels))
       }
       if (users) {
         state = state.set('users', state.users.merge(users))

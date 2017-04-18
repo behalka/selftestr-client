@@ -84,6 +84,22 @@ export default {
   getPopularTags: () => Promise.resolve([_.values(tagObjects)[0]]),
   getTestById: ({ id }) => axios
     .get(`${URL}/testModels/${id}`),
+  createQuestion: ({ payload, token }) => axios
+    .post(`${URL}/editor/${payload.testModelId}/questions`,
+    payload.questionModel,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }),
+  updateQuestion: ({ payload, token }) => axios
+    .patch(`${URL}/editor/${payload.testModelId}/questions/${payload.questionModelId}`,
+    payload.questionModel,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }),
   addComment: ({ payload, token }) => axios
     .post(`${URL}/testModels/${payload.testModelId}/comments`,
       payload.comment, {
