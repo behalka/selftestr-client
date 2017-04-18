@@ -16,7 +16,11 @@ class LoggedIn extends Component {
   }
   render() {
     if (this.props.auth.isLogged) {
-      return this.props.children
+      return (
+        <div>
+          {React.cloneElement(this.props.children, { auth: this.props.auth })}
+        </div>
+      )
     }
     return null
   }

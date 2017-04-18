@@ -6,7 +6,8 @@ import TestsOverview from './containers/TestsOverview'
 import TestDetail from './containers/TestDetail'
 import Auth from './containers/Auth'
 import LoggedIn from './containers/LoggedIn'
-import Editor from './containers/Editor'
+import Editor from './containers/Editor/Editor'
+import EditorOverview from './containers/Editor/EditorOverview'
 
 // eslint-disable-next-line no-unused-vars
 export default store =>
@@ -17,8 +18,8 @@ export default store =>
       <Route path=":test_id" component={TestDetail} />
     </Route>
     <Route component={LoggedIn}>
-      <Route path="editor" component={Editor}>
-      </Route>
+      <Route path="editor" component={EditorOverview} />
+      <Route path="editor/:test_model_id" component={Editor} />
     </Route>
     <Route path="historie" component={TestsOverview} />
     <Route path="login" component={Auth} />

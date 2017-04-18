@@ -17,6 +17,13 @@ export const questionModels = {
   SET_PER_TEST: 'QUESTIONS/SET_PER_TEST',
 }
 
+export const editor = {
+  INIT_REQ: 'EDITOR/INIT_REQ',
+  INIT_RES: 'EDITOR/INIT_RES',
+  CLEAR: 'EDITOR/CLEAR',
+  SET_QUESTION: 'EDITOR/SET_QUESTION',
+}
+
 export const appState = {
   DISPLAY_ERROR_MESSAGE: 'APPSTATE/DISPLAY_ERROR_MESSAGE',
   HIDE_NOTIFICATION: 'APPSTATE/HIDE_NOTIFICATION',
@@ -38,15 +45,8 @@ export const tags = {
   SET_PER_TEST: 'TAGS/SET_PER_TEST',
 }
 
-/* po pouziti normalizr by stacil jeden typ akce ktera by obsahovala "rozpadnute" entity
- podle schemat */
 export const entities = {
   MERGE_ENTITIES: 'ENTITIES/MERGE_ENTITIES',
-  MERGE_COMMENTS: 'ENTITIES/MERGE_COMMENTS',
-  MERGE_USERS: 'ENTITIES/MERGE_USERS',
-  MERGE_TESTS: 'ENTITIES/MERGE_TESTS',
-  MERGE_TEST_DETAILS: 'ENTITIES/MERGE_TEST_DETAILS',
-  MERGE_TAGS: 'ENTITIES/MERGE_TAGS',
 }
 
 export const auth = {

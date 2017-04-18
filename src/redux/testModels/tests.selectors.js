@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect'
-
 import { getCommentsByTest } from '../comments/comments.selectors'
 import { getTagsByTest } from '../tags/tags.selectors'
 import { getUserById } from '../users/users.selectors'
+import { getQuestionsByTest } from '../questionModels/questionModels.selectors'
 
 export const getTestsData = state => state.tests.data
 
@@ -33,6 +33,16 @@ export const getTestHeaders = state => ({
     let test = state.entities.tests[testId]
     test = test.set('tags', getTagsByTest(state, testId))
             .set('user', getUserById(state, test.user))
+    return test
+  }),
+})
+
+export const getTestsByOwner = state => ({
+  isFetching: state.tests.testsOfOwner.isFetching,
+  fetched: state.tests.testsOfOwner.fetched,
+  items: state.tests.testsOfOwner.items.map(testId => {
+    let test = state.entities.testsWithQuestions[testId]
+    test = test.set('questionModels', getQuestionsByTest(state, testId))
     return test
   }),
 })
