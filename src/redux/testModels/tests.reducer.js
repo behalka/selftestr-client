@@ -13,10 +13,22 @@ const initialState = immutable({
     isFetching: false,
     items: [],
   },
+  testsOfOwner: {
+    isFetching: false,
+    items: [],
+  },
 })
 
 export default function testsReducer(state = initialState, action) {
   switch (action.type) {
+    case tests.LIST_USER_REQ:
+      return state.setIn(['testsOfOwner', 'isFetching'], true)
+    case tests.LIST_USER_FAIL:
+      return state.setIn(['testsOfOwner', 'isFetching'], false)
+    case tests.LIST_USER_RES:
+      return state
+        .setIn(['testsOfOwner', 'isFetching'], false)
+        .setIn(['testsOfOwner', 'items'], action.payload)
     case tests.LIST_REQ:
       return state.setIn(['testHeaders', 'isFetching'], true)
     case tests.LIST_RES:

@@ -19,13 +19,14 @@ class App extends Component {
     const nextLoggedIn = nextProps.auth.isLogged
     // doslo k prihlaseni! -> todo: poslat na admin homepage
     if (!loggedIn && nextLoggedIn) {
-      hashHistory.push('/')
+      hashHistory.push('/editor')
+      // hashHistory.push('/')
     } else if (loggedIn && !nextLoggedIn) {
       hashHistory.push('/')
     }
   }
   componentDidMount() {
-    this.props.dispatch(loginRequest({ username: 'behalkar', password: 'abc'}))
+    this.props.dispatch(loginRequest({ username: 'john', password: 'password' }))
   }
   render() {
     return (

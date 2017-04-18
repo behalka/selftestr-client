@@ -5,6 +5,7 @@ import testsReducer from './testModels/tests.reducer'
 import entitiesReducer from './entities/entities.reducer'
 import tagsReducer from './tags/tags.reducer'
 import commentsReducer from './comments/comments.reducer'
+import questionModelsReducer from './questionModels/questionModels.reducer'
 import { reducer as formReducer } from 'redux-form'
 
 export default combineReducers({
@@ -13,6 +14,7 @@ export default combineReducers({
   comments: commentsReducer,
   entities: entitiesReducer,
   form: formReducer,
+  questionModels: questionModelsReducer,
   tags: tagsReducer,
   tests: testsReducer,
 })

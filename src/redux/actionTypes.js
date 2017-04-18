@@ -8,6 +8,13 @@ export const tests = {
   GET_TEST_RES: `${prefix}/GET_TEST_RES`,
   UPDATE_TEST_DETAIL_RES: `${prefix}/UPDATE_TEST_DETAIL_RES`,
   GET_TEST_FAIL: `${prefix}/GET_TEST_FAIL`,
+  LIST_USER_REQ: `${prefix}/LIST_USER_REQ`,
+  LIST_USER_RES: `${prefix}/LIST_USER_RES`,
+  LIST_USER_FAIL: `${prefix}/LIST_USER_FAIL`,
+}
+
+export const questionModels = {
+  SET_PER_TEST: 'QUESTIONS/SET_PER_TEST',
 }
 
 export const appState = {
