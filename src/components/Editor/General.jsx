@@ -1,29 +1,12 @@
-import React, { PropTypes, Component } from 'react'
+import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { Form, Button } from 'react-bootstrap'
 
+import ContentForm from './ContentForm'
 import Input from '../forms/Input'
 import validate from './GeneralValidation'
 
-class GeneralForm extends Component {
-  static propTypes = {
-    dirty: PropTypes.bool.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-    setFormChanged: PropTypes.func.isRequired,
-  }
-  constructor(props) {
-    super(props)
-    this.state = {
-      formUpdated: false,
-    }
-  }
-  componentWillReceiveProps(newProps) {
-    if (newProps.dirty !== this.state.formUpdated) {
-      this.setState({ formUpdated: newProps.dirty })
-      this.props.setFormChanged(newProps.dirty)
-    }
-  }
+class GeneralForm extends ContentForm {
   render() {
     const { reset, handleSubmit } = this.props
     return (
