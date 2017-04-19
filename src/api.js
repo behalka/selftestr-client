@@ -81,6 +81,13 @@ export default {
     .get(`${URL}/editor/`, {
       headers: { Authorization: token },
     }),
+  updateTestModel: ({ token, payload }) => axios
+    .patch(`${URL}/editor/${payload.testModel.id}`, payload.testModel,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }),
   getPopularTags: () => Promise.resolve([_.values(tagObjects)[0]]),
   getTestById: ({ id }) => axios
     .get(`${URL}/testModels/${id}`),

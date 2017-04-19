@@ -13,6 +13,10 @@ export const clearQuestion = () => ({
   type: editor.CLEAR_QUESTION,
 })
 
+export const displayGeneral = () => ({
+  type: editor.DISPLAY_GENERAL,
+})
+
 export const selectQuestion = questionModelId => ({
   type: editor.SET_QUESTION_REQ,
   payload: { questionModelId },

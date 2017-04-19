@@ -12,3 +12,12 @@ export const fetchTestById = testId => ({
 export const fetchByUser = () => ({
   type: tests.LIST_USER_REQ,
 })
+
+export const saveReq = testModelData => ({
+  type: tests.SAVE_TEST_REQ,
+  payload: { testModelData },
+})
+
+export const saveRes = () => ({
+  type: tests.SAVE_TEST_RES,
+})

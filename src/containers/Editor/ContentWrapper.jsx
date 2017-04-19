@@ -1,21 +1,30 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getQuestionById } from '../../redux/questionModels/questionModels.selectors'
+import { getTestModelFromId } from '../../redux/testModels/tests.selectors'
 import { saveQuestionReq, deleteQuestionReq } from '../../redux/questionModels/questionModels.actions'
 import { formChanged } from '../../redux/editor/editor.actions'
-import TextInputQuestion from '../../components/Editor/TextInputQuestion'
+import { saveReq } from '../../redux/testModels/tests.actions'
 import questionTypes from '../../constants/questionTypes'
+
+import ContentOverview from './ContentOverview'
+import GeneralForm from '../../components/Editor/General'
+import TextInputQuestion from '../../components/Editor/TextInputQuestion'
 
 // todo: nekam do utils - volat z sag
 // todo: mozna dalsi funkce - init tech modelu
-function questionModelToForm(questionModel) {
+function questionModelToForm(model) {
   const formData = {}
-  switch (questionModel.type) {
+  if (!model.type) {
+    // jedna se o general form!
+    return Object.assign(formData, model)
+  }
+  switch (model.type) {
     case questionTypes.TEXT_INPUT:
-      if (questionModel.answerModels.length > 0) {
-        formData.answer = questionModel.answerModels[0].correctSolution
+      if (model.answerModels.length > 0) {
+        formData.answer = model.answerModels[0].correctSolution
       }
-      return Object.assign(formData, questionModel)
+      return Object.assign(formData, model)
     default:
       console.log('failed mapping to form')
   }
@@ -52,18 +61,22 @@ class ContentWrapper extends Component {
     editor: PropTypes.object,
     formChanged: PropTypes.func.isRequired,
     questionModel: PropTypes.object,
+    testModel: PropTypes.object,
     saveQuestion: PropTypes.func.isRequired,
+    saveGeneral: PropTypes.func.isRequired,
   }
   static defaultProps = {
     editor: {
       questionModelId: null,
     },
+    testModel: null,
     questionModel: null,
   }
   constructor(props) {
     super(props)
     this.renderForm = this.renderForm.bind(this)
     this.submitHandler = this.submitHandler.bind(this)
+    this.submitGeneralHandler = this.submitGeneralHandler.bind(this)
     this.setFormChanged = this.setFormChanged.bind(this)
     this.deleteQuestionHandler = this.deleteQuestionHandler.bind(this)
   }
@@ -71,6 +84,10 @@ class ContentWrapper extends Component {
     const { testModelId, isQuestionNew } = this.props.editor
     const payload = formToQuestionModel(formData)
     this.props.saveQuestion(testModelId, payload, isQuestionNew)
+  }
+  submitGeneralHandler(formData) {
+    console.log(formData)
+    this.props.saveGeneral(formData)
   }
   deleteQuestionHandler() {
     const { testModelId, isQuestionNew, questionModelId } = this.props.editor
@@ -84,29 +101,42 @@ class ContentWrapper extends Component {
     // sdilene form properties
     const formProps = {
       initialValues: questionModelToForm(data),
-      onSubmit: this.submitHandler,
+      onSubmit: this.submitGeneralHandler,
       enableReinitialize: true,
       deleteQuestionHandler: this.deleteQuestionHandler,
+      setFormChanged: this.setFormChanged,
     }
-    return <TextInputQuestion {...formProps} setFormChanged={this.setFormChanged} />
+    switch (data.type) {
+      case questionTypes.TEXT_INPUT:
+        return <TextInputQuestion {...formProps} onSubmit={this.submitHandler} />
+      default:
+        return <GeneralForm {...formProps} onSubmit={this.submitGeneralHandler} />
+    }
   }
   render() {
-    const { questionModel } = this.props
-    const renderQuestion = Boolean(questionModel)
+    const { questionModel, testModel, editor } = this.props
+    const renderForm = editor.displayGeneralForm || Boolean(questionModel)
     return (
       <div>
-        {this.props.editor.questionModelId || 'je to null'}
-        {renderQuestion && this.renderForm(questionModel)}
+        {renderForm && editor.displayGeneralForm && this.renderForm(testModel)}
+        {renderForm && !editor.displayGeneralForm && this.renderForm(questionModel)}
+        {!renderForm && <ContentOverview />}
       </div>
     )
+    // {renderQuestion
+    //   ? this.renderForm(questionModel)
+    //   : <ContentOverview />
+    // }
   }
 }
 const mapStateToProps = (state, props) => ({
   questionModel: getQuestionById(state, props.editor.questionModelId),
+  testModel: getTestModelFromId(state, props.editor.testModelId),
 })
 const mapDispatchToProps = {
   deleteQuestion: deleteQuestionReq,
   saveQuestion: saveQuestionReq,
+  saveGeneral: saveReq,
   formChanged,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ContentWrapper)

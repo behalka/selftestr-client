@@ -35,8 +35,9 @@ class QuestionsBar extends Component {
     }
   }
   render() {
-    /**
-     * todo: vyresit disabled zvolene otazky vic elegantne -> idealne odstranit odkaz a upravit vzhled
+    /*
+     * todo: vyresit disabled zvolene otazky vic elegantne
+     *  -> idealne odstranit odkaz a upravit vzhled
      */
     const { isFormChanged, selectedQuestion } = this.props
     return (
@@ -52,7 +53,7 @@ class QuestionsBar extends Component {
               })
             }
             onClick={() => this.questionSelectedHandler(question)}>
-            {index}
+            {index + 1}
           </Button>
           )}
       </nav>

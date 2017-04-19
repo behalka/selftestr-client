@@ -48,6 +48,9 @@ export const getTestsByOwner = state => ({
 })
 
 export const getTestModelFromId = (state, testModelId) => {
+  if (!testModelId) {
+    return null
+  }
   const test = state.entities.testsWithQuestions[testModelId]
   return test
 }

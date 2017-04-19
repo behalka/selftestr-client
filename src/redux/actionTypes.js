@@ -11,6 +11,9 @@ export const tests = {
   LIST_USER_REQ: `${prefix}/LIST_USER_REQ`,
   LIST_USER_RES: `${prefix}/LIST_USER_RES`,
   LIST_USER_FAIL: `${prefix}/LIST_USER_FAIL`,
+  SAVE_TEST_REQ: `${prefix}/SAVE_TEST_REQ`,
+  SAVE_TEST_RES: `${prefix}/SAVE_TEST_RES`,
+  SAVE_TEST_FAIL: `${prefix}/SAVE_TEST_FAIL`,
 }
 
 export const questionModels = {
@@ -38,6 +41,7 @@ export const editor = {
   SET_NEW_QUESTION_REQ: 'EDITOR/SET_NEW_QUESTION_REQ',
   FORM_WAS_CHANGED: 'EDITOR/FORM_WAS_CHANGED',
   CLEAR_QUESTION: 'EDITOR/CLEAR_QUESTION',
+  DISPLAY_GENERAL: 'EDITOR/DISPLAY_GENERAL',
 }
 
 export const appState = {
