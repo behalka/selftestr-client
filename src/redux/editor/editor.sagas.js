@@ -5,11 +5,12 @@ import { v1 } from 'uuid'
 import { addNotificationReq } from '../appState/appState.actions'
 import { types as notifTypes } from '../../constants/notifications'
 import { editor, questionModels } from '../actionTypes'
-import { saveEntities } from '../entities/entities.actions'
+import { saveEntities, deleteEntity } from '../entities/entities.actions'
 import {
   setQuestionsPerTest,
   saveQuestionRes,
-  saveQuestionFail
+  saveQuestionFail,
+  deleteQuestionRes,
  } from '../questionModels/questionModels.actions'
 import * as editorActions from './editor.actions'
 import * as client from '../restClientSaga'
@@ -96,6 +97,25 @@ function * saveQuestion(action) {
   }
 }
 
+function * deleteQuestion(action) {
+  const { isQuestionNew, testModelId, questionModelId } = action.payload
+  try {
+    if (!isQuestionNew) {
+      yield client.authApiCall(Api.deleteQuestion, {
+        testModelId,
+        questionModelId,
+      })
+    }
+    yield put(deleteQuestionRes(testModelId, questionModelId))
+    yield put(editorActions.clearQuestion())
+    yield put(addNotificationReq('Otázka byla smazána', notifTypes.SUCCESS))
+    yield put(deleteEntity('questionModels', questionModelId))
+  } catch (err) {
+    console.log(err)
+    console.log(err.response)
+  }
+}
+
 export function * editorFlow() {
   while (true) {
     let action = yield take(editor.INIT_REQ)
@@ -113,6 +133,10 @@ export function * createQuestionWatcher() {
   yield takeLatest(questionModels.CREATE_QUESTION_REQ, createQuestion)
 }
 
+export function * deleteQuestionWatcher() {
+  yield takeLatest(questionModels.DELETE_QUESTION_REQ, deleteQuestion)
+}
+
 export function * selectQuestionWatcher() {
   yield takeEvery(editor.SET_QUESTION_REQ, selectQuestion)
 }
@@ -120,6 +144,7 @@ export function * selectQuestionWatcher() {
 export default function * () {
   yield [
     createQuestionWatcher(),
+    deleteQuestionWatcher(),
     editorFlow(),
     selectQuestionWatcher(),
     saveQuestionWatcher(),

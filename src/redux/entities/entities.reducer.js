@@ -14,6 +14,11 @@ const initialState = immutable({
 export default function entitiesReducer(state = initialState, action) {
   switch (action.type) {
     // eslint-disable-next-line no-case-declarations
+    case entities.DELETE_ENTITY:
+      const { entityId, entityName } = action.payload
+      return state
+        .update(entityName, field => field.without(entityId))
+    // eslint-disable-next-line no-case-declarations
     case entities.MERGE_ENTITIES:
       const {
         tests,

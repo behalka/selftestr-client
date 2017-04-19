@@ -92,6 +92,13 @@ export default {
         Authorization: token,
       },
     }),
+  deleteQuestion: ({ payload, token }) => axios
+    .delete(`${URL}/editor/${payload.testModelId}/questions/${payload.questionModelId}`,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }),
   updateQuestion: ({ payload, token }) => axios
     .patch(`${URL}/editor/${payload.testModelId}/questions/${payload.questionModelId}`,
     payload.questionModel,

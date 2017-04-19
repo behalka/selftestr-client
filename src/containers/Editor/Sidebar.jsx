@@ -30,7 +30,6 @@ class EditorSidebar extends Component {
     this.props.createQuestion(this.props.testModelId, data)
   }
   render() {
-    console.log(this.props.testDetail)
     const { testDetail } = this.props
     return (
       <nav className="editor__navbar">

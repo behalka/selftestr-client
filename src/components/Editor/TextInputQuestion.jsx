@@ -7,6 +7,7 @@ import validate from './TextInputQuestionValidator'
 
 class TextInputQuestion extends Component {
   static propTypes = {
+    deleteQuestionHandler: PropTypes.func.isRequired,
     dirty: PropTypes.bool.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
@@ -25,7 +26,7 @@ class TextInputQuestion extends Component {
     }
   }
   render() {
-    const { reset, handleSubmit } = this.props
+    const { reset, handleSubmit, deleteQuestionHandler } = this.props
     return (
       <Form onSubmit={handleSubmit}>
         <Field name="text" label="Znění otázky" component={Input} componentClass="textarea"/>
@@ -33,6 +34,7 @@ class TextInputQuestion extends Component {
         <Field name="explanation" label="Krátké vysvětlení" component={Input} componentClass="textarea"/>
         <Button type="submit" bsStyle="primary">Uložit otázku</Button>
         <Button type="reset" bsStyle="default" onClick={reset}>Zahodit změny</Button>
+        <Button bsStyle="danger" onClick={deleteQuestionHandler}>Vymazat otázku</Button>
       </Form>
     )
   }

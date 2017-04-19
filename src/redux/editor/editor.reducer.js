@@ -42,6 +42,10 @@ export default function editorReducer(state = initialState, action) {
     case editor.FORM_WAS_CHANGED:
       return state
         .set('isFormChanged', action.payload.isFormChanged)
+    case editor.CLEAR_QUESTION:
+      return state
+        .set('questionModelId', null)
+        .set('isFormChanged', false)
     case editor.CLEAR:
       return initialState
     default:

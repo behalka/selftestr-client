@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getQuestionById } from '../../redux/questionModels/questionModels.selectors'
-import { saveQuestionReq } from '../../redux/questionModels/questionModels.actions'
+import { saveQuestionReq, deleteQuestionReq } from '../../redux/questionModels/questionModels.actions'
 import { formChanged } from '../../redux/editor/editor.actions'
 import TextInputQuestion from '../../components/Editor/TextInputQuestion'
 import questionTypes from '../../constants/questionTypes'
@@ -48,6 +48,7 @@ function formToQuestionModel(formData) {
 
 class ContentWrapper extends Component {
   static propTypes = {
+    deleteQuestion: PropTypes.func.isRequired,
     editor: PropTypes.object,
     formChanged: PropTypes.func.isRequired,
     questionModel: PropTypes.object,
@@ -64,11 +65,17 @@ class ContentWrapper extends Component {
     this.renderForm = this.renderForm.bind(this)
     this.submitHandler = this.submitHandler.bind(this)
     this.setFormChanged = this.setFormChanged.bind(this)
+    this.deleteQuestionHandler = this.deleteQuestionHandler.bind(this)
   }
   submitHandler(formData) {
     const { testModelId, isQuestionNew } = this.props.editor
     const payload = formToQuestionModel(formData)
     this.props.saveQuestion(testModelId, payload, isQuestionNew)
+  }
+  deleteQuestionHandler() {
+    const { testModelId, isQuestionNew, questionModelId } = this.props.editor
+    console.log('delete', questionModelId)
+    this.props.deleteQuestion(testModelId, questionModelId, isQuestionNew)
   }
   setFormChanged(isFormDirty) {
     this.props.formChanged(isFormDirty)
@@ -79,6 +86,7 @@ class ContentWrapper extends Component {
       initialValues: questionModelToForm(data),
       onSubmit: this.submitHandler,
       enableReinitialize: true,
+      deleteQuestionHandler: this.deleteQuestionHandler,
     }
     return <TextInputQuestion {...formProps} setFormChanged={this.setFormChanged} />
   }
@@ -97,6 +105,7 @@ const mapStateToProps = (state, props) => ({
   questionModel: getQuestionById(state, props.editor.questionModelId),
 })
 const mapDispatchToProps = {
+  deleteQuestion: deleteQuestionReq,
   saveQuestion: saveQuestionReq,
   formChanged,
 }

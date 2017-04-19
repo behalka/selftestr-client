@@ -9,6 +9,10 @@ export const clearEditor = () => ({
   type: editor.CLEAR,
 })
 
+export const clearQuestion = () => ({
+  type: editor.CLEAR_QUESTION,
+})
+
 export const selectQuestion = questionModelId => ({
   type: editor.SET_QUESTION_REQ,
   payload: { questionModelId },
