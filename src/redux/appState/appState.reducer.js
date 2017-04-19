@@ -13,7 +13,7 @@ export default function appStateReducer(state = initialState, action) {
         .set('errorMessage', action.payload.error.message)
     case appState.SHOW_NOTIFICATION_RES:
       return state
-        .set('notifications', [...state.notifications, action.payload.message])
+        .set('notifications', [action.payload.message, ...state.notifications])
     case appState.HIDE_NOTIFICATION:
       return state
         .set('notifications', state.notifications

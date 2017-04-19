@@ -1,5 +1,5 @@
 import { delay } from 'redux-saga'
-import { call, put, take } from 'redux-saga/effects'
+import { call, put, take, fork } from 'redux-saga/effects'
 import { appState } from '../actionTypes'
 import { hideNotification, showNotification } from './appState.actions'
 import { v1 } from 'uuid'
@@ -26,7 +26,7 @@ function * displayNotification(action) {
 function * notificationFlow() {
   while (true) {
     const action = yield take(appState.SHOW_NOTIFICATION_REQ)
-    yield displayNotification(action)
+    yield fork(displayNotification, action)
   }
 }
 
