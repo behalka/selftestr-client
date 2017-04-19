@@ -4,7 +4,7 @@ import { appState } from '../actionTypes'
 import { hideNotification, showNotification } from './appState.actions'
 import { v1 } from 'uuid'
 
-const DISPLAY_NOTIF_TIMEOUT = 10000
+const DISPLAY_NOTIF_TIMEOUT = 5000
 
 /**
  * Vytvori notifikaci jen z textove zpravy
