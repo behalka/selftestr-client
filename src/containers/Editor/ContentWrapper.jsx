@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getQuestionById } from '../../redux/questionModels/questionModels.selectors'
 import { saveQuestionReq } from '../../redux/questionModels/questionModels.actions'
+import { formChanged } from '../../redux/editor/editor.actions'
 import TextInputQuestion from '../../components/Editor/TextInputQuestion'
 import questionTypes from '../../constants/questionTypes'
 
@@ -48,6 +49,7 @@ function formToQuestionModel(formData) {
 class ContentWrapper extends Component {
   static propTypes = {
     editor: PropTypes.object,
+    formChanged: PropTypes.func.isRequired,
     questionModel: PropTypes.object,
     saveQuestion: PropTypes.func.isRequired,
   }
@@ -61,27 +63,27 @@ class ContentWrapper extends Component {
     super(props)
     this.renderForm = this.renderForm.bind(this)
     this.submitHandler = this.submitHandler.bind(this)
+    this.setFormChanged = this.setFormChanged.bind(this)
   }
   submitHandler(formData) {
     const { testModelId, isQuestionNew } = this.props.editor
     const payload = formToQuestionModel(formData)
     this.props.saveQuestion(testModelId, payload, isQuestionNew)
   }
+  setFormChanged(isFormDirty) {
+    this.props.formChanged(isFormDirty)
+  }
   renderForm(data) {
     // sdilene form properties
-    // todo: initialData - hlavne odpovedi se mozna budou muset nastavovat taky podle tipu otazky tak aby
-    // sedely do formulare - a potom musi sedet pro request na API
-    // bud unikatni submity, nebo switch v jednom submitu
     const formProps = {
       initialValues: questionModelToForm(data),
       onSubmit: this.submitHandler,
       enableReinitialize: true,
     }
-    return <TextInputQuestion {...formProps} />
+    return <TextInputQuestion {...formProps} setFormChanged={this.setFormChanged} />
   }
   render() {
     const { questionModel } = this.props
-    // todo: zobrazit formular na zaklade udaju v editor
     const renderQuestion = Boolean(questionModel)
     return (
       <div>
@@ -96,5 +98,6 @@ const mapStateToProps = (state, props) => ({
 })
 const mapDispatchToProps = {
   saveQuestion: saveQuestionReq,
+  formChanged,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ContentWrapper)

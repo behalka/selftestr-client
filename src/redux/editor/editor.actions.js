@@ -18,3 +18,8 @@ export const selectNewQuestion = questionModelId => ({
   type: editor.SET_NEW_QUESTION_REQ,
   payload: { questionModelId },
 })
+
+export const formChanged = isFormChanged => ({
+  type: editor.FORM_WAS_CHANGED,
+  payload: { isFormChanged },
+})
