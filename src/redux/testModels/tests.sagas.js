@@ -64,7 +64,6 @@ export function * getTestsOfUser() {
   try {
     const tests = yield client.authApiCall(Api.listTestsOfUser)
     const normalized = normalize(tests, testsOfOwnerListSchema)
-    console.log(normalized)
     yield put(saveEntities(normalized))
     for (const test of tests) {
       yield put(setQuestionsPerTest(test.id,

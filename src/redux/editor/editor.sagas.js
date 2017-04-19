@@ -2,20 +2,27 @@ import { takeEvery, takeLatest } from 'redux-saga'
 import { take, call, put } from 'redux-saga/effects'
 import { schema, normalize } from 'normalizr'
 import { v1 } from 'uuid'
+import { addNotificationReq } from '../appState/appState.actions'
+import { types as notifTypes } from '../../constants/notifications'
 import { editor, questionModels } from '../actionTypes'
 import { saveEntities } from '../entities/entities.actions'
-import { setQuestionsPerTest } from '../questionModels/questionModels.actions'
+import {
+  setQuestionsPerTest,
+  saveQuestionRes,
+  saveQuestionFail
+ } from '../questionModels/questionModels.actions'
 import * as editorActions from './editor.actions'
 import * as client from '../restClientSaga'
 import Api from '../../api'
 
 const questionSchema = new schema.Entity('questionModels')
 
+// todo: do utils spolecne s contentWrapper funkcema
 function transformQuestionModel(question) {
   const res = Object.assign({}, question)
-  // delete res.id
   delete res.updated_at
   delete res.created_at
+  console.log(res, 'foo')
   return res
 }
 
@@ -55,25 +62,38 @@ function * addQuestion(action) {
   }
 }
 
-// todo: removeQuestion - z questionModels, entities - delete metodu na entities!
-
-function * saveQuestion(action) {
+function * updateQuestion(action) {
   const { testModelId, questionModelData } = action.payload
   try {
     const result = yield client.authApiCall(Api.updateQuestion, {
       testModelId,
       questionModelId: questionModelData.id,
-      questionModel: transformQuestionModel(questionModelData), // maybe transform it!
+      questionModel: transformQuestionModel(questionModelData),
     })
-    // todo: set questions per test
     const normalized = normalize(result, questionSchema)
     yield put(saveEntities(normalized))
-    // todo: saveRes action
   } catch (err) {
     console.log(err.response)
     yield put({ type: questionModels.SAVE_QUESTION_FAIL })
   }
+}
 
+// todo: removeQuestion - z questionModels, entities - delete metodu na entities!
+
+function * saveQuestion(action) {
+  const { isQuestionNew } = action.payload
+  try {
+    isQuestionNew
+    ? yield addQuestion(action)
+    : yield updateQuestion(action)
+    yield put(saveQuestionRes())
+    yield put(addNotificationReq('Otázka byla uložena.', notifTypes.SUCCESS))
+  } catch (err) {
+    console.log(err, err.response)
+    yield put(saveQuestionFail())
+    // provolat error message panel
+    yield put(addNotificationReq('Otázka nemohla být uložena.', notifTypes.WARNING))
+  }
 }
 
 export function * editorFlow() {
@@ -93,17 +113,12 @@ export function * createQuestionWatcher() {
   yield takeLatest(questionModels.CREATE_QUESTION_REQ, createQuestion)
 }
 
-export function * addQuestionWatcher() {
-  yield takeLatest(questionModels.ADD_QUESTION_REQ, addQuestion)
-}
-
 export function * selectQuestionWatcher() {
   yield takeEvery(editor.SET_QUESTION_REQ, selectQuestion)
 }
 
 export default function * () {
   yield [
-    addQuestionWatcher(),
     createQuestionWatcher(),
     editorFlow(),
     selectQuestionWatcher(),

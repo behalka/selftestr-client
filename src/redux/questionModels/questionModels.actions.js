@@ -5,9 +5,9 @@ export const setQuestionsPerTest = (testId, questionIds) => ({
   payload: { testId, questionIds },
 })
 
-export const saveQuestionReq = (testModelId, questionModelData) => ({
+export const saveQuestionReq = (testModelId, questionModelData, isQuestionNew) => ({
   type: questionModels.SAVE_QUESTION_REQ,
-  payload: { testModelId, questionModelData },
+  payload: { testModelId, questionModelData, isQuestionNew },
 })
 
 export const saveQuestionRes = question => ({
@@ -15,12 +15,11 @@ export const saveQuestionRes = question => ({
   payload: { question },
 })
 
-export const createQuestionReq = (testModelId, questionModelData) => ({
-  type: questionModels.CREATE_QUESTION_REQ,
-  payload: { testModelId, questionModelData },
+export const saveQuestionFail = () => ({
+  type: questionModels.SAVE_QUESTION_FAIL,
 })
 
-export const addQuestionReq = (testModelId, questionModelData) => ({
-  type: questionModels.ADD_QUESTION_REQ,
+export const createQuestionReq = (testModelId, questionModelData) => ({
+  type: questionModels.CREATE_QUESTION_REQ,
   payload: { testModelId, questionModelData },
 })

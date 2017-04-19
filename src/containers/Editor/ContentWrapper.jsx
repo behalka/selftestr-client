@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getQuestionById } from '../../redux/questionModels/questionModels.selectors'
-import { saveQuestionReq, addQuestionReq } from '../../redux/questionModels/questionModels.actions'
+import { saveQuestionReq } from '../../redux/questionModels/questionModels.actions'
 import TextInputQuestion from '../../components/Editor/TextInputQuestion'
 import questionTypes from '../../constants/questionTypes'
 
-// todo: nekam do utils
+// todo: nekam do utils - volat z sag
+// todo: mozna dalsi funkce - init tech modelu
 function questionModelToForm(questionModel) {
   const formData = {}
   switch (questionModel.type) {
@@ -46,7 +47,6 @@ function formToQuestionModel(formData) {
 
 class ContentWrapper extends Component {
   static propTypes = {
-    addQuestion: PropTypes.func.isRequired,
     editor: PropTypes.object,
     questionModel: PropTypes.object,
     saveQuestion: PropTypes.func.isRequired,
@@ -63,15 +63,11 @@ class ContentWrapper extends Component {
     this.submitHandler = this.submitHandler.bind(this)
   }
   submitHandler(formData) {
-    const { testModelId } = this.props.editor
+    const { testModelId, isQuestionNew } = this.props.editor
     const payload = formToQuestionModel(formData)
-
-    this.props.editor.isQuestionNew
-    ? this.props.addQuestion(testModelId, payload)
-    : this.props.saveQuestion(testModelId, payload)
+    this.props.saveQuestion(testModelId, payload, isQuestionNew)
   }
   renderForm(data) {
-    console.log(data)
     // sdilene form properties
     // todo: initialData - hlavne odpovedi se mozna budou muset nastavovat taky podle tipu otazky tak aby
     // sedely do formulare - a potom musi sedet pro request na API
@@ -100,6 +96,5 @@ const mapStateToProps = (state, props) => ({
 })
 const mapDispatchToProps = {
   saveQuestion: saveQuestionReq,
-  addQuestion: addQuestionReq,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ContentWrapper)

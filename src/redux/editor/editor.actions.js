@@ -15,6 +15,6 @@ export const selectQuestion = questionModelId => ({
 })
 
 export const selectNewQuestion = questionModelId => ({
-  type: editor.SET_NEW_QUESTION_RES,
+  type: editor.SET_NEW_QUESTION_REQ,
   payload: { questionModelId },
 })
