@@ -7,7 +7,7 @@ import { formChanged } from '../../redux/editor/editor.actions'
 import { saveReq } from '../../redux/testModels/tests.actions'
 import questionTypes from '../../constants/questionTypes'
 
-import ContentOverview from './ContentOverview'
+import ContentOverview from '../../components/Editor/ContentOverview'
 import GeneralForm from '../../components/Editor/General'
 import TextInputQuestion from '../../components/Editor/TextInputQuestion'
 
@@ -61,9 +61,10 @@ class ContentWrapper extends Component {
     editor: PropTypes.object,
     formChanged: PropTypes.func.isRequired,
     questionModel: PropTypes.object,
-    testModel: PropTypes.object,
-    saveQuestion: PropTypes.func.isRequired,
     saveGeneral: PropTypes.func.isRequired,
+    saveQuestion: PropTypes.func.isRequired,
+    testModel: PropTypes.object,
+    testModelId: PropTypes.string.isRequired,
   }
   static defaultProps = {
     editor: {
@@ -120,18 +121,14 @@ class ContentWrapper extends Component {
       <div>
         {renderForm && editor.displayGeneralForm && this.renderForm(testModel)}
         {renderForm && !editor.displayGeneralForm && this.renderForm(questionModel)}
-        {!renderForm && <ContentOverview />}
+        {!renderForm && <ContentOverview testModel={testModel} />}
       </div>
     )
-    // {renderQuestion
-    //   ? this.renderForm(questionModel)
-    //   : <ContentOverview />
-    // }
   }
 }
 const mapStateToProps = (state, props) => ({
   questionModel: getQuestionById(state, props.editor.questionModelId),
-  testModel: getTestModelFromId(state, props.editor.testModelId),
+  testModel: getTestModelFromId(state, props.testModelId),
 })
 const mapDispatchToProps = {
   deleteQuestion: deleteQuestionReq,

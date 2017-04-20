@@ -46,7 +46,7 @@ class Editor extends Component {
             <Col xs={12} className="editor__content">
               <Questionsbar testModelId={this.props.params.test_model_id} />
               <div className="editor__form">
-                <ContentWrapper editor={this.props.editor} />
+                <ContentWrapper editor={this.props.editor} testModelId={this.props.params.test_model_id} />
               </div>
             </Col>
           </Row>
