@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { fetchByUser } from '../../redux/testModels/tests.actions'
 import { clearEditor, initEditor } from '../../redux/editor/editor.actions'
+import { addNotificationReq } from '../../redux/appState/appState.actions'
+import { types } from '../../constants/notifications'
 
 import { Button, Row, Col } from 'react-bootstrap'
 import Sidebar from './Sidebar'
@@ -10,16 +12,27 @@ import ContentWrapper from './ContentWrapper'
 
 class Editor extends Component {
   static propTypes = {
+    addNotification: PropTypes.func.isRequired,
     clearEditor: PropTypes.func.isRequired,
     editor: PropTypes.object.isRequired,
     fetchByUser: PropTypes.func.isRequired,
     initEditor: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
   }
+  constructor(props) {
+    super(props)
+    this.canLeaveContent = this.canLeaveContent.bind(this)
+  }
   componentDidMount() {
     this.props.clearEditor()
     this.props.initEditor(this.props.params.test_model_id)
     // this.props.fetchByUser()
+  }
+  canLeaveContent(callback) {
+    if (!this.props.editor.isFormChanged) {
+      return callback()
+    }
+    return this.props.addNotification('Nejprve uložte formulář nebo zahoďte změny', types.WARNING)
   }
   /*
    * bude nutny nejak vyresit zvlastni "current test" kus v store
@@ -39,12 +52,16 @@ class Editor extends Component {
     return (
       <Row className="editor">
         <Col xs={3}>
-          <Sidebar testModelId={this.props.params.test_model_id} />
+          <Sidebar
+            testModelId={this.props.params.test_model_id}
+            canLeaveContent={this.canLeaveContent} />
         </Col>
         <Col xs={9}>
           <Row>
             <Col xs={12} className="editor__content">
-              <Questionsbar testModelId={this.props.params.test_model_id} />
+              <Questionsbar
+                testModelId={this.props.params.test_model_id}
+                canLeaveContent={this.canLeaveContent} />
               <div className="editor__form">
                 <ContentWrapper editor={this.props.editor} testModelId={this.props.params.test_model_id} />
               </div>
@@ -59,6 +76,7 @@ const mapStateToProps = state => ({
   editor: state.editor,
 })
 const mapDispatchToProps = {
+  addNotification: addNotificationReq,
   fetchByUser,
   clearEditor,
   initEditor,

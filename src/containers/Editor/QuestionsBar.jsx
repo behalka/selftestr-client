@@ -3,14 +3,11 @@ import { connect } from 'react-redux'
 import classnames from 'classnames'
 import { getQuestionsByTest } from '../../redux/questionModels/questionModels.selectors'
 import { selectQuestion } from '../../redux/editor/editor.actions'
-import { addNotificationReq } from '../../redux/appState/appState.actions'
-import { types } from '../../constants/notifications'
-// import { fetchByUser } from '../redux/testModels/tests.actions'
-import { Button, Row, Col } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 class QuestionsBar extends Component {
   static propTypes = {
-    addNotification: PropTypes.func.isRequired,
+    canLeaveContent: PropTypes.func.isRequired,
     isFormChanged: PropTypes.bool.isRequired,
     questions: PropTypes.array,
     selectedQuestion: PropTypes.string,
@@ -26,13 +23,7 @@ class QuestionsBar extends Component {
     this.questionSelectedHandler = this.questionSelectedHandler.bind(this)
   }
   questionSelectedHandler(question) {
-    if (this.props.isFormChanged) {
-      this.props.addNotification('Nejprve uložte otázku nebo zahoďte změny', types.WARNING)
-    } else if (this.props.selectedQuestion !== question.id) {
-      this.props.selectQuestion(question.id)
-    } else {
-      console.log('already there!')
-    }
+    this.props.canLeaveContent(this.props.selectQuestion.bind(this, question.id))
   }
   render() {
     /*
@@ -67,7 +58,6 @@ const mapStateToProps = (state, props) => ({
   isFormChanged: state.editor.isFormChanged,
 })
 const mapDispatchToProps = {
-  addNotification: addNotificationReq,
   selectQuestion,
 }
 

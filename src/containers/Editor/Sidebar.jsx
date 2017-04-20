@@ -16,6 +16,7 @@ import QuestionSelect from '../../components/Editor/QuestionSelect'
 class EditorSidebar extends Component {
   static propTypes = {
     addNotification: PropTypes.func.isRequired,
+    canLeaveContent: PropTypes.func.isRequired,
     clearForm: PropTypes.func.isRequired,
     createQuestion: PropTypes.func.isRequired,
     displayGeneral: PropTypes.func.isRequired,
@@ -47,30 +48,18 @@ class EditorSidebar extends Component {
     const data = {
       type: 'text_input',
     }
-    this.props.createQuestion(this.props.testModelId, data)
+    this.props.canLeaveContent(this.props.createQuestion.bind(this, this.props.testModelId, data))
   }
   editGeneralHandler() {
-    const { isFormChanged } = this.props
-    if (!isFormChanged) {
-      this.props.displayGeneral()
-    } else {
-      this.props.addNotification('Nejprve uložte formulář nebo zahoďte změny', types.WARNING)
-    }
+    this.props.canLeaveContent(this.props.displayGeneral)
   }
   displayOverview(event) {
-    const { isFormChanged } = this.props
     if (event) {
       event.preventDefault()
     }
-    if (!isFormChanged) {
-      this.props.clearForm()
-    } else {
-      this.props.addNotification('Nejprve uložte formulář nebo zahoďte změny', types.WARNING)
-    }
+    this.props.canLeaveContent(this.props.clearForm)
   }
   selectQuestionType(formData) {
-    // todo: validace nejak
-    console.log(formData, 'selectbox')
     const questionType = formData.type
     this.addQuestionHandler(questionType)
     this.props.reset('questionSelect')
