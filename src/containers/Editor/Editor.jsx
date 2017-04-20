@@ -54,6 +54,7 @@ class Editor extends Component {
         <Col xs={3}>
           <Sidebar
             testModelId={this.props.params.test_model_id}
+            isFormChanged={this.props.editor.isFormChanged}
             canLeaveContent={this.canLeaveContent} />
         </Col>
         <Col xs={9}>
@@ -61,6 +62,7 @@ class Editor extends Component {
             <Col xs={12} className="editor__content">
               <Questionsbar
                 testModelId={this.props.params.test_model_id}
+                isFormChanged={this.props.editor.isFormChanged}
                 canLeaveContent={this.canLeaveContent} />
               <div className="editor__form">
                 <ContentWrapper editor={this.props.editor} testModelId={this.props.params.test_model_id} />

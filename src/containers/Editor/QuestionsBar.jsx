@@ -55,7 +55,6 @@ class QuestionsBar extends Component {
 const mapStateToProps = (state, props) => ({
   questions: getQuestionsByTest(state, props.testModelId),
   selectedQuestion: state.editor.questionModelId,
-  isFormChanged: state.editor.isFormChanged,
 })
 const mapDispatchToProps = {
   selectQuestion,

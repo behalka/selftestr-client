@@ -4,7 +4,6 @@ import { getTestModelFromId } from '../../redux/testModels/tests.selectors'
 import classnames from 'classnames'
 import { Button, Row, Col } from 'react-bootstrap'
 import { reset } from 'redux-form'
-// import { fetchByUser } from '../redux/testModels/tests.actions'
 import { createQuestionReq } from '../../redux/questionModels/questionModels.actions'
 import { displayGeneral, clearForm } from '../../redux/editor/editor.actions'
 import { addNotificationReq } from '../../redux/appState/appState.actions'
@@ -114,7 +113,6 @@ class EditorSidebar extends Component {
 const mapStateToProps = (state, props) => ({
   testDetail: getTestModelFromId(state, props.testModelId),
   selectedQuestion: state.editor.questionModelId,
-  isFormChanged: state.editor.isFormChanged,
 })
 const mapDispatchToProps = {
   addNotification: addNotificationReq,
