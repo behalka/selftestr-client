@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getQuestionById } from '../../redux/questionModels/questionModels.selectors'
 import { getTestModelFromId } from '../../redux/testModels/tests.selectors'
 import { saveQuestionReq, deleteQuestionReq } from '../../redux/questionModels/questionModels.actions'
-import { formChanged } from '../../redux/editor/editor.actions'
+import { formChanged, displayGeneral } from '../../redux/editor/editor.actions'
 import { saveReq } from '../../redux/testModels/tests.actions'
 import questionTypes from '../../constants/questionTypes'
 
@@ -58,6 +58,7 @@ function formToQuestionModel(formData) {
 class ContentWrapper extends Component {
   static propTypes = {
     deleteQuestion: PropTypes.func.isRequired,
+    displayGeneral: PropTypes.func.isRequired,
     editor: PropTypes.object,
     formChanged: PropTypes.func.isRequired,
     questionModel: PropTypes.object,
@@ -87,12 +88,10 @@ class ContentWrapper extends Component {
     this.props.saveQuestion(testModelId, payload, isQuestionNew)
   }
   submitGeneralHandler(formData) {
-    console.log(formData)
-    this.props.saveGeneral(formData)
+    this.props.saveGeneral(formData, this.props.editor.isTestModelNew)
   }
   deleteQuestionHandler() {
     const { testModelId, isQuestionNew, questionModelId } = this.props.editor
-    console.log('delete', questionModelId)
     this.props.deleteQuestion(testModelId, questionModelId, isQuestionNew)
   }
   setFormChanged(isFormDirty) {
@@ -102,7 +101,6 @@ class ContentWrapper extends Component {
     // sdilene form properties
     const formProps = {
       initialValues: questionModelToForm(data),
-      onSubmit: this.submitGeneralHandler,
       enableReinitialize: true,
       deleteQuestionHandler: this.deleteQuestionHandler,
       setFormChanged: this.setFormChanged,
@@ -121,7 +119,10 @@ class ContentWrapper extends Component {
       <div>
         {renderForm && editor.displayGeneralForm && this.renderForm(testModel)}
         {renderForm && !editor.displayGeneralForm && this.renderForm(questionModel)}
-        {!renderForm && <ContentOverview testModel={testModel} />}
+        {!renderForm && <ContentOverview
+          testModel={testModel}
+          isNew={editor.isTestModelNew}
+          displayGeneral={this.props.displayGeneral} />}
       </div>
     )
   }
@@ -135,5 +136,6 @@ const mapDispatchToProps = {
   saveQuestion: saveQuestionReq,
   saveGeneral: saveReq,
   formChanged,
+  displayGeneral,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ContentWrapper)

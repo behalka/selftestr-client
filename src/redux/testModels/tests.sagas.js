@@ -43,6 +43,10 @@ function transformTestToUpdate(data) {
   delete testModel.userId
   return testModel
 }
+function transformTestToCreate(data) {
+  const testModel = Object.assign({}, data)
+  return testModel
+}
 
 /*
  * Updates a test detail or creates a complete test in the store
@@ -113,12 +117,18 @@ function * getTestsList() {
 }
 
 function * saveTestModel(action) {
-  const { testModelData } = action.payload
+  const { testModelData, isTestModelNew } = action.payload
   try {
-    const result = yield client.authApiCall(Api.updateTestModel, {
-      // questionModel: transformQuestionModel(questionModelData),
-      testModel: transformTestToUpdate(testModelData),
-    })
+    let result
+    if (isTestModelNew) {
+      result = yield client.authApiCall(Api.createTestModel, {
+        testModel: transformTestToCreate(testModelData),
+      })
+    } else {
+      result = yield client.authApiCall(Api.updateTestModel, {
+        testModel: transformTestToUpdate(testModelData),
+      })
+    }
     const normalized = normalize(result, testsWithQuestionsSchema)
     // endpoint nevraci zpet otazky. zjistit jestli to vadi :)
     // dokud nesahame na entities.tests.questionModels tak to nevadi *_*
@@ -129,7 +139,7 @@ function * saveTestModel(action) {
     console.log(err)
     console.log(err.response)
     yield put({ type: actions.tests.SAVE_TEST_FAIL })
-  } 
+  }
 }
 
 export function * saveTestModelWatcher() {

@@ -13,11 +13,20 @@ export const fetchByUser = () => ({
   type: tests.LIST_USER_REQ,
 })
 
-export const saveReq = testModelData => ({
+export const saveReq = (testModelData, isTestModelNew) => ({
   type: tests.SAVE_TEST_REQ,
-  payload: { testModelData },
+  payload: { testModelData, isTestModelNew },
 })
 
 export const saveRes = () => ({
   type: tests.SAVE_TEST_RES,
+})
+
+export const createTestReq = router => ({
+  type: tests.CREATE_TEST_REQ,
+  payload: { router },
+})
+export const createTestRes = testModelIds => ({
+  type: tests.CREATE_TEST_RES,
+  payload: testModelIds,
 })

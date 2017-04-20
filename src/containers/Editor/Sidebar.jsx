@@ -15,11 +15,11 @@ import QuestionSelect from '../../components/Editor/QuestionSelect'
 class EditorSidebar extends Component {
   static propTypes = {
     addNotification: PropTypes.func.isRequired,
+    canCreateQuestions: PropTypes.func.isRequired,
     canLeaveContent: PropTypes.func.isRequired,
     clearForm: PropTypes.func.isRequired,
     createQuestion: PropTypes.func.isRequired,
     displayGeneral: PropTypes.func.isRequired,
-    isFormChanged: PropTypes.bool,
     reset: PropTypes.func.isRequired,
     selectedQuestion: PropTypes.string,
     testDetail: PropTypes.object,
@@ -33,7 +33,6 @@ class EditorSidebar extends Component {
       description: 'Popis není zadaný',
     },
     selectedQuestion: null,
-    isFormChanged: false,
   }
   constructor(props) {
     super(props)
@@ -59,8 +58,10 @@ class EditorSidebar extends Component {
     this.props.canLeaveContent(this.props.clearForm)
   }
   selectQuestionType(formData) {
-    const questionType = formData.type
-    this.addQuestionHandler(questionType)
+    if (this.props.canCreateQuestions()) {
+      const questionType = formData.type
+      this.addQuestionHandler(questionType)
+    }
     this.props.reset('questionSelect')
   }
   render() {
@@ -74,9 +75,12 @@ class EditorSidebar extends Component {
     return (
       <nav className="editor__navbar">
         <a className="test-model__name" onClick={this.displayOverview} href="#">
-            {testDetail.name}
+            {testDetail.name || EditorSidebar.defaultProps.testDetail.name}
         </a>
-        <LimitedText classes="test-model__desc" input={testDetail.description} limit={60} />
+        <LimitedText
+          classes="test-model__desc"
+          input={testDetail.description || EditorSidebar.defaultProps.testDetail.description}
+          limit={60} />
         <QuestionSelect options={[
           { value: 'foo', text: 'bar' },
           { value: 'foo1', text: 'ba1r' },

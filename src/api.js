@@ -88,6 +88,13 @@ export default {
         Authorization: token,
       },
     }),
+  createTestModel: ({ token, payload }) => axios
+    .post(`${URL}/editor/`, payload.testModel,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }),
   getPopularTags: () => Promise.resolve([_.values(tagObjects)[0]]),
   getTestById: ({ id }) => axios
     .get(`${URL}/testModels/${id}`),

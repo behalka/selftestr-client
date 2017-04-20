@@ -48,7 +48,17 @@ export default function testsReducer(state = initialState, action) {
         .setIn(['testDetails', 'items'], state.testDetails.items.concat(action.payload))
     case tests.GET_TEST_FAIL:
       return state
-        .set('isFetching', false)
+        .setIn(['testDetails', 'isFetching'], false)
+    case tests.CREATE_TEST_REQ:
+      return state
+        .setIn(['testsOfOwner', 'isFetching'], true)
+    case tests.CREATE_TEST_FAIL:
+      return state
+        .setIn(['testsOfOwner', 'isFetching'], false)
+    case tests.CREATE_TEST_RES:
+      return state
+        .setIn(['testsOfOwner', 'items'], state.testsOfOwner.items.concat(action.payload))
+        .setIn(['testsOfOwner', 'isFetching'], false)
     default:
       return state
   }

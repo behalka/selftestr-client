@@ -15,6 +15,8 @@ const initialState = immutable({
   isFormChanged: false,
   /* are we displaying the form with general settings */
   displayGeneralForm: false,
+  /* do we need to create testModel first */
+  isTestModelNew: false,
 })
 
 export default function editorReducer(state = initialState, action) {
@@ -22,6 +24,9 @@ export default function editorReducer(state = initialState, action) {
     case editor.INIT_REQ:
       return state
         .set('testModelId', action.payload.testModelId)
+    case editor.CREATE_TEST_MODEL:
+      return state
+        .set('isTestModelNew', true)
     case editor.SET_QUESTION_REQ:
       return state
         .set('questionModelId', action.payload.questionModelId)
@@ -41,6 +46,7 @@ export default function editorReducer(state = initialState, action) {
       return state
         .set('isFormSaving', false)
         .set('isFormSaved', true)
+        .set('isTestModelNew', false)
     case tests.SAVE_TEST_FAIL:
     case questionModels.SAVE_QUESTION_FAIL:
       return state
@@ -64,6 +70,7 @@ export default function editorReducer(state = initialState, action) {
         .set('questionModelId', null)
     case editor.CLEAR:
       return initialState
+        .set('isTestModelNew', state.isTestModelNew)
     default:
       return state
   }

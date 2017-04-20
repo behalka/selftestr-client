@@ -5,6 +5,10 @@ export const initEditor = testModelId => ({
   payload: { testModelId },
 })
 
+export const createTestModel = () => ({
+  type: editor.CREATE_TEST_MODEL,
+})
+
 export const clearEditor = () => ({
   type: editor.CLEAR,
 })

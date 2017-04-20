@@ -1,10 +1,11 @@
 import { takeEvery, takeLatest } from 'redux-saga'
-import { take, call, put } from 'redux-saga/effects'
+import { take, call, put, select } from 'redux-saga/effects'
 import { schema, normalize } from 'normalizr'
 import { v1 } from 'uuid'
 import { addNotificationReq } from '../appState/appState.actions'
+import { getAuth } from '../auth/auth.selectors'
 import { types as notifTypes } from '../../constants/notifications'
-import { editor, questionModels } from '../actionTypes'
+import { editor, questionModels, tests } from '../actionTypes'
 import { saveEntities, deleteEntity } from '../entities/entities.actions'
 import {
   setQuestionsPerTest,
@@ -14,9 +15,11 @@ import {
  } from '../questionModels/questionModels.actions'
 import * as editorActions from './editor.actions'
 import * as client from '../restClientSaga'
+import * as testActions from '../testModels/tests.actions'
 import Api from '../../api'
 
 const questionSchema = new schema.Entity('questionModels')
+const testModelSchema = new schema.Entity('testsWithQuestions')
 
 // todo: do utils spolecne s contentWrapper funkcema
 function transformQuestionModel(question) {
@@ -34,6 +37,20 @@ function * initEditor(action) {
 function * selectQuestion(action) {
   console.log('select', action)
   // todo: k prepnuti by melo dojit az po overeni/ulozeni stavajici otazky
+}
+
+function * createTestModel(action) {
+  // action.payload.ownerId is set
+  const testModel = {
+    id: v1(),
+  }
+  const normalized = normalize(testModel, testModelSchema)
+  yield put(saveEntities(normalized))
+  yield put(setQuestionsPerTest(testModel.id, []))
+  yield put(testActions.createTestRes([testModel.id]))
+  yield put(editorActions.createTestModel())
+  const { router } = action.payload
+  yield router.push(`/editor/${testModel.id}`)
 }
 
 function * createQuestion(action) {
@@ -78,8 +95,6 @@ function * updateQuestion(action) {
     yield put({ type: questionModels.SAVE_QUESTION_FAIL })
   }
 }
-
-// todo: removeQuestion - z questionModels, entities - delete metodu na entities!
 
 function * saveQuestion(action) {
   const { isQuestionNew } = action.payload
@@ -133,6 +148,10 @@ export function * createQuestionWatcher() {
   yield takeLatest(questionModels.CREATE_QUESTION_REQ, createQuestion)
 }
 
+export function * createTestWatcher() {
+  yield takeLatest(tests.CREATE_TEST_REQ, createTestModel)
+}
+
 export function * deleteQuestionWatcher() {
   yield takeLatest(questionModels.DELETE_QUESTION_REQ, deleteQuestion)
 }
@@ -143,6 +162,7 @@ export function * selectQuestionWatcher() {
 
 export default function * () {
   yield [
+    createTestWatcher(),
     createQuestionWatcher(),
     deleteQuestionWatcher(),
     editorFlow(),
