@@ -32,7 +32,6 @@ class Select extends Component {
     const { input, label, meta, placeholder, componentClass, options, feedback } = this.props
     const hasError = meta.touched && meta.error
     const hasWarning = meta.touched && meta.warning
-    console.log(hasError, meta)
     const messageElem = hasError || hasWarning
       ? <span className="help-block">{meta.error || meta.warning}</span>
       : null

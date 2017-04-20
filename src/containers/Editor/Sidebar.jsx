@@ -8,6 +8,7 @@ import { createQuestionReq } from '../../redux/questionModels/questionModels.act
 import { displayGeneral, clearForm } from '../../redux/editor/editor.actions'
 import { addNotificationReq } from '../../redux/appState/appState.actions'
 import { types } from '../../constants/notifications'
+import questionTypes, { names as questionNames } from '../../constants/questionTypes'
 
 import LimitedText from '../../components/LimitedText/LimitedText'
 import QuestionSelect from '../../components/Editor/QuestionSelect'
@@ -44,7 +45,7 @@ class EditorSidebar extends Component {
   addQuestionHandler(questionType) {
     console.log('vytvorit otazku typu', questionType)
     const data = {
-      type: 'text_input',
+      type: questionType,
     }
     this.props.canLeaveContent(this.props.createQuestion.bind(this, this.props.testModelId, data))
   }
@@ -81,10 +82,11 @@ class EditorSidebar extends Component {
           classes="test-model__desc"
           input={testDetail.description || EditorSidebar.defaultProps.testDetail.description}
           limit={60} />
-        <QuestionSelect options={[
-          { value: 'foo', text: 'bar' },
-          { value: 'foo1', text: 'ba1r' },
-        ]}
+        <QuestionSelect options={
+          Object.keys(questionTypes).map(key => ({
+            value: questionTypes[key], text: questionNames[key],
+          }))
+        }
         onSubmit={this.selectQuestionType}
         buttonClasses={classnames(sidebarBtnClass, disabledClass)}
         />

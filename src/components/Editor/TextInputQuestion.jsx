@@ -24,6 +24,7 @@ class TextInputQuestion extends ContentForm {
 }
 
 export default reduxForm({
+  enableReinitialize: true,
   form: 'text_input',
   validate,
 })(TextInputQuestion)

@@ -24,6 +24,7 @@ class GeneralForm extends ContentForm {
 }
 
 export default reduxForm({
+  enableReinitialize: true,
   form: 'general',
   validate,
 })(GeneralForm)

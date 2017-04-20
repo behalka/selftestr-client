@@ -33,6 +33,10 @@ class QuestionsBar extends Component {
     const { isFormChanged, selectedQuestion } = this.props
     return (
       <nav className="editor__question-bar">
+        {this.props.questions.length === 0
+          && <div className="editor__question-bar--empty">
+          Test zatím neobsahuje žádné otázky.
+          </div>}
         {this.props.questions.map((question, index) =>
           <Button bsSize="large"
             key={question.id}

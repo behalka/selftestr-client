@@ -6,14 +6,18 @@ import { saveQuestionReq, deleteQuestionReq } from '../../redux/questionModels/q
 import { formChanged, displayGeneral } from '../../redux/editor/editor.actions'
 import { saveReq } from '../../redux/testModels/tests.actions'
 import questionTypes from '../../constants/questionTypes'
+import { v1 } from 'uuid'
 
 import ContentOverview from '../../components/Editor/ContentOverview'
 import GeneralForm from '../../components/Editor/General'
 import TextInputQuestion from '../../components/Editor/TextInputQuestion'
+import MultichoiceQuestion from '../../components/Editor/MultichoiceQuestion'
+import SinglechoiceQuestion from '../../components/Editor/SinglechoiceQuestion'
 
 // todo: nekam do utils - volat z sag
 // todo: mozna dalsi funkce - init tech modelu
 function questionModelToForm(model) {
+  // console.log(model, 'model', questionTypes.MULTICHOICE)
   const formData = {}
   if (!model.type) {
     // jedna se o general form!
@@ -24,6 +28,12 @@ function questionModelToForm(model) {
       if (model.answerModels.length > 0) {
         formData.answer = model.answerModels[0].correctSolution
       }
+      return Object.assign(formData, model)
+    case questionTypes.SINGLECHOICE:
+      const isCorrectIndex = model.answerModels.findIndex(answer => answer.isCorrect)
+      formData.isCorrectGroup = isCorrectIndex
+      return Object.assign(formData, model)
+    case questionTypes.MULTICHOICE:
       return Object.assign(formData, model)
     default:
       console.log('failed mapping to form')
@@ -49,6 +59,29 @@ function formToQuestionModel(formData) {
         })
       }
       delete questionModel.answer
+      return questionModel
+    case questionTypes.SINGLECHOICE:
+      questionModel.answerModels = questionModel.answerModels.map((answer, ind) => {
+        if (!answer.id) {
+          answer.id = v1()
+          answer.isCorrect = Boolean(formData.isCorrectGroup === ind)
+        } else {
+          answer = answer.set('isCorrect', Boolean(formData.isCorrectGroup === ind))
+        }
+        return answer
+      })
+      delete questionModel.isCorrectGroup
+      return questionModel
+    case questionTypes.MULTICHOICE:
+      questionModel.answerModels = questionModel.answerModels.map(answer => {
+        if (!answer.id) {
+          answer.id = v1()
+        }
+        if (typeof answer.isCorrect === 'undefined') {
+          answer.isCorrect = false
+        }
+        return answer
+      })
       return questionModel
     default:
       console.log('failed mapping to model')
@@ -98,16 +131,18 @@ class ContentWrapper extends Component {
     this.props.formChanged(isFormDirty)
   }
   renderForm(data) {
-    // sdilene form properties
     const formProps = {
       initialValues: questionModelToForm(data),
-      enableReinitialize: true,
       deleteQuestionHandler: this.deleteQuestionHandler,
       setFormChanged: this.setFormChanged,
     }
     switch (data.type) {
       case questionTypes.TEXT_INPUT:
         return <TextInputQuestion {...formProps} onSubmit={this.submitHandler} />
+      case questionTypes.MULTICHOICE:
+        return <MultichoiceQuestion {...formProps} onSubmit={this.submitHandler} />
+      case questionTypes.SINGLECHOICE:
+        return <SinglechoiceQuestion {...formProps} onSubmit={this.submitHandler} />
       default:
         return <GeneralForm {...formProps} onSubmit={this.submitGeneralHandler} />
     }
@@ -117,6 +152,7 @@ class ContentWrapper extends Component {
     const renderForm = editor.displayGeneralForm || Boolean(questionModel)
     return (
       <div>
+        {questionModel && `${questionModel.id}`}
         {renderForm && editor.displayGeneralForm && this.renderForm(testModel)}
         {renderForm && !editor.displayGeneralForm && this.renderForm(questionModel)}
         {!renderForm && <ContentOverview
