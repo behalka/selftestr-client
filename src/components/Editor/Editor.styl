@@ -1,7 +1,7 @@
 .editor
   &__navbar
     background-color $color-grey-light
-    padding 1.5em 1em
+    // padding 1.5em 1em
   &__question-bar
     padding 0.5em 0
     border-bottom 1px $color-grey solid
@@ -18,9 +18,17 @@
 .test-model
   &__name
     padding 1em
+    display block
     background-color $color-blue-dark
     color $color-grey-light
     text-align center
     set-font-size 22px
+    &:hover
+      color $color-grey
+      text-decoration none
   &__desc
+    padding 1em
     text-align justify
+    set-font-size 16px
+  &__control
+    set-font-size 16px

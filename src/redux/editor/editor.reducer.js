@@ -53,6 +53,11 @@ export default function editorReducer(state = initialState, action) {
       return state
         .set('questionModelId', null)
         .set('isFormChanged', false)
+    case editor.CLEAR_FORM:
+      return state
+        .set('questionModelId', null)
+        .set('displayGeneralForm', false)
+        .set('isFormChanged', false)
     case editor.DISPLAY_GENERAL:
       return state
         .set('displayGeneralForm', true)

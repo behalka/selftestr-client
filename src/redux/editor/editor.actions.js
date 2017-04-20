@@ -13,6 +13,10 @@ export const clearQuestion = () => ({
   type: editor.CLEAR_QUESTION,
 })
 
+export const clearForm = () => ({
+  type: editor.CLEAR_FORM,
+})
+
 export const displayGeneral = () => ({
   type: editor.DISPLAY_GENERAL,
 })
