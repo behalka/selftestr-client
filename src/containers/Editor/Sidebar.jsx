@@ -1,14 +1,17 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getTestModelFromId } from '../../redux/testModels/tests.selectors'
+import classnames from 'classnames'
+import { Button, Row, Col } from 'react-bootstrap'
+import { reset } from 'redux-form'
 // import { fetchByUser } from '../redux/testModels/tests.actions'
 import { createQuestionReq } from '../../redux/questionModels/questionModels.actions'
 import { displayGeneral, clearForm } from '../../redux/editor/editor.actions'
 import { addNotificationReq } from '../../redux/appState/appState.actions'
 import { types } from '../../constants/notifications'
-import classnames from 'classnames'
-import { Button, Row, Col } from 'react-bootstrap'
+
 import LimitedText from '../../components/LimitedText/LimitedText'
+import QuestionSelect from '../../components/Editor/QuestionSelect'
 
 class EditorSidebar extends Component {
   static propTypes = {
@@ -17,6 +20,7 @@ class EditorSidebar extends Component {
     createQuestion: PropTypes.func.isRequired,
     displayGeneral: PropTypes.func.isRequired,
     isFormChanged: PropTypes.bool,
+    reset: PropTypes.func.isRequired,
     selectedQuestion: PropTypes.string,
     testDetail: PropTypes.object,
     testModelId: PropTypes.string.isRequired,
@@ -36,9 +40,10 @@ class EditorSidebar extends Component {
     this.addQuestionHandler = this.addQuestionHandler.bind(this)
     this.editGeneralHandler = this.editGeneralHandler.bind(this)
     this.displayOverview = this.displayOverview.bind(this)
+    this.selectQuestionType = this.selectQuestionType.bind(this)
   }
-  addQuestionHandler() {
-    // fixme: tohle bude z formulare
+  addQuestionHandler(questionType) {
+    console.log('vytvorit otazku typu', questionType)
     const data = {
       type: 'text_input',
     }
@@ -63,6 +68,13 @@ class EditorSidebar extends Component {
       this.props.addNotification('Nejprve uložte formulář nebo zahoďte změny', types.WARNING)
     }
   }
+  selectQuestionType(formData) {
+    // todo: validace nejak
+    console.log(formData, 'selectbox')
+    const questionType = formData.type
+    this.addQuestionHandler(questionType)
+    this.props.reset('questionSelect')
+  }
   render() {
     const { testDetail, isFormChanged } = this.props
     const disabledClass = classnames({
@@ -77,29 +89,34 @@ class EditorSidebar extends Component {
             {testDetail.name}
         </a>
         <LimitedText classes="test-model__desc" input={testDetail.description} limit={60} />
-        <Button
-          block
-          className={classnames(sidebarBtnClass, disabledClass)}
-          onClick={this.editGeneralHandler}>
-          Editovat test
-        </Button>
-        <Button
-          block
-          className={classnames(sidebarBtnClass, disabledClass)}
-          onClick={this.addQuestionHandler}>Přidat otázku</Button>
-        <Button
-          block
-          className={classnames(sidebarBtnClass, disabledClass)}
-          onClick={this.displayOverview}>Zobrazit přehled</Button>
-        <Button block
-          className={sidebarBtnClass}
-          bsStyle="primary">Uložit test</Button>
-        <Button block
-          className={sidebarBtnClass}
-          bsStyle="danger">Smazat test</Button>
-        <Button
-          className={sidebarBtnClass}
-          block>Opustit editor</Button>
+        <QuestionSelect options={[
+          { value: 'foo', text: 'bar' },
+          { value: 'foo1', text: 'ba1r' },
+        ]}
+        onSubmit={this.selectQuestionType}
+        buttonClasses={classnames(sidebarBtnClass, disabledClass)}
+        />
+        <div className="test-model__controls">
+          <Button
+            block
+            className={classnames(sidebarBtnClass, disabledClass)}
+            onClick={this.editGeneralHandler}>
+            Editovat test
+          </Button>
+          <Button
+            block
+            className={classnames(sidebarBtnClass, disabledClass)}
+            onClick={this.displayOverview}>Zobrazit přehled</Button>
+          <Button block
+            className={sidebarBtnClass}
+            bsStyle="primary">Uložit test</Button>
+          <Button block
+            className={sidebarBtnClass}
+            bsStyle="danger">Smazat test</Button>
+          <Button
+            className={sidebarBtnClass}
+            block>Opustit editor</Button>
+        </div>
       </nav>
     )
   }
@@ -115,5 +132,6 @@ const mapDispatchToProps = {
   createQuestion: createQuestionReq,
   displayGeneral,
   clearForm,
+  reset,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EditorSidebar)
