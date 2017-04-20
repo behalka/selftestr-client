@@ -18,16 +18,29 @@ class Editor extends Component {
     fetchByUser: PropTypes.func.isRequired,
     initEditor: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired,
   }
   constructor(props) {
     super(props)
     this.canLeaveContent = this.canLeaveContent.bind(this)
     this.canCreateQuestions = this.canCreateQuestions.bind(this)
+    this.saveAndLeave = this.saveAndLeave.bind(this)
   }
   componentDidMount() {
     this.props.clearEditor()
     this.props.initEditor(this.props.params.test_model_id)
     // this.props.fetchByUser()
+  }
+  saveAndLeave() {
+    const { questionModelId, displayGeneralForm, isFormChanged } = this.props.editor
+    // is there stuff to be saved?
+    const saveQuestion = isFormChanged && questionModelId
+    const saveGeneral = isFormChanged && displayGeneralForm
+    if (saveQuestion || saveGeneral) {
+      this.props.addNotification('Nejprve uložte formulář nebo zahoďte změny', types.WARNING)
+    } else {
+      this.props.router.push('/editor')
+    }
   }
   canLeaveContent(callback) {
     if (!this.props.editor.isFormChanged) {
@@ -64,6 +77,7 @@ class Editor extends Component {
             testModelId={this.props.params.test_model_id}
             isFormChanged={this.props.editor.isFormChanged}
             canCreateQuestions={this.canCreateQuestions}
+            saveAndLeaveHandler={this.saveAndLeave}
             canLeaveContent={this.canLeaveContent} />
         </Col>
         <Col xs={9}>

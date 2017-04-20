@@ -4,9 +4,8 @@ import { Form, Button } from 'react-bootstrap'
 import ContentForm from './ContentForm'
 import Input from '../forms/Input'
 import Checkbox from '../forms/Checkbox'
-import validate from './TextInputQuestionValidator'
-
 // todo: validace
+import validate from './TextInputQuestionValidator'
 
 class MultichoiceQuestion extends ContentForm {
   renderAnswers({ fields, meta }) {

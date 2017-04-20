@@ -16,7 +16,7 @@ class GeneralForm extends ContentForm {
         <Field name="description" label="Popis testu" component={Input} componentClass="textarea"/>
         <Field name="timeLimit" label="Časový limit (ve vteřinách)" component={Input} type="number"/>
         <Field name="questionsPerTestInstance" label="Počet otázek ve vygenerovaném testu" component={Input} type="number"/>
-        <Button type="submit" bsStyle="success">Uložit otázku</Button>
+        <Button type="submit" bsStyle="success">Uložit nastavení</Button>
         <Button type="reset" bsStyle="default" onClick={reset}>Zahodit změny</Button>
       </Form>
     )

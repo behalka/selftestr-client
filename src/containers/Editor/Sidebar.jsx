@@ -22,6 +22,7 @@ class EditorSidebar extends Component {
     createQuestion: PropTypes.func.isRequired,
     displayGeneral: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
+    saveAndLeaveHandler: PropTypes.func.isRequired,
     selectedQuestion: PropTypes.string,
     testDetail: PropTypes.object,
     testModelId: PropTypes.string.isRequired,
@@ -102,14 +103,12 @@ class EditorSidebar extends Component {
             className={classnames(sidebarBtnClass, disabledClass)}
             onClick={this.displayOverview}>Zobrazit přehled</Button>
           <Button block
-            className={sidebarBtnClass}
-            bsStyle="primary">Uložit test</Button>
+            className={classnames(sidebarBtnClass, disabledClass)}
+            onClick={this.props.saveAndLeaveHandler}
+            bsStyle="primary">Opustit test</Button>
           <Button block
             className={sidebarBtnClass}
             bsStyle="danger">Smazat test</Button>
-          <Button
-            className={sidebarBtnClass}
-            block>Opustit editor</Button>
         </div>
       </nav>
     )
