@@ -22,6 +22,7 @@ class Editor extends Component {
   constructor(props) {
     super(props)
     this.canLeaveContent = this.canLeaveContent.bind(this)
+    this.canCreateQuestions = this.canCreateQuestions.bind(this)
   }
   componentDidMount() {
     this.props.clearEditor()
@@ -33,6 +34,13 @@ class Editor extends Component {
       return callback()
     }
     return this.props.addNotification('Nejprve uložte formulář nebo zahoďte změny', types.WARNING)
+  }
+  canCreateQuestions() {
+    const res = !(this.props.editor.isFormChanged || this.props.editor.isTestModelNew)
+    if (!res) {
+      this.props.addNotification('Nejprve zadejte obecné údaje k formuláři', types.WARNING)
+    }
+    return res
   }
   /*
    * bude nutny nejak vyresit zvlastni "current test" kus v store
@@ -55,6 +63,7 @@ class Editor extends Component {
           <Sidebar
             testModelId={this.props.params.test_model_id}
             isFormChanged={this.props.editor.isFormChanged}
+            canCreateQuestions={this.canCreateQuestions}
             canLeaveContent={this.canLeaveContent} />
         </Col>
         <Col xs={9}>
