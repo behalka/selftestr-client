@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm, Field, FieldArray, change } from 'redux-form'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import ContentForm from './ContentForm'
 import Input from '../forms/Input'
 
@@ -50,8 +50,16 @@ class SinglechoiceQuestion extends ContentForm {
         <Field name="explanation" label="Krátké vysvětlení" component={Input} componentClass="textarea"/>
 
         <Button type="submit" bsStyle="success">Uložit otázku</Button>
-        <Button bsStyle="default" onClick={reset}>Zahodit změny</Button>
-        <Button bsStyle="danger" onClick={deleteQuestionHandler}>Vymazat otázku</Button>
+        <OverlayTrigger
+          placement="top"
+          overlay={<Tooltip id="reset-btn">Nastaví zpět hodnoty podle posledního uložení.</Tooltip>}>
+          <Button type="reset" bsStyle="default" onClick={reset}>Zahodit změny</Button>
+        </OverlayTrigger>
+        <OverlayTrigger
+          placement="top"
+          overlay={<Tooltip id="delete-btn">Nenávratně vymaže otázku a odpovědi.</Tooltip>}>
+          <Button bsStyle="danger" onClick={deleteQuestionHandler}>Vymazat otázku</Button>
+        </OverlayTrigger>
       </Form>
     )
   }

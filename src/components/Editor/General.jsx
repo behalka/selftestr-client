@@ -1,6 +1,6 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import ContentForm from './ContentForm'
 import Input from '../forms/Input'
@@ -17,7 +17,11 @@ class GeneralForm extends ContentForm {
         <Field name="timeLimit" label="Časový limit (ve vteřinách)" component={Input} type="number"/>
         <Field name="questionsPerTestInstance" required label="Počet otázek ve vygenerovaném testu" component={Input} type="number"/>
         <Button type="submit" bsStyle="success">Uložit nastavení</Button>
-        <Button type="reset" bsStyle="default" onClick={reset}>Zahodit změny</Button>
+        <OverlayTrigger
+          placement="top"
+          overlay={<Tooltip id="reset-btn">Nastaví zpět hodnoty podle posledního uložení.</Tooltip>}>
+          <Button type="reset" bsStyle="default" onClick={reset}>Zahodit změny</Button>
+        </OverlayTrigger>
       </Form>
     )
   }
