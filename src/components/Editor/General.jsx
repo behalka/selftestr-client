@@ -12,10 +12,10 @@ class GeneralForm extends ContentForm {
     return (
       <Form onSubmit={handleSubmit}>
         <h3 className="editor__header">Obecné nastavení</h3>
-        <Field name="name" label="Jméno testu" component={Input} type="text"/>
-        <Field name="description" label="Popis testu" component={Input} componentClass="textarea"/>
+        <Field name="name" required label="Jméno testu" component={Input} type="text"/>
+        <Field name="description" required label="Popis testu" component={Input} componentClass="textarea"/>
         <Field name="timeLimit" label="Časový limit (ve vteřinách)" component={Input} type="number"/>
-        <Field name="questionsPerTestInstance" label="Počet otázek ve vygenerovaném testu" component={Input} type="number"/>
+        <Field name="questionsPerTestInstance" required label="Počet otázek ve vygenerovaném testu" component={Input} type="number"/>
         <Button type="submit" bsStyle="success">Uložit nastavení</Button>
         <Button type="reset" bsStyle="default" onClick={reset}>Zahodit změny</Button>
       </Form>

@@ -11,6 +11,7 @@ class Input extends Component {
     componentClass: 'input',
     type: 'text',
     placeholder: '',
+    required: false,
   }
   static propTypes = {
     componentClass: PropTypes.string,
@@ -18,6 +19,7 @@ class Input extends Component {
     label: PropTypes.string.isRequired,
     meta: PropTypes.object.isRequired,
     placeholder: PropTypes.string,
+    required: PropTypes.bool,
     type: PropTypes.string,
   }
   constructor(props) {
@@ -28,8 +30,7 @@ class Input extends Component {
     this.props.input.onBlur()
   }
   render() {
-    const { input, label, meta, type, placeholder, componentClass } = this.props
-    // todo: validationState - mozne values: error, warning, success, null!
+    const { input, label, meta, type, placeholder, componentClass, required } = this.props
     const hasError = meta.touched && meta.error
     const hasWarning = meta.touched && meta.warning
     const messageElem = hasError || hasWarning
@@ -41,7 +42,7 @@ class Input extends Component {
         controlId={input.name}
         onBlur={this.handleBlur}
         validationState={hasError ? 'error' : null}>
-        <ControlLabel>
+        <ControlLabel className={required ? 'required-field' : ''}>
           {label}
         </ControlLabel>
         <FormControl

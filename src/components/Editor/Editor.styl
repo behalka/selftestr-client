@@ -34,6 +34,10 @@
     background-color $color-blue-middle
     border-color $color-blue-dark
     color $color-grey-light
+  .required-field
+    &:after
+      color $color-warning
+      content: " *"
 .test-model
   &__name
     padding 1em

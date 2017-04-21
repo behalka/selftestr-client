@@ -11,6 +11,7 @@ const SinglechoiceAnswer = ({ answerModel, index, correctIndex, updateSelectedAn
     <Field
       name={`${answerModel}.text`}
       label="Znění odpovědi"
+      required
       component={Input} type="text"/>
     <Field
       name={groupName}

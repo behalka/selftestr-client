@@ -45,7 +45,7 @@ class SinglechoiceQuestion extends ContentForm {
     return (
       <Form onSubmit={handleSubmit}>
         <h3 className="editor__header">Nastavení otázky</h3>
-        <Field name="text" label="Znění otázky" component={Input} componentClass="textarea"/>
+        <Field name="text" label="Znění otázky" required component={Input} componentClass="textarea"/>
         <FieldArray name="answerModels" component={this.renderAnswers} />
         <Field name="explanation" label="Krátké vysvětlení" component={Input} componentClass="textarea"/>
 

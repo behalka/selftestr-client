@@ -12,8 +12,8 @@ class TextInputQuestion extends ContentForm {
     return (
       <Form onSubmit={handleSubmit}>
         <h3 className="editor__header">Nastavení otázky</h3>
-        <Field name="text" label="Znění otázky" component={Input} componentClass="textarea"/>
-        <Field name="answer" label="Správná odpověď" component={Input} componentClass="textarea"/>
+        <Field name="text" required label="Znění otázky" component={Input} componentClass="textarea"/>
+        <Field name="answer" required label="Správná odpověď" component={Input} componentClass="textarea"/>
         <Field name="explanation" label="Krátké vysvětlení" component={Input} componentClass="textarea"/>
         <Button type="submit" bsStyle="success">Uložit otázku</Button>
         <Button type="reset" bsStyle="default" onClick={reset}>Zahodit změny</Button>

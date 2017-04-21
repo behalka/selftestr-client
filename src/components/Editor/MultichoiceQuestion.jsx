@@ -15,7 +15,7 @@ class MultichoiceQuestion extends ContentForm {
         <ul className="list list--block list--no-bullets">
           {fields.map((answerModel, index) =>
             <li key={index}>
-              <Field name={`${answerModel}.text`} label="Znění odpovědi" component={Input} type="text" />
+              <Field name={`${answerModel}.text`} required label="Znění odpovědi" component={Input} type="text" />
               <Field name={`${answerModel}.isCorrect`} label="Je odpověď správně" component={Checkbox} type="checkbox" />
               <Button bsStyle="danger" onClick={() => fields.remove(index)}>Odstranit odpověď</Button>
             </li>
@@ -30,7 +30,7 @@ class MultichoiceQuestion extends ContentForm {
     return (
       <Form onSubmit={handleSubmit}>
         <h3 className="editor__header">Nastavení otázky</h3>
-        <Field name="text" label="Znění otázky" component={Input} componentClass="textarea"/>
+        <Field name="text" required label="Znění otázky" component={Input} componentClass="textarea"/>
         <FieldArray name="answerModels" component={this.renderAnswers} />
         <Field name="explanation" label="Krátké vysvětlení" component={Input} componentClass="textarea"/>
         <Button type="submit" bsStyle="success">Uložit otázku</Button>
