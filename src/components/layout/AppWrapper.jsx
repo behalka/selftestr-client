@@ -13,12 +13,14 @@ const AppWrapper = props =>
       <Notifications />
       <Row>
         <Col xs={12}>
-          <Breadcrumbs/>
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          {props.children}
+          <Grid>
+            <Row>
+              <Breadcrumbs/>
+            </Row>
+            <Row>
+              {props.children}
+            </Row>
+          </Grid>
         </Col>
       </Row>
     </Grid>
