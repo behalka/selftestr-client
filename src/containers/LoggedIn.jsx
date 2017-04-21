@@ -9,8 +9,8 @@ class LoggedIn extends Component {
     children: PropTypes.object.isRequired,
   }
   componentDidMount() {
-    const { isLogged } = this.props.auth
-    if (!isLogged) {
+    const { isLogged, isFetching } = this.props.auth
+    if (!isLogged && !isFetching) {
       hashHistory.push('/login')
     }
   }

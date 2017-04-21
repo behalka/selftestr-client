@@ -9,14 +9,18 @@ class App extends Component {
     auth: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
     recoverFromToken: PropTypes.func.isRequired,
+    router: PropTypes.object.isRequired,
   }
   componentWillReceiveProps(nextProps) {
     const loggedIn = this.props.auth.isLogged
     const nextLoggedIn = nextProps.auth.isLogged
-    // doslo k prihlaseni! -> todo: poslat na admin homepage
+    // doslo k login
     if (!loggedIn && nextLoggedIn) {
-      hashHistory.push('/editor')
-    } else if (loggedIn && !nextLoggedIn) {
+      console.log('redirecting to editor')
+      this.props.router.push('/editor')
+    }
+    // doslo k logout
+    if (loggedIn && !nextLoggedIn) {
       hashHistory.push('/')
     }
   }

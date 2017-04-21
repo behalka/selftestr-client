@@ -32,7 +32,6 @@ class EditorOverview extends Component {
     this.deleteTestHandler = this.deleteTestHandler.bind(this)
   }
   componentDidMount() {
-    console.log(this.props.auth)
     const { testModels } = this.props
     // todo: stav, kdy uzivatel nema zadne testy!
     if (!testModels.fetched && !testModels.isFetching) {
@@ -43,8 +42,6 @@ class EditorOverview extends Component {
     this.props.createTest(this.props.router)
   }
   editTestHandler(testModelId) {
-    console.log(testModelId)
-    // this.props.initEditor(testModelId)
     this.props.router.push(`/editor/${testModelId}`)
   }
   deleteTestHandler(testModelId) {

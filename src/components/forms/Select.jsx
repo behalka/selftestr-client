@@ -5,6 +5,7 @@ class Select extends Component {
   static defaultProps = {
     componentClass: 'select',
     feedback: true,
+    label: '',
     placeholder: '',
     options: [],
   }
@@ -12,7 +13,7 @@ class Select extends Component {
     componentClass: PropTypes.string,
     feedback: PropTypes.bool,
     input: PropTypes.object.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     meta: PropTypes.object.isRequired,
     options: PropTypes.array,
     placeholder: PropTypes.string,
