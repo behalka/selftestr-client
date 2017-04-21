@@ -11,7 +11,7 @@ import EditorOverview from './containers/Editor/EditorOverview'
 
 // eslint-disable-next-line no-unused-vars
 export default store =>
-  <Route path="/" component={App}>
+  <Route path="/" component={App} routeName="Domů">
     <IndexRoute component={TestsOverview} />
     <Route path="testy">
       <IndexRoute component={TestsOverview} />

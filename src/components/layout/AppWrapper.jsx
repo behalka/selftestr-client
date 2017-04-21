@@ -15,7 +15,7 @@ const AppWrapper = props =>
         <Col xs={12}>
           <Grid>
             <Row>
-              <Breadcrumbs/>
+              <Breadcrumbs routes={props.routes} params={props.params}/>
             </Row>
             <Row>
               {props.children}
@@ -28,6 +28,8 @@ const AppWrapper = props =>
 
 AppWrapper.propTypes = {
   children: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
+  routes: PropTypes.array.isRequired,
 }
 
 export default AppWrapper

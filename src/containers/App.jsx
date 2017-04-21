@@ -8,8 +8,11 @@ class App extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
     recoverFromToken: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
+    routes: PropTypes.array.isRequired,
   }
   componentWillReceiveProps(nextProps) {
     const loggedIn = this.props.auth.isLogged
@@ -29,7 +32,11 @@ class App extends Component {
   }
   render() {
     return (
-      <AppWrapper children={this.props.children} />
+      <AppWrapper
+        routes={this.props.routes}
+        location={this.props.location}
+        params={this.props.params}
+        children={this.props.children} />
     )
   }
 }
