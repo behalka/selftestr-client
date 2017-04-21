@@ -2,17 +2,13 @@ import React, { Component, PropTypes } from 'react'
 import AppWrapper from '../components/layout/AppWrapper'
 import { connect } from 'react-redux'
 import { hashHistory } from 'react-router'
-import { loginRequest } from '../redux/auth/auth.actions.js'
+import { recoverFromTokenReq } from '../redux/auth/auth.actions'
 
 class App extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
-  }
-  constructor(props) {
-    super(props)
-    console.log(this.props.auth)
-    // todo: handle auth logic
+    recoverFromToken: PropTypes.func.isRequired,
   }
   componentWillReceiveProps(nextProps) {
     const loggedIn = this.props.auth.isLogged
@@ -20,13 +16,12 @@ class App extends Component {
     // doslo k prihlaseni! -> todo: poslat na admin homepage
     if (!loggedIn && nextLoggedIn) {
       hashHistory.push('/editor')
-      // hashHistory.push('/')
     } else if (loggedIn && !nextLoggedIn) {
       hashHistory.push('/')
     }
   }
   componentDidMount() {
-    this.props.dispatch(loginRequest({ username: 'john', password: 'password' }))
+    this.props.recoverFromToken()
   }
   render() {
     return (
@@ -38,5 +33,8 @@ class App extends Component {
 const mapStateToProps = state => ({
   auth: state.auth,
 })
+const mapDispatchToProps = {
+  recoverFromToken: recoverFromTokenReq,
+}
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

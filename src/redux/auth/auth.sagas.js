@@ -1,6 +1,7 @@
+import { takeLatest } from 'redux-saga'
 import { call, put, take } from 'redux-saga/effects'
 import { auth } from '../actionTypes'
-import { loginSuccess, logoutRequest } from './auth.actions'
+import { loginSuccess, recoverFromTokenRes, recoverFromTokenFail } from './auth.actions'
 import { addNotificationReq } from '../appState/appState.actions'
 import { types as notifTypes } from '../../constants/notifications'
 import * as client from '../restClientSaga'
@@ -11,17 +12,27 @@ function * login(action) {
   try {
     // poskytnu username a password
     const { user, token } = yield client.apiCall(Api.login, formValues)
-    yield put(loginSuccess(user, token))
+    client.storeToken(token)
+    yield put(loginSuccess(user))
     yield put(addNotificationReq('Byl jste uspesne prihlasen!', notifTypes.SUCCESS))
   } catch (err) {
     console.log(err.response)
   }
 }
 
+function * loadAuthFromToken() {
+  const user = client.getUserFromToken()
+  user
+  ? yield put(recoverFromTokenRes(user))
+  : yield put(recoverFromTokenFail())
+}
+
 function * logout() {
-  console.log('logout')
-  // yield put(logoutRequest())
-  // todo: moar actions jako zrusit token atd
+  client.removeToken()
+}
+
+export function * authFromTokenWatcher() {
+  yield takeLatest(auth.TOKEN_RECOVER_REQ, loadAuthFromToken)
 }
 
 export function * loginFlow() {
@@ -36,6 +47,7 @@ export function * loginFlow() {
 
 export default function * () {
   yield [
+    authFromTokenWatcher(),
     loginFlow(),
   ]
 }

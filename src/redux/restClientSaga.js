@@ -1,9 +1,38 @@
-import { call, select } from 'redux-saga/effects'
+import { call } from 'redux-saga/effects'
+import cookie from 'react-cookie'
+import jwtDecode from 'jwt-decode'
 
-const tokenSelector = state => state.auth.token
+export function storeToken(token) {
+  cookie.save('token', token, {
+    path: '/',
+    maxAge: 2 * 60 * 60,
+  })
+}
+
+// fixme: tohle neresi platnost tokenu
+export function getUserFromToken() {
+  try {
+    const token = cookie.load('token')
+    if (!token) {
+      return null
+    }
+    const res = jwtDecode(token)
+    const user = {
+      id: res.userId,
+      username: res.username,
+    }
+    return user
+  } catch (err) {
+    return null
+  }
+}
+
+export function removeToken() {
+  cookie.remove('token')
+}
 
 export function * authApiCall(instance, payload) {
-  const token = yield select(tokenSelector)
+  const token = cookie.load('token')
   if (!token) {
     throw new Error('Token not set.')
   }
