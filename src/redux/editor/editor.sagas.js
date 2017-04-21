@@ -5,6 +5,7 @@ import { v1 } from 'uuid'
 import { addNotificationReq } from '../appState/appState.actions'
 import { getAuth } from '../auth/auth.selectors'
 import { types as notifTypes } from '../../constants/notifications'
+import questionTypes from '../../constants/questionTypes'
 import { editor, questionModels, tests } from '../actionTypes'
 import { saveEntities, deleteEntity } from '../entities/entities.actions'
 import {
@@ -26,8 +27,32 @@ function transformQuestionModel(question) {
   const res = Object.assign({}, question)
   delete res.updated_at
   delete res.created_at
-  console.log(res, 'foo')
   return res
+}
+
+function initQuestionModel(question) {
+  question.id = v1()
+  question.answerModels = []
+  switch (question.type) {
+    case questionTypes.TEXT_INPUT:
+      question.answerModels.push({
+        id: v1(),
+        isCorrect: true,
+      })
+      return question
+    case questionTypes.MULTICHOICE:
+      for (let i = 0; i < 3; i++) {
+        question.answerModels.push({ id: v1() })
+      }
+      return question
+    case questionTypes.SINGLECHOICE:
+      for (let i = 0; i < 3; i++) {
+        question.answerModels.push({ id: v1() })
+      }
+      question.answerModels[0].isCorrect = true
+      return question
+    default: throw new Error('Missing question.type param')
+  }
 }
 
 function * initEditor(action) {
@@ -54,11 +79,10 @@ function * createTestModel(action) {
 }
 
 function * createQuestion(action) {
-  const { testModelId, questionModelData: data } = action.payload
-  console.log(testModelId, data, 'create q')
+  const { testModelId, questionModelData } = action.payload
   // budouci questionModel se ma podobat ostatnim
-  data.id = v1()
-  data.answerModels = []
+  const data = initQuestionModel(questionModelData)
+  console.log(testModelId, data, 'create q')
   const normalized = normalize(data, questionSchema)
   yield put(saveEntities(normalized))
   yield put(setQuestionsPerTest(testModelId, [data.id]))
@@ -67,6 +91,7 @@ function * createQuestion(action) {
 
 function * addQuestion(action) {
   const { testModelId, questionModelData } = action.payload
+  console.log('add')
   try {
     const result = yield client.authApiCall(Api.createQuestion, {
       testModelId,
@@ -82,6 +107,7 @@ function * addQuestion(action) {
 
 function * updateQuestion(action) {
   const { testModelId, questionModelData } = action.payload
+  console.log('update')
   try {
     const result = yield client.authApiCall(Api.updateQuestion, {
       testModelId,

@@ -14,6 +14,8 @@ import TextInputQuestion from '../../components/Editor/TextInputQuestion'
 import MultichoiceQuestion from '../../components/Editor/MultichoiceQuestion'
 import SinglechoiceQuestion from '../../components/Editor/SinglechoiceQuestion'
 
+import immutable from 'seamless-immutable'
+
 // todo: nekam do utils - volat z sag
 // todo: mozna dalsi funkce - init tech modelu
 function questionModelToForm(model) {
@@ -64,9 +66,11 @@ function formToQuestionModel(formData) {
       questionModel.answerModels = questionModel.answerModels.map((answer, ind) => {
         if (!answer.id) {
           answer.id = v1()
-          answer.isCorrect = Boolean(formData.isCorrectGroup === ind)
-        } else {
+        }
+        if (immutable.isImmutable(answer)) {
           answer = answer.set('isCorrect', Boolean(formData.isCorrectGroup === ind))
+        } else {
+          answer.isCorrect = Boolean(formData.isCorrectGroup === ind)
         }
         return answer
       })

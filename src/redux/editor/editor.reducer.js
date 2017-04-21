@@ -47,6 +47,7 @@ export default function editorReducer(state = initialState, action) {
         .set('isFormSaving', false)
         .set('isFormSaved', true)
         .set('isTestModelNew', false)
+        .set('isQuestionNew', false)
     case tests.SAVE_TEST_FAIL:
     case questionModels.SAVE_QUESTION_FAIL:
       return state
