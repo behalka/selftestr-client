@@ -16,8 +16,24 @@
     // background-color $color-grey-light
   &__question
     margin 0.3em
+    &:hover
+      color $color-blue-dark
+      border-color $color-blue-dark
     &--selected
-      background-color red
+      background-color $color-blue-middle
+      border-color $color-blue-dark
+      color #fff
+    &:focus
+      background-color $color-blue-middle
+      border-color $color-blue-dark
+      color $color-grey-light
+      opacity 1
+  .btn-default.disabled.editor__question--selected
+  &:focus
+    opacity 1
+    background-color $color-blue-middle
+    border-color $color-blue-dark
+    color $color-grey-light
 .test-model
   &__name
     padding 1em
