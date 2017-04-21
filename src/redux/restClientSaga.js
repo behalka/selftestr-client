@@ -28,7 +28,10 @@ export function getUserFromToken() {
 }
 
 export function removeToken() {
-  cookie.remove('token')
+  cookie.remove('token', {
+    path: '/',
+    maxAge: 2 * 60 * 60,
+  })
 }
 
 export function * authApiCall(instance, payload) {
