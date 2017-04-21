@@ -95,6 +95,8 @@ export default {
         Authorization: token,
       },
     }),
+  createUser: userData => axios
+    .post(`${URL}/users/`, userData),
   getPopularTags: () => Promise.resolve([_.values(tagObjects)[0]]),
   getTestById: ({ id }) => axios
     .get(`${URL}/testModels/${id}`),

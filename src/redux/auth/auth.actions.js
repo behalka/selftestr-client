@@ -14,6 +14,20 @@ export const logoutRequest = () => ({
   type: auth.LOGOUT_REQ,
 })
 
+export const registerReq = userData => ({
+  type: auth.REGISTER_REQ,
+  payload: { userData },
+})
+
+export const registerRes = userAuth => ({
+  type: auth.REGISTER_RES,
+  payload: { userAuth },
+})
+
+export const registerFail = () => ({
+  type: auth.REGISTER_FAIL,
+})
+
 export const recoverFromTokenReq = () => ({
   type: auth.TOKEN_RECOVER_REQ,
 })

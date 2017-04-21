@@ -9,15 +9,18 @@ const initialState = immutable({
 
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
+    case auth.REGISTER_REQ:
     case auth.TOKEN_RECOVER_REQ:
     case auth.LOGIN_REQ:
       return state
         .set('isFetching', true)
+    case auth.REGISTER_FAIL:
     case auth.TOKEN_RECOVER_FAIL:
     case auth.LOGIN_FAIL:
       return state
         .set('isFetching', false)
         .set('isLogged', false)
+    case auth.REGISTER_RES:
     case auth.TOKEN_RECOVER_RES:
     case auth.LOGIN_RES:
       return state

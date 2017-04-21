@@ -96,7 +96,11 @@ export function * getTestsOfUser() {
 }
 
 export function * getTestsOfUserWatcher() {
-  yield takeLatest(actions.tests.LIST_USER_REQ, getTestsOfUser)
+  // kus reduceru je provazany primo s uzivatelem
+  yield takeLatest([
+    actions.tests.LIST_USER_REQ,
+    actions.auth.LOGIN_RES,
+    actions.auth.REGISTER_RES], getTestsOfUser)
 }
 
 function * getTestsList() {

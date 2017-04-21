@@ -7,6 +7,9 @@ const LoginMenuItem = () =>
     <LinkContainer to="/login">
       <NavItem eventKey={1}>Login</NavItem>
     </LinkContainer>
+    <LinkContainer to="/registrace">
+      <NavItem eventKey={1}>Registrace</NavItem>
+    </LinkContainer>
   </Nav>
 
 export default LoginMenuItem

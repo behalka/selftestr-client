@@ -5,6 +5,7 @@ import App from './containers/App'
 import TestsOverview from './containers/TestsOverview'
 import TestDetail from './containers/TestDetail'
 import Auth from './containers/Auth'
+import Register from './containers/Register'
 import LoggedIn from './containers/LoggedIn'
 import Editor from './containers/Editor/Editor'
 import EditorOverview from './containers/Editor/EditorOverview'
@@ -23,4 +24,5 @@ export default store =>
     </Route>
     <Route path="historie" component={TestsOverview} />
     <Route path="login" component={Auth} />
+    <Route path="registrace" component={Register} />
   </Route>

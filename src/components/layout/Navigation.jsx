@@ -13,7 +13,7 @@ const Navigation = () =>
     <Navbar inverse staticTop className="custom-nav">
       <Navbar.Header>
         <Navbar.Brand className="index-link">
-          <IndexLink to="/">Selftester!!!</IndexLink>
+          <IndexLink to="/">Selftester</IndexLink>
         </Navbar.Brand>
       </Navbar.Header>
       <Nav>
