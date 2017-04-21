@@ -10,6 +10,7 @@ import { addNotificationReq } from '../../redux/appState/appState.actions'
 import { types } from '../../constants/notifications'
 import questionTypes, { names as questionNames } from '../../constants/questionTypes'
 
+import Modal from '../../components/Modal/Modal'
 import LimitedText from '../../components/LimitedText/LimitedText'
 import QuestionSelect from '../../components/Editor/QuestionSelect'
 
@@ -28,8 +29,6 @@ class EditorSidebar extends Component {
     selectedQuestion: PropTypes.string,
     testDetail: PropTypes.object,
     testModelId: PropTypes.string.isRequired,
-    // saveHandler: PropTypes.func,
-    // leaveHandler: PropTypes.func,
   }
   static defaultProps = {
     testDetail: {
@@ -45,6 +44,10 @@ class EditorSidebar extends Component {
     this.editGeneralHandler = this.editGeneralHandler.bind(this)
     this.displayOverview = this.displayOverview.bind(this)
     this.selectQuestionType = this.selectQuestionType.bind(this)
+    this.createModal = this.createModal.bind(this)
+    this.state = {
+      deleteModal: false,
+    }
   }
   addQuestionHandler(questionType) {
     console.log('vytvorit otazku typu', questionType)
@@ -69,6 +72,9 @@ class EditorSidebar extends Component {
     }
     this.props.reset('questionSelect')
   }
+  createModal(properties, stateParam) {
+    return <Modal {...properties} isOpened={this.state[stateParam]} />
+  }
   render() {
     const { testDetail, isFormChanged } = this.props
     const disabledClass = classnames({
@@ -77,8 +83,15 @@ class EditorSidebar extends Component {
     const sidebarBtnClass = classnames({
       'test-model__control': true,
     })
+    const deleteTestModal = this.createModal({
+      submitHandler: this.props.deleteTestHandler.bind(this, testDetail.id),
+      title: 'Opravdu chcete smazat celý test se všemi otázkami?',
+      body: 'Tato akce je nevratná.',
+      btnStyle: 'danger',
+    }, 'deleteModal')
     return (
       <nav className="editor__navbar">
+        {deleteTestModal}
         <a className="test-model__name" onClick={this.displayOverview} href="#">
             {testDetail.name || EditorSidebar.defaultProps.testDetail.name}
         </a>
@@ -109,7 +122,7 @@ class EditorSidebar extends Component {
             className={classnames(sidebarBtnClass, disabledClass)}
             onClick={this.props.saveAndLeaveHandler}>Opustit test</Button>
           <Button block
-            onClick={() => this.props.deleteTestHandler(testDetail.id)}
+            onClick={() => this.setState({ deleteModal: true })}
             className={sidebarBtnClass}
             bsStyle="danger">Smazat test</Button>
         </div>

@@ -5,6 +5,7 @@ import { initEditor } from '../../redux/editor/editor.actions'
 import { getTestsByOwner } from '../../redux/testModels/tests.selectors'
 import { Button } from 'react-bootstrap'
 
+import Modal from '../../components/Modal/Modal'
 import Loader from '../../components/layout/Loader'
 import EditorOverviewComponent from '../../components/Editor/Overview'
 
@@ -30,6 +31,12 @@ class EditorOverview extends Component {
     this.createTestHandler = this.createTestHandler.bind(this)
     this.editTestHandler = this.editTestHandler.bind(this)
     this.deleteTestHandler = this.deleteTestHandler.bind(this)
+    this.createModal = this.createModal.bind(this)
+    this.initModal = this.initModal.bind(this)
+    this.state = {
+      deleteModal: false,
+      modals: null,
+    }
   }
   componentDidMount() {
     const { testModels } = this.props
@@ -47,6 +54,21 @@ class EditorOverview extends Component {
   deleteTestHandler(testModelId) {
     this.props.deleteTest(testModelId)
   }
+  createModal(testModelId, testModelName, selectedModal) {
+    const modalProps = {
+      submitHandler: this.deleteTestHandler.bind(this, testModelId),
+      title: `Opravdu chcete smazat celý test "${testModelName}" se všemi otázkami?`,
+      body: 'Tato akce je nevratná.',
+      btnStyle: 'danger',
+      isOpened: testModelId === selectedModal,
+    }
+    return <Modal {...modalProps} />
+  }
+  initModal(testModelId) {
+    this.setState({
+      modals: testModelId,
+    })
+  }
   render() {
     const { testModels } = this.props
     return (
@@ -56,6 +78,9 @@ class EditorOverview extends Component {
         {!testModels.isFetching
           && <EditorOverviewComponent
               testModels={testModels.items}
+              createModal={this.createModal}
+              initModal={this.initModal}
+              selectedModal={this.state.modals}
               deleteTestHandler={this.deleteTestHandler}
               editTestHandler={this.editTestHandler} />}
       </div>
