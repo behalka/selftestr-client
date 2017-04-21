@@ -20,7 +20,9 @@ class EditorSidebar extends Component {
     canLeaveContent: PropTypes.func.isRequired,
     clearForm: PropTypes.func.isRequired,
     createQuestion: PropTypes.func.isRequired,
+    deleteTestHandler: PropTypes.func.isRequired,
     displayGeneral: PropTypes.func.isRequired,
+    isFormChanged: PropTypes.bool,
     reset: PropTypes.func.isRequired,
     saveAndLeaveHandler: PropTypes.func.isRequired,
     selectedQuestion: PropTypes.string,
@@ -34,6 +36,7 @@ class EditorSidebar extends Component {
       name: 'Jméno testu není zadané',
       description: 'Popis není zadaný',
     },
+    isFormChanged: false,
     selectedQuestion: null,
   }
   constructor(props) {
@@ -94,19 +97,19 @@ class EditorSidebar extends Component {
         <div className="test-model__controls">
           <Button
             block
+            bsStyle="primary"
             className={classnames(sidebarBtnClass, disabledClass)}
             onClick={this.editGeneralHandler}>
-            Editovat test
-          </Button>
+            Editovat test</Button>
           <Button
             block
             className={classnames(sidebarBtnClass, disabledClass)}
             onClick={this.displayOverview}>Zobrazit přehled</Button>
           <Button block
             className={classnames(sidebarBtnClass, disabledClass)}
-            onClick={this.props.saveAndLeaveHandler}
-            bsStyle="primary">Opustit test</Button>
+            onClick={this.props.saveAndLeaveHandler}>Opustit test</Button>
           <Button block
+            onClick={() => this.props.deleteTestHandler(testDetail.id)}
             className={sidebarBtnClass}
             bsStyle="danger">Smazat test</Button>
         </div>

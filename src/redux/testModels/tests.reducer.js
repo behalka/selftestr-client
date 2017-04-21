@@ -59,6 +59,10 @@ export default function testsReducer(state = initialState, action) {
       return state
         .setIn(['testsOfOwner', 'items'], state.testsOfOwner.items.concat(action.payload))
         .setIn(['testsOfOwner', 'isFetching'], false)
+    case tests.DELETE_RES:
+      return state
+        .updateIn(['testsOfOwner', 'items'],
+          testModels => testModels.filter(id => id !== action.payload.testModelId))
     default:
       return state
   }

@@ -39,3 +39,8 @@ export const formChanged = isFormChanged => ({
   type: editor.FORM_WAS_CHANGED,
   payload: { isFormChanged },
 })
+
+export const deleteTestFromEditor = (testModelId, isTestModelNew, router) => ({
+  type: editor.DELETE_TEST_MODEL,
+  payload: { testModelId, isTestModelNew, router },
+})

@@ -30,3 +30,13 @@ export const createTestRes = testModelIds => ({
   type: tests.CREATE_TEST_RES,
   payload: testModelIds,
 })
+
+export const deleteTestReq = (testModelId, isTestModelNew) => ({
+  type: tests.DELETE_REQ,
+  payload: { testModelId, isTestModelNew },
+})
+
+export const deleteTestRes = testModelId => ({
+  type: tests.DELETE_RES,
+  payload: { testModelId },
+})

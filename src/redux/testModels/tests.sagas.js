@@ -4,12 +4,12 @@ import { schema, normalize } from 'normalizr'
 import * as actions from '../actionTypes'
 import * as selectors from './tests.selectors'
 import { setTagsPerTest } from '../tags/tags.actions'
-import { saveRes } from './tests.actions'
+import { saveRes, deleteTestRes } from './tests.actions'
 import { addNotificationReq } from '../appState/appState.actions'
 import { types as notifTypes } from '../../constants/notifications'
 import { setCommentsByTest } from '../comments/comments.actions'
 import { setQuestionsPerTest } from '../questionModels/questionModels.actions'
-import { saveEntities } from '../entities/entities.actions'
+import { saveEntities, deleteEntity } from '../entities/entities.actions'
 import Api from '../../api'
 import * as client from '../restClientSaga'
 
@@ -142,6 +142,27 @@ function * saveTestModel(action) {
   }
 }
 
+function * deleteTestModel(action) {
+  const { testModelId, isTestModelNew } = action.payload
+  try {
+    if (!isTestModelNew) {
+      yield client.authApiCall(Api.deleteTest, {
+        testModelId,
+      })
+    }
+    yield put(deleteTestRes(testModelId))
+    yield put(deleteEntity('testsWithQuestions', testModelId))
+    yield put(addNotificationReq('Test byl smazán', notifTypes.SUCCESS))
+  } catch (err) {
+    console.log(err)
+    console.log(err.response)
+  }
+}
+
+export function * deleteTestModelWatcher() {
+  yield takeLatest(actions.tests.DELETE_REQ, deleteTestModel)
+}
+
 export function * saveTestModelWatcher() {
   yield takeLatest(actions.tests.SAVE_TEST_REQ, saveTestModel)
 }
@@ -152,6 +173,7 @@ export function * getTestsListWatcher() {
 
 export default function * () {
   yield [
+    deleteTestModelWatcher(),
     getTestsOfUserWatcher(),
     getTestsListWatcher(),
     getTestDetailWatcher(),

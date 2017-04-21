@@ -17,6 +17,9 @@ export const tests = {
   CREATE_TEST_RES: `${prefix}/CREATE_TEST_RES`,
   CREATE_TEST_REQ: `${prefix}/CREATE_TEST_REQ`,
   CREATE_TEST_FAIL: `${prefix}/CREATE_TEST_FAIL`,
+  DELETE_REQ: `${prefix}/DELETE_REQ`,
+  DELETE_RES: `${prefix}/DELETE_RES`,
+  DELETE_FAIL: `${prefix}/DELETE_FAIL`,
 }
 
 export const questionModels = {
@@ -47,6 +50,7 @@ export const editor = {
   CLEAR_FORM: 'EDITOR/CLEAR_FORM',
   DISPLAY_GENERAL: 'EDITOR/DISPLAY_GENERAL',
   CREATE_TEST_MODEL: 'EDITOR/CREATE_TEST_MODEL',
+  DELETE_TEST_MODEL: 'EDITOR/DELETE_TEST_MODEL',
 }
 
 export const appState = {

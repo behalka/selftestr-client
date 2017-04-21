@@ -157,6 +157,18 @@ function * deleteQuestion(action) {
   }
 }
 
+function * deleteTestFromEditorFlow() {
+  while (true) {
+    let action = yield take(editor.DELETE_TEST_MODEL)
+    const { router, isTestModelNew, testModelId } = action.payload
+    // todo: melo by se to forknout
+    yield put(testActions.deleteTestReq(testModelId, isTestModelNew))
+    action = yield take(tests.DELETE_RES)
+    yield router.push('/editor')
+    yield put(editorActions.clearEditor())
+  }
+}
+
 export function * editorFlow() {
   while (true) {
     let action = yield take(editor.INIT_REQ)
@@ -191,6 +203,7 @@ export default function * () {
     createTestWatcher(),
     createQuestionWatcher(),
     deleteQuestionWatcher(),
+    deleteTestFromEditorFlow(),
     editorFlow(),
     selectQuestionWatcher(),
     saveQuestionWatcher(),

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { fetchByUser } from '../../redux/testModels/tests.actions'
-import { clearEditor, initEditor } from '../../redux/editor/editor.actions'
+import { clearEditor, initEditor, deleteTestFromEditor } from '../../redux/editor/editor.actions'
 import { addNotificationReq } from '../../redux/appState/appState.actions'
 import { types } from '../../constants/notifications'
 
@@ -14,6 +14,7 @@ class Editor extends Component {
   static propTypes = {
     addNotification: PropTypes.func.isRequired,
     clearEditor: PropTypes.func.isRequired,
+    deleteTest: PropTypes.func.isRequired,
     editor: PropTypes.object.isRequired,
     fetchByUser: PropTypes.func.isRequired,
     initEditor: PropTypes.func.isRequired,
@@ -25,6 +26,7 @@ class Editor extends Component {
     this.canLeaveContent = this.canLeaveContent.bind(this)
     this.canCreateQuestions = this.canCreateQuestions.bind(this)
     this.saveAndLeave = this.saveAndLeave.bind(this)
+    this.deleteTestHandler = this.deleteTestHandler.bind(this)
   }
   componentDidMount() {
     this.props.clearEditor()
@@ -47,6 +49,9 @@ class Editor extends Component {
       return callback()
     }
     return this.props.addNotification('Nejprve uložte formulář nebo zahoďte změny', types.WARNING)
+  }
+  deleteTestHandler(testModelId) {
+    this.props.deleteTest(testModelId, this.props.editor.isTestModelNew, this.props.router)
   }
   canCreateQuestions() {
     const res = !(this.props.editor.isFormChanged || this.props.editor.isTestModelNew)
@@ -78,6 +83,7 @@ class Editor extends Component {
             isFormChanged={this.props.editor.isFormChanged}
             canCreateQuestions={this.canCreateQuestions}
             saveAndLeaveHandler={this.saveAndLeave}
+            deleteTestHandler={this.deleteTestHandler}
             canLeaveContent={this.canLeaveContent} />
         </Col>
         <Col xs={9}>
@@ -102,6 +108,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = {
   addNotification: addNotificationReq,
+  deleteTest: deleteTestFromEditor,
   fetchByUser,
   clearEditor,
   initEditor,

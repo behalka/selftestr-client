@@ -106,6 +106,13 @@ export default {
         Authorization: token,
       },
     }),
+  deleteTest: ({ payload, token }) => axios
+    .delete(`${URL}/editor/${payload.testModelId}`,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }),
   deleteQuestion: ({ payload, token }) => axios
     .delete(`${URL}/editor/${payload.testModelId}/questions/${payload.questionModelId}`,
     {
