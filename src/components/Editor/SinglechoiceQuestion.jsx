@@ -3,12 +3,9 @@ import { reduxForm, Field, FieldArray, change } from 'redux-form'
 import { Form, Button } from 'react-bootstrap'
 import ContentForm from './ContentForm'
 import Input from '../forms/Input'
-import Radio from '../forms/Radio'
 
 import SinglechoiceAnswer from './SinglechoiceAnswer'
-import validate from './TextInputQuestionValidator'
-
-// todo: validace
+import validate from './ChoiceValidation'
 
 class SinglechoiceQuestion extends ContentForm {
   constructor(props) {
@@ -23,23 +20,24 @@ class SinglechoiceQuestion extends ContentForm {
     this.props.dispatch(change('singlechoice', 'isCorrectGroup', index))
   }
   renderAnswers({ fields, meta }) {
+    const hasError = meta.error
     return (
-      <ul>
-        <li><Button onClick={() => fields.push()}>Přidat odpověď</Button></li>
-        {fields.map((answerModel, index) =>
-          <li key={index}>
-            <SinglechoiceAnswer
-              groupName="isCorrectGroup"
-              answerModel={answerModel}
-              index={index}
-              updateSelectedAnswer={() => this.updateSelectedAnswer(index)} />
-            <Button bsStyle="danger" onClick={() => fields.remove(index)}>Odstranit odpověď</Button>
-          </li>
-        )}
-        {
-          // console.log(meta)
-        }
-      </ul>
+      <div className={ hasError ? 'has-error' : ''}>
+        <Button onClick={() => fields.push()}>Přidat odpověď</Button>
+        <ul className="list list--block list--no-bullets">
+          {fields.map((answerModel, index) =>
+            <li key={index}>
+              <SinglechoiceAnswer
+                groupName="isCorrectGroup"
+                answerModel={answerModel}
+                index={index}
+                updateSelectedAnswer={() => this.updateSelectedAnswer(index)} />
+              <Button bsStyle="danger" onClick={() => fields.remove(index)}>Odstranit odpověď</Button>
+            </li>
+          )}
+          {hasError && <div className="help-block">{meta.error}</div>}
+        </ul>
+      </div>
     )
   }
   render() {
@@ -60,6 +58,7 @@ class SinglechoiceQuestion extends ContentForm {
 }
 
 export default reduxForm({
+  validate,
   enableReinitialize: true,
   form: 'singlechoice',
 })(SinglechoiceQuestion)

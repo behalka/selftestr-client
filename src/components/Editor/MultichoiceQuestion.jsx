@@ -4,25 +4,25 @@ import { Form, Button } from 'react-bootstrap'
 import ContentForm from './ContentForm'
 import Input from '../forms/Input'
 import Checkbox from '../forms/Checkbox'
-// todo: validace
-import validate from './TextInputQuestionValidator'
+import validate from './ChoiceValidation'
 
 class MultichoiceQuestion extends ContentForm {
   renderAnswers({ fields, meta }) {
+    const hasError = meta.error
     return (
-      <ul>
-        <li><Button onClick={() => fields.push()}>Přidat odpověď</Button></li>
-        {fields.map((answerModel, index) =>
-          <li key={index}>
-            <Field name={`${answerModel}.text`} label="Znění odpovědi" component={Input} type="text" />
-            <Field name={`${answerModel}.isCorrect`} label="Je odpověď správně" component={Checkbox} type="checkbox" />
-            <Button bsStyle="danger" onClick={() => fields.remove(index)}>Odstranit odpověď</Button>
-          </li>
-        )}
-        {
-          // console.log(meta)
-        }
-      </ul>
+      <div className={ hasError ? 'has-error' : ''}>
+        <Button onClick={() => fields.push()}>Přidat odpověď</Button>
+        <ul className="list list--block list--no-bullets">
+          {fields.map((answerModel, index) =>
+            <li key={index}>
+              <Field name={`${answerModel}.text`} label="Znění odpovědi" component={Input} type="text" />
+              <Field name={`${answerModel}.isCorrect`} label="Je odpověď správně" component={Checkbox} type="checkbox" />
+              <Button bsStyle="danger" onClick={() => fields.remove(index)}>Odstranit odpověď</Button>
+            </li>
+          )}
+          {hasError && <div className="help-block">{meta.error}</div>}
+        </ul>
+      </div>
     )
   }
   render() {
@@ -42,6 +42,7 @@ class MultichoiceQuestion extends ContentForm {
 }
 
 export default reduxForm({
+  validate,
   enableReinitialize: true,
   form: 'multichoice',
 })(MultichoiceQuestion)
