@@ -53,8 +53,8 @@ class ModalBox extends Component {
           {body}
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.closeModal}>Close</Button>
-          <Button bsStyle={btnStyle} onClick={submitHandler}>Save changes</Button>
+          <Button onClick={this.closeModal}>Zpět</Button>
+          <Button bsStyle={btnStyle} onClick={submitHandler}>Pokračovat</Button>
         </Modal.Footer>
       </Modal>
     )
