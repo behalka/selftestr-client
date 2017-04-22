@@ -1,29 +1,36 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Field, formValueSelector } from 'redux-form'
+import { Row, Col } from 'react-bootstrap'
+import texts from '../../constants/formHelpers'
 
 // import formTypes from '../../constants/createTest/formTypes'
 import Input from '../forms/Input'
 import Radio from '../forms/Radio'
 
 const SinglechoiceAnswer = ({ answerModel, index, correctIndex, updateSelectedAnswer, groupName }) =>
-  <div>
-    <Field
-      name={`${answerModel}.text`}
-      label="Znění odpovědi"
-      required
-      component={Input} type="text"/>
-    <Field
-      name={groupName}
-      value={index}
-      id={`answer${index}`}
-      component={Radio}
-      label="Je odpověď správně"
-      type="radio"
-      checked={correctIndex === index}
-      changeHandler={updateSelectedAnswer}
-    />
-  </div>
+  <Row>
+    <Col xs={12}>
+      <Field
+        name={`${answerModel}.text`}
+        label="Znění odpovědi"
+        required
+        helper={texts.helpers.singlechoiceAnswer}
+        component={Input} type="text"/>
+    </Col>
+    <Col xs={12}>
+      <Field
+        name={groupName}
+        value={index}
+        id={`answer${index}`}
+        component={Radio}
+        label="Je odpověď správně"
+        type="radio"
+        checked={correctIndex === index}
+        changeHandler={updateSelectedAnswer}
+      />
+    </Col>
+  </Row>
 
 SinglechoiceAnswer.propTypes = {
   answerModel: PropTypes.string.isRequired,

@@ -1,6 +1,7 @@
 import React from 'react'
 import { reduxForm, Field, FieldArray } from 'redux-form'
-import { Form, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Form, Button, OverlayTrigger, Tooltip, Panel, Grid, Row, Col } from 'react-bootstrap'
+import classnames from 'classnames'
 import ContentForm from './ContentForm'
 import FontAwesome from 'react-fontawesome'
 import texts from '../../constants/formHelpers'
@@ -11,19 +12,65 @@ import validate from './ChoiceValidation'
 class MultichoiceQuestion extends ContentForm {
   renderAnswers({ fields, meta }) {
     const hasError = meta.error
+    const answersClasses = classnames({
+      'has-error': hasError,
+      'editor__answers': true,
+    })
     return (
-      <div className={ hasError ? 'has-error' : ''}>
-        <Button onClick={() => fields.push()}>Přidat odpověď</Button>
-        <ul className="list list--block list--no-bullets">
-          {fields.map((answerModel, index) =>
-            <li key={index}>
-              <Field name={`${answerModel}.text`} required label="Znění odpovědi" component={Input} type="text" />
-              <Field name={`${answerModel}.isCorrect`} label="Je odpověď správně" component={Checkbox} type="checkbox" />
-              <Button bsStyle="danger" onClick={() => fields.remove(index)}>Odstranit odpověď</Button>
-            </li>
-          )}
-          {hasError && <div className="help-block">{meta.error}</div>}
-        </ul>
+      <div className={answersClasses}>
+        <Grid fluid>
+          <Row className="editor__answers__header">
+            <Col xs={8} className="editor__answers__header__h">Odpovědi</Col>
+            <Col xs={4}>
+              <Button
+                bsStyle="success"
+                onClick={() => fields.push()}>
+                <FontAwesome name="plus" />
+                Přidat odpověď
+              </Button>
+            </Col>
+          </Row>
+          <ul className="list list--block list--no-bullets">
+            {fields.map((answerModel, index) =>
+              <li key={index} className="answer">
+                <Panel>
+                  <Row className="answer__header">
+                    <div>
+                      <Col xs={8} className="answer__header__h">Odpověď {index + 1}</Col>
+                      <Col xs={4}>
+                        <Button
+                          className="answer__header__btn"
+                          bsStyle="danger" onClick={() => fields.remove(index)}>
+                          <FontAwesome name="trash-o" />
+                          Odstranit odpověď
+                        </Button>
+                      </Col>
+                    </div>
+                  </Row>
+                  <Row>
+                    <Col xs={12}>
+                      <Field
+                        name={`${answerModel}.text`}
+                        required
+                        helper={texts.helpers.choiceAnswer}
+                        label="Znění odpovědi"
+                        component={Input}
+                        type="text" />
+                    </Col>
+                    <Col xs={12}>
+                      <Field
+                        name={`${answerModel}.isCorrect`}
+                        label="Správná odpověď"
+                        component={Checkbox}
+                        type="checkbox" />
+                    </Col>
+                  </Row>
+                </Panel>
+              </li>
+            )}
+            {hasError && <div className="help-block">{meta.error}</div>}
+          </ul>
+        </Grid>
       </div>
     )
   }

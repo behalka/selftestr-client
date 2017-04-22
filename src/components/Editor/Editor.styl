@@ -13,13 +13,36 @@
   &__header
     margin 0
     margin-bottom 1em
+  &__answers
+    &__header
+      // display block
+      padding-bottom 0.5em
+      &__h
+        set-font-size 21px
+      // .btn
+      //   float right
+    .answer
+      margin-left -15px
+      margin-right -15px
+      &__header
+        padding 0.8em 0
+        &__h
+          set-font-size 18px
+        &__btn
+          margin-top -0.3em
+          float right
   &__form
     padding 1em
     // background-color $color-grey-light
     .btn
       margin-right: 0.4em
+  &__pagination
+    border-top 1px $color-grey solid
+    padding-top 0.5em
+  &__questions
+    padding-bottom 0.5em
   &__question
-    margin 0.3em
+    margin 0.2em
     &:hover
       color $color-blue-dark
       border-color $color-blue-dark

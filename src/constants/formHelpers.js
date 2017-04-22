@@ -6,6 +6,10 @@ export default {
     explanation: 'Krátké vysvětlení, které uživateli pomůže pochopit, správnost odpovědi.\
       Bude zobrazeno při průchodu výsledky, můžeme tam tedy klidně napsat \
       jaké bylo správné řešení.',
+    choiceAnswer: 'Odpověď bude zobrazena uživateli jako jedna z možností. Odpověď je správně \
+      pokud ji uživatel zaškrtne a zároveň je označena jako správná v editoru.',
+    singlechoiceAnswer: 'Odpověď bude zobrazena uživateli jako jedna z možností. Odpověď je správně \
+      pokud ji uživatel zvolí a zároveň je označena jako správná v editoru.',
   },
   btns: {
     discard: 'Vrátí zpět hodnoty podle posledního uložení.',

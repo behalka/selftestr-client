@@ -1,10 +1,11 @@
 import React from 'react'
 import { reduxForm, Field, FieldArray, change } from 'redux-form'
-import { Form, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Form, Button, OverlayTrigger, Tooltip, Row, Col, Panel, Grid } from 'react-bootstrap'
 import ContentForm from './ContentForm'
 import Input from '../forms/Input'
 import FontAwesome from 'react-fontawesome'
 import texts from '../../constants/formHelpers'
+import classnames from 'classnames'
 
 import SinglechoiceAnswer from './SinglechoiceAnswer'
 import validate from './ChoiceValidation'
@@ -23,25 +24,59 @@ class SinglechoiceQuestion extends ContentForm {
   }
   renderAnswers({ fields, meta }) {
     const hasError = meta.error
+    const answersClasses = classnames({
+      'has-error': hasError,
+      'editor__answers': true,
+    })    
     return (
-      <div className={ hasError ? 'has-error' : ''}>
-        <Button onClick={() => fields.push()}>Přidat odpověď</Button>
+      <div className={answersClasses}>
+        <Grid fluid>
+          <Row className="editor__answers__header">
+            <Col xs={8} className="editor__answers__header__h">Odpovědi</Col>
+            <Col xs={4}>
+              <Button
+                bsStyle="success"
+                onClick={() => fields.push()}>
+                <FontAwesome name="plus" />
+                Přidat odpověď
+              </Button>
+            </Col>
+          </Row>
         <ul className="list list--block list--no-bullets">
           {fields.map((answerModel, index) =>
             <li key={index}>
-              <SinglechoiceAnswer
-                groupName="isCorrectGroup"
-                answerModel={answerModel}
-                index={index}
-                updateSelectedAnswer={() => this.updateSelectedAnswer(index)} />
-              <Button bsStyle="danger" onClick={() => fields.remove(index)}>Odstranit odpověď</Button>
+              <Panel>
+                  <Row className="answer__header">
+                    <div>
+                      <Col xs={8} className="answer__header__h">Odpověď {index + 1}</Col>
+                      <Col xs={4}>
+                        <Button
+                          className="answer__header__btn"
+                          bsStyle="danger" onClick={() => fields.remove(index)}>
+                          <FontAwesome name="trash-o" />
+                          Odstranit odpověď
+                        </Button>
+                      </Col>
+                    </div>
+                  </Row>
+                  <SinglechoiceAnswer
+                    groupName="isCorrectGroup"
+                    answerModel={answerModel}
+                    index={index}
+                    updateSelectedAnswer={() => this.updateSelectedAnswer(index)} />
+              </Panel>
             </li>
           )}
           {hasError && <div className="help-block">{meta.error}</div>}
         </ul>
-      </div>
+      </Grid>
+    </div>
     )
   }
+
+      // <div className={ hasError ? 'has-error' : ''}>
+      //   <Button onClick={() => fields.push()}>Přidat odpověď</Button>
+      // </div>
   render() {
     const { reset, handleSubmit, deleteQuestionHandler } = this.props
     return (
