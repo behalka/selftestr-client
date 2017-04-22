@@ -19,6 +19,7 @@ const EditorOverview = props => {
           <tbody>
           {testModels.map(test =>
             <tr key={test.id} className="test-models__item">
+              {createModal(test.id, test.name, selectedModal)}
               <td>
                 {test.name}
               </td>
@@ -43,14 +44,6 @@ const EditorOverview = props => {
     </div>
   )
 }
-      // <ul className="test-models">
-      //   {testModels.map(test =>
-      //     <li key={test.id}>
-      //       {createModal(test.id, test.name, selectedModal)}
-      //       {test.name}
-      //     </li>
-      //     )}
-      // </ul>
 EditorOverview.propTypes = {
   createModal: PropTypes.func.isRequired,
   editTestHandler: PropTypes.func.isRequired,
