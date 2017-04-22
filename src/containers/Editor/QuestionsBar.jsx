@@ -87,9 +87,11 @@ class QuestionsBar extends Component {
                 </Button>
                 )}
             </div>
-            <div className="editor__pagination">
-              {pages}
-            </div>
+            {questions.length > QUESTIONS_PER_PAGE &&
+              <div className="editor__pagination">
+                {pages}
+              </div>
+            }
           </div>
         }
       </nav>
