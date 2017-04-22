@@ -1,4 +1,6 @@
 .editor
+  &__content
+    padding-bottom 2em
   &__navbar
     background-color $color-grey-light
     // padding 1.5em 1em
@@ -14,6 +16,8 @@
   &__form
     padding 1em
     // background-color $color-grey-light
+    .btn
+      margin-right: 0.4em
   &__question
     margin 0.3em
     &:hover
@@ -34,10 +38,6 @@
     background-color $color-blue-middle
     border-color $color-blue-dark
     color $color-grey-light
-  .required-field
-    &:after
-      color $color-warning
-      content: " *"
 .test-model
   &__name
     padding 1em

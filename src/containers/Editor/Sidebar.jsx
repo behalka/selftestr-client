@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getTestModelFromId } from '../../redux/testModels/tests.selectors'
-import classnames from 'classnames'
-import { Button, Row, Col } from 'react-bootstrap'
 import { reset } from 'redux-form'
 import { createQuestionReq } from '../../redux/questionModels/questionModels.actions'
 import { displayGeneral, clearForm } from '../../redux/editor/editor.actions'
@@ -10,6 +8,10 @@ import { addNotificationReq } from '../../redux/appState/appState.actions'
 import { types } from '../../constants/notifications'
 import questionTypes, { names as questionNames } from '../../constants/questionTypes'
 
+// fixme: oddelat presentation komponentu
+import classnames from 'classnames'
+import { Button, Row, Col } from 'react-bootstrap'
+import FontAwesome from 'react-fontawesome'
 import Modal from '../../components/Modal/Modal'
 import LimitedText from '../../components/LimitedText/LimitedText'
 import QuestionSelect from '../../components/Editor/QuestionSelect'
@@ -113,6 +115,7 @@ class EditorSidebar extends Component {
             bsStyle="primary"
             className={classnames(sidebarBtnClass, disabledClass)}
             onClick={this.editGeneralHandler}>
+            <FontAwesome name="pencil" />
             Editovat test</Button>
           <Button
             block
@@ -120,11 +123,16 @@ class EditorSidebar extends Component {
             onClick={this.displayOverview}>Zobrazit přehled</Button>
           <Button block
             className={classnames(sidebarBtnClass, disabledClass)}
-            onClick={this.props.saveAndLeaveHandler}>Opustit test</Button>
+            onClick={this.props.saveAndLeaveHandler}>
+            <FontAwesome name="angle-left" /> 
+            Opustit test</Button>
           <Button block
             onClick={() => this.setState({ deleteModal: true })}
             className={sidebarBtnClass}
-            bsStyle="danger">Smazat test</Button>
+            bsStyle="danger">
+            <FontAwesome name="trash-o" />
+            Smazat test
+          </Button>
         </div>
       </nav>
     )

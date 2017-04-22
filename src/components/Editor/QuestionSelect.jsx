@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { Form, Button } from 'react-bootstrap'
-
+import FontAwesome from 'react-fontawesome'
 import Select from '../forms/Select'
 
 const validate = (values = {}) => {
@@ -23,7 +23,10 @@ const QuestionSelect = props => {
         options={options}
         feedback={false}
       />
-      <Button block type="submit" bsStyle="success" className={buttonClasses}>Přidat otázku</Button>
+      <Button block type="submit" bsStyle="success" className={buttonClasses}>
+        <FontAwesome name="plus" />
+        Přidat otázku
+      </Button>
     </Form>
   )
 }

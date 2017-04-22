@@ -2,6 +2,8 @@ import React from 'react'
 import { reduxForm, Field, FieldArray } from 'redux-form'
 import { Form, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import ContentForm from './ContentForm'
+import FontAwesome from 'react-fontawesome'
+import texts from '../../constants/formHelpers'
 import Input from '../forms/Input'
 import Checkbox from '../forms/Checkbox'
 import validate from './ChoiceValidation'
@@ -30,19 +32,28 @@ class MultichoiceQuestion extends ContentForm {
     return (
       <Form onSubmit={handleSubmit}>
         <h3 className="editor__header">Nastavení otázky</h3>
-        <Field name="text" required label="Znění otázky" component={Input} componentClass="textarea"/>
+        <Field name="text" helper={texts.helpers.questionText} required label="Znění otázky" component={Input} componentClass="textarea"/>
         <FieldArray name="answerModels" component={this.renderAnswers} />
-        <Field name="explanation" label="Krátké vysvětlení" component={Input} componentClass="textarea"/>
-        <Button type="submit" bsStyle="success">Uložit otázku</Button>
+        <Field name="explanation" helper={texts.helpers.explanation} label="Krátké vysvětlení" component={Input} componentClass="textarea"/>
+        <Button type="submit" bsStyle="success">
+          <FontAwesome name="check" />
+          Uložit otázku
+        </Button>
         <OverlayTrigger
           placement="top"
-          overlay={<Tooltip id="reset-btn">Nastaví zpět hodnoty podle posledního uložení.</Tooltip>}>
-          <Button type="reset" bsStyle="default" onClick={reset}>Zahodit změny</Button>
+          overlay={<Tooltip id="reset-btn">{texts.btns.discard}</Tooltip>}>
+          <Button type="reset" bsStyle="default" onClick={reset}>
+            <FontAwesome name="undo" />
+            Zahodit změny
+          </Button>
         </OverlayTrigger>
         <OverlayTrigger
           placement="top"
-          overlay={<Tooltip id="delete-btn">Nenávratně vymaže otázku a odpovědi.</Tooltip>}>
-          <Button bsStyle="danger" onClick={deleteQuestionHandler}>Vymazat otázku</Button>
+          overlay={<Tooltip id="delete-btn">{texts.btns.delete}</Tooltip>}>
+          <Button bsStyle="danger" onClick={deleteQuestionHandler}>
+            <FontAwesome name="trash-o" />
+            Vymazat otázku
+          </Button>
         </OverlayTrigger>
       </Form>
     )
