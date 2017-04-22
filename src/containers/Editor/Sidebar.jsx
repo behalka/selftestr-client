@@ -100,7 +100,7 @@ class EditorSidebar extends Component {
         <LimitedText
           classes="test-model__desc"
           input={testDetail.description || EditorSidebar.defaultProps.testDetail.description}
-          limit={60} />
+          limit={120} />
         <QuestionSelect options={
           Object.keys(questionTypes).map(key => ({
             value: questionTypes[key], text: questionNames[key],
