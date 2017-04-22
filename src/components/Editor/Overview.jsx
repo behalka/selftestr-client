@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
-import { Button, Row, Col, Table } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
+import FontAwesome from 'react-fontawesome'
 
 const EditorOverview = props => {
   const { testModels, initModal, selectedModal, createModal, editTestHandler } = props
@@ -24,9 +25,11 @@ const EditorOverview = props => {
             </td>
             <td>
               <Button bsStyle="success" className="test-models__btn" onClick={() => editTestHandler(test.id)}>
+                <FontAwesome name="pencil" />
                 Editovat
               </Button>
               <Button bsStyle="danger" className="test-models__btn" onClick={() => initModal(test.id)}>
+                <FontAwesome name="trash-o" />
                 Smazat
               </Button>
             </td>

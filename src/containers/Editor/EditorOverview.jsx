@@ -40,7 +40,6 @@ class EditorOverview extends Component {
   }
   componentDidMount() {
     const { testModels } = this.props
-    // todo: stav, kdy uzivatel nema zadne testy!
     if (!testModels.fetched && !testModels.isFetching) {
       this.props.fetchByUser()
     }
