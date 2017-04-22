@@ -13,12 +13,13 @@ import * as client from '../restClientSaga'
 import Api from '../../api'
 
 function * login(action) {
-  const { formValues } = action.payload
+  const { formValues, router } = action.payload
   try {
     // poskytnu username a password
     const { user, token } = yield client.apiCall(Api.login, formValues)
     client.storeToken(token)
     yield put(loginSuccess(user))
+    yield router.push('/editor')
     yield put(addNotificationReq('Byl jste úspěšně přihlášen!', notifTypes.SUCCESS))
   } catch (err) {
     console.log(err.response)
@@ -26,11 +27,12 @@ function * login(action) {
 }
 
 function * register(action) {
-  const { userData } = action.payload
+  const { userData, router } = action.payload
   try {
     const { user, token } = yield client.apiCall(Api.createUser, userData)
     client.storeToken(token)
     yield put(registerRes(user))
+    yield router.push('/editor')
     yield put(addNotificationReq('Byl jste úspěšně zaregistrován!', notifTypes.SUCCESS))
   } catch (err) {
     yield put(registerFail())

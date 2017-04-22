@@ -11,19 +11,14 @@ class App extends Component {
     location: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
     recoverFromToken: PropTypes.func.isRequired,
-    router: PropTypes.object.isRequired,
     routes: PropTypes.array.isRequired,
   }
   componentWillReceiveProps(nextProps) {
     const loggedIn = this.props.auth.isLogged
     const nextLoggedIn = nextProps.auth.isLogged
-    // doslo k login
-    if (!loggedIn && nextLoggedIn) {
-      console.log('redirecting to editor')
-      this.props.router.push('/editor')
-    }
     // doslo k logout
     if (loggedIn && !nextLoggedIn) {
+      console.log('logout')
       hashHistory.push('/')
     }
   }

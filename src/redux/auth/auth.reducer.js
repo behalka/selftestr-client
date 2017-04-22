@@ -5,6 +5,7 @@ const initialState = immutable({
   user: null,
   isLogged: false,
   isFetching: false,
+  isVerifying: true,
 })
 
 export default function authReducer(state = initialState, action) {
@@ -20,6 +21,7 @@ export default function authReducer(state = initialState, action) {
       return state
         .set('isFetching', false)
         .set('isLogged', false)
+        .set('isVerifying', false)
     case auth.REGISTER_RES:
     case auth.TOKEN_RECOVER_RES:
     case auth.LOGIN_RES:
@@ -27,6 +29,7 @@ export default function authReducer(state = initialState, action) {
         .set('isFetching', false)
         .set('isLogged', true)
         .set('user', action.payload.userAuth)
+        .set('isVerifying', false)
     case auth.LOGOUT_REQ:
       return state
         .set('isLogged', false)

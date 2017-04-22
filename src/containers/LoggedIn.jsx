@@ -9,13 +9,27 @@ class LoggedIn extends Component {
     children: PropTypes.object.isRequired,
   }
   componentDidMount() {
-    const { isLogged, isFetching } = this.props.auth
-    if (!isLogged && !isFetching) {
+    const { isLogged, isFetching, isVerifying } = this.props.auth
+    if (isVerifying) {
+      console.log('waiting')
+    }
+    if (!isLogged && !isFetching && !isVerifying) {
+      hashHistory.push('/login')
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    const { isLogged, isVerifying } = this.props.auth
+    const { isLogged: nextLogged, isVerifying: nextVerifying, isFetching: nextFetching } = nextProps.auth
+    if (!nextVerifying && nextLogged) {
+      console.log('stay on the page')
+    }
+    if (!nextLogged && !nextFetching && !nextVerifying) {
       hashHistory.push('/login')
     }
   }
   render() {
-    if (this.props.auth.isLogged) {
+    const { isVerifying, isLogged } = this.props.auth
+    if (isLogged) {
       return (
         <div>
           {React.cloneElement(this.props.children, { ...this.props })}

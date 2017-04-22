@@ -1,8 +1,8 @@
 import { auth } from '../actionTypes'
 
-export const loginRequest = formValues => ({
+export const loginRequest = (formValues, router) => ({
   type: auth.LOGIN_REQ,
-  payload: { formValues },
+  payload: { formValues, router },
 })
 
 export const loginSuccess = userAuth => ({
@@ -14,9 +14,9 @@ export const logoutRequest = () => ({
   type: auth.LOGOUT_REQ,
 })
 
-export const registerReq = userData => ({
+export const registerReq = (userData, router) => ({
   type: auth.REGISTER_REQ,
-  payload: { userData },
+  payload: { userData, router },
 })
 
 export const registerRes = userAuth => ({

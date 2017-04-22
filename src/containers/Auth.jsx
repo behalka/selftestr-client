@@ -6,13 +6,14 @@ import LoginForm from '../components/forms/Login'
 class Auth extends Component {
   static propTypes = {
     loginRequest: PropTypes.func.isRequired,
+    router: PropTypes.object.isRequired,
   }
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleSubmit(data) {
-    this.props.loginRequest(data)
+    this.props.loginRequest(data, this.props.router)
   }
   render() {
     return (

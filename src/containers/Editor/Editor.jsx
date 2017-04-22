@@ -5,7 +5,7 @@ import { clearEditor, initEditor, deleteTestFromEditor } from '../../redux/edito
 import { addNotificationReq } from '../../redux/appState/appState.actions'
 import { types } from '../../constants/notifications'
 
-import { Button, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import Sidebar from './Sidebar'
 import Questionsbar from './QuestionsBar'
 import ContentWrapper from './ContentWrapper'
@@ -18,6 +18,8 @@ class Editor extends Component {
     editor: PropTypes.object.isRequired,
     fetchByUser: PropTypes.func.isRequired,
     initEditor: PropTypes.func.isRequired,
+    modelsFetched: PropTypes.bool.isRequired,
+    modelsFetching: PropTypes.bool.isRequired,
     params: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired,
   }
@@ -31,7 +33,9 @@ class Editor extends Component {
   componentDidMount() {
     this.props.clearEditor()
     this.props.initEditor(this.props.params.test_model_id)
-    // this.props.fetchByUser()
+    if (!this.props.modelsFetched && !this.props.modelsFetching) {
+      this.props.fetchByUser()
+    }
   }
   saveAndLeave() {
     const { questionModelId, displayGeneralForm, isFormChanged } = this.props.editor
@@ -60,20 +64,6 @@ class Editor extends Component {
     }
     return res
   }
-  /*
-   * bude nutny nejak vyresit zvlastni "current test" kus v store
-   * asi neni nutny to kopirovat, jen treba dat flag "isEdited" do testsWithQuestions
-   * ID testu se muze brat z URL vzdy
-   * metody na editaci/vytvoreni/smazani otazky
-   * metody na editaci obecnych parametru
-   * SIDEBAR nav - handlery, detail testu
-   * QUESTIONS - ciste otazky a nejake isSelected .. tyhle meta informace by mohly byt nekde zvlast
-   * CONTENT - formular prislusny nebo prehled ... asi muze dostavat veci od nekoho ciste..
-   *  - otazka jde ULOZIT nebo ZRUSIT
-   *  - tohle se bude krmit samo nebo od Editoru, zalezi na redux-forms spis
-   * nadrazena komponenta muze poslouchat na /editor store metadata,
-   * SIDEBAR na test fields, QUESTIONS na questionsPerTest, CONTENT krmi Editor komponenta
-   */
   render() {
     return (
       <Row className="editor">
@@ -105,6 +95,8 @@ class Editor extends Component {
 }
 const mapStateToProps = state => ({
   editor: state.editor,
+  modelsFetched: state.tests.testsOfOwner.fetched,
+  modelsFetching: state.tests.testsOfOwner.fetching,
 })
 const mapDispatchToProps = {
   addNotification: addNotificationReq,
