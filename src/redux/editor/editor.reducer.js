@@ -37,6 +37,7 @@ export default function editorReducer(state = initialState, action) {
         .set('questionModelId', action.payload.questionModelId)
         .set('isQuestionNew', true)
         .set('displayGeneralForm', false)
+        .set('isFormChanged', true)
     case tests.SAVE_TEST_REQ:
     case questionModels.SAVE_QUESTION_REQ:
       return state
