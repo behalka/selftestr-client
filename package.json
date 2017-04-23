@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node webpack/devServer.js",
     "pack": "./node_modules/.bin/webpack --progress --colors --config webpack/beta.config.js",
-    "heroku": "npm run pack && NODE_ENV=beta node webpack/herokuServer.js",
+    "heroku": "npm run pack && NODE_ENV=beta node ./webpack/herokuServer.js",
     "test": "./node_modules/.bin/jest",
     "test:watch": "npm test -- --watch"
   },
@@ -51,6 +51,7 @@
     "postcss-loader": "^1.1.1",
     "style-loader": "^0.13.1",
     "stylus-loader": "^2.3.1",
+    "dotenv": "^4.0.0",
     "webpack": "^1.13.3"
   },
   "devDependencies": {
@@ -58,7 +59,6 @@
     "chai": "^3.5.0",
     "clean-webpack-plugin": "^0.1.14",
     "css-loader": "^0.26.0",
-    "dotenv": "^4.0.0",
     "enzyme": "^2.7.0",
     "eslint": "^3.10.2",
     "express": "^4.14.0",
