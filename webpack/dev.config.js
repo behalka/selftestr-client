@@ -1,12 +1,15 @@
 const webpack = require('webpack')
 const path = require('path')
 const autoprefixer = require('autoprefixer')
+const dotenv = require('dotenv')
+dotenv.config({ silent: false })
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HappyPack = require('happypack')
 const config = {
   host: 'localhost',
   port: 3003,
 }
+
 
 const paths = {
   root: path.join(__dirname, '../'),
@@ -60,6 +63,12 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist'], {
       root: paths.root,
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        API_HOST: JSON.stringify(process.env.API_HOST),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      }
     }),
     new webpack.HotModuleReplacementPlugin(),
     new HappyPack({
