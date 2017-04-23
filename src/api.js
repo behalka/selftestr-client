@@ -65,13 +65,10 @@ const testObjects = {
 
 const testDetail = _.omit(_.values(testObjects)[0], 'comments')
 
-const URL = 'http://localhost:3000'
+// eslint-disable-next-line 
+const URL = process.env.API_HOST
 
 export default {
-  getUser: () => Promise.resolve({
-    user,
-    token: TOKEN,
-  }),
   login: payload => axios
     .post(`${URL}/login`, payload),
   // listTests: () => Promise.resolve([testDetail]),
