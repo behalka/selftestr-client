@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react'
-import { PageHeader, FormGroup, Form, FormControl, Button } from 'react-bootstrap'
+import { PageHeader, FormGroup, Form, FormControl, Button, Alert } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import TestsListItem from './TestsListItem'
 
-// todo: nastylovat formular
-// todo: propojit formular s redux-forms
-
 const TestsHeader = () =>
   <header className="">
+    <Alert bsStyle="warning">
+      Tato část aplikace není dokončená!
+    </Alert>
     <PageHeader>
       Populární testy
     </PageHeader>

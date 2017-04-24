@@ -34,7 +34,6 @@ class TestsOverview extends Component {
     // varianty: error stav -> globalne, loading anebo ne
     return (
       <div>
-        <p>futurebreadcrumbs: {this.props.route.path}</p>
         <TestsHeader />
         {!tags.isFetching && <PopularTags tags={tags.items} />}
         {isFetching && <Loader />}
