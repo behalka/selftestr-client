@@ -23,6 +23,7 @@ function * login(action) {
     yield put(addNotificationReq('Byl jste úspěšně přihlášen!', notifTypes.SUCCESS))
   } catch (err) {
     console.log(err.response)
+    yield put(addNotificationReq('Nesprávně zadané jméno nebo heslo.', notifTypes.ERROR))
   }
 }
 
@@ -36,6 +37,11 @@ function * register(action) {
     yield put(addNotificationReq('Byl jste úspěšně zaregistrován!', notifTypes.SUCCESS))
   } catch (err) {
     yield put(registerFail())
+    if (err.response && err.response.status === 409) {
+      yield put(addNotificationReq('Uživatelské jméno nebo email je již zaregistrovaný.', notifTypes.ERROR))
+    } else {
+      yield put(addNotificationReq('Registrace se nezdařila.', notifTypes.ERROR))
+    }
     console.log(err)
     console.log(err.response)
   }
