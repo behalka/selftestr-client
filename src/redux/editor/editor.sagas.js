@@ -130,6 +130,8 @@ function * saveQuestion(action) {
     : yield updateQuestion(action)
     yield put(saveQuestionRes())
     yield put(addNotificationReq('Otázka byla uložena.', notifTypes.SUCCESS))
+    // po uspesnem ulozeni (ktere se zavola po uspesnem submitu) chceme vyjet nahoru
+    window.scrollTo(0, 0)
   } catch (err) {
     console.log(err, err.response)
     yield put(saveQuestionFail())
