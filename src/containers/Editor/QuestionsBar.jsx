@@ -65,6 +65,7 @@ class QuestionsBar extends Component {
       .slice(lower, upper)
     return (
       <nav className="editor__question-bar">
+        <div className="editor__question-header">Testové otázky</div>
         {questions.length === 0
           && <div className="editor__question-bar--empty">
           Test zatím neobsahuje žádné otázky.
