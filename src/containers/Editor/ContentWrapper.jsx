@@ -154,19 +154,19 @@ class ContentWrapper extends Component {
   render() {
     const { questionModel, testModel, editor } = this.props
     const hasModel = Boolean(testModel)
-    const renderForm = editor.displayGeneralForm || Boolean(questionModel)
-    const renderGeneral = editor.displayGeneralForm && hasModel
+    const renderForm = editor.displayGeneralForm || Boolean(questionModel) || editor.isTestModelNew
+    const renderGeneral = (editor.displayGeneralForm && hasModel) || editor.isTestModelNew
     const renderQuestion = !editor.displayGeneralForm && Boolean(questionModel) && hasModel
-    const renderOverview = !renderForm && hasModel
+    const renderOverview = (!renderForm && hasModel) || editor.isTestModelNew
     return (
       <div>
         {!hasModel && <span>loading</span>}
-        {renderGeneral && this.renderForm(testModel)}
-        {renderQuestion && this.renderForm(questionModel)}
         {renderOverview && <ContentOverview
           testModel={testModel}
           isNew={editor.isTestModelNew}
           displayGeneral={this.props.displayGeneral} />}
+        {renderGeneral && this.renderForm(testModel)}
+        {renderQuestion && this.renderForm(questionModel)}
       </div>
     )
   }
