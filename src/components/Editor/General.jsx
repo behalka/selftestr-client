@@ -21,7 +21,7 @@ class GeneralForm extends ContentForm {
         <OverlayTrigger
           placement="top"
           overlay={<Tooltip id="reset-btn">Nastaví zpět hodnoty podle posledního uložení.</Tooltip>}>
-          <Button type="reset" bsStyle="default" onClick={reset}>Zahodit změny</Button>
+          <Button type="reset" bsStyle="default" onClick={this.resetAndScroll}>Zahodit změny</Button>
         </OverlayTrigger>
       </Form>
     )

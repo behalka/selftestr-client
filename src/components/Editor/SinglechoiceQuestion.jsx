@@ -93,7 +93,7 @@ class SinglechoiceQuestion extends ContentForm {
         <OverlayTrigger
           placement="top"
           overlay={<Tooltip id="reset-btn">{texts.btns.discard}</Tooltip>}>
-          <Button type="reset" bsStyle="default" onClick={reset}>
+          <Button type="reset" bsStyle="default" onClick={this.resetAndScroll}>
             <FontAwesome name="undo" />
             Zahodit změny
           </Button>

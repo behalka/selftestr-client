@@ -75,7 +75,7 @@ class MultichoiceQuestion extends ContentForm {
     )
   }
   render() {
-    const { reset, handleSubmit, deleteQuestionHandler } = this.props
+    const { handleSubmit, deleteQuestionHandler } = this.props
     return (
       <Form onSubmit={handleSubmit}>
         <h3 className="editor__header">Nastavení otázky</h3>
@@ -89,7 +89,7 @@ class MultichoiceQuestion extends ContentForm {
         <OverlayTrigger
           placement="top"
           overlay={<Tooltip id="reset-btn">{texts.btns.discard}</Tooltip>}>
-          <Button type="reset" bsStyle="default" onClick={reset}>
+          <Button type="reset" bsStyle="default" onClick={this.resetAndScroll}>
             <FontAwesome name="undo" />
             Zahodit změny
           </Button>

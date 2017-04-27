@@ -14,6 +14,12 @@ class ContentForm extends Component {
     this.state = {
       formUpdated: false,
     }
+    this.resetAndScroll = this.resetAndScroll.bind(this)
+  }
+  resetAndScroll() {
+    const { reset } = this.props
+    reset()
+    window.scrollTo(0, 0)
   }
   componentWillReceiveProps(newProps) {
     if (newProps.dirty !== this.state.formUpdated) {
