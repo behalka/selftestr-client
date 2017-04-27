@@ -9,7 +9,7 @@ import text from '../../constants/formHelpers'
 
 class GeneralForm extends ContentForm {
   render() {
-    const { reset, handleSubmit } = this.props
+    const { handleSubmit } = this.props
     return (
       <Form onSubmit={handleSubmit}>
         <h3 className="editor__header">Obecné nastavení</h3>

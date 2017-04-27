@@ -78,7 +78,7 @@ class SinglechoiceQuestion extends ContentForm {
       //   <Button onClick={() => fields.push()}>Přidat odpověď</Button>
       // </div>
   render() {
-    const { reset, handleSubmit, deleteQuestionHandler } = this.props
+    const { handleSubmit, deleteQuestionHandler } = this.props
     return (
       <Form onSubmit={handleSubmit}>
         <h3 className="editor__header">Nastavení otázky</h3>
