@@ -6,7 +6,7 @@ import { createQuestionReq } from '../../redux/questionModels/questionModels.act
 import { displayGeneral, clearForm } from '../../redux/editor/editor.actions'
 import { addNotificationReq } from '../../redux/appState/appState.actions'
 import { types } from '../../constants/notifications'
-import questionTypes, { names as questionNames } from '../../constants/questionTypes'
+import questionTypes from '../../constants/questionTypes'
 
 // fixme: oddelat presentation komponentu
 import classnames from 'classnames'
@@ -111,7 +111,7 @@ class EditorSidebar extends Component {
           limit={120} />
         <QuestionSelect options={
           Object.keys(questionTypes).map(key => ({
-            value: questionTypes[key], text: questionNames[key],
+            value: questionTypes[key].id, text: questionTypes[key].name,
           }))
         }
         onSubmit={this.selectQuestionType}
@@ -135,7 +135,7 @@ class EditorSidebar extends Component {
           <Button block
             className={classnames(sidebarBtnClass, disabledClass)}
             onClick={this.props.saveAndLeaveHandler}>
-            <FontAwesome name="angle-left" /> 
+            <FontAwesome name="angle-left" />
             Opustit test</Button>
           <Button block
             onClick={() => this.setState({ deleteModal: true })}

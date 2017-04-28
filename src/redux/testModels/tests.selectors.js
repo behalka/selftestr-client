@@ -51,6 +51,10 @@ export const getTestModelFromId = (state, testModelId) => {
   if (!testModelId) {
     return null
   }
-  const test = state.entities.testsWithQuestions[testModelId]
+  let test = state.entities.testsWithQuestions[testModelId]
+  if (test) {
+    test = test.set('questionModels', getQuestionsByTest(state, test.id))
+  }
+  // muze byt null
   return test
 }

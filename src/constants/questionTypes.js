@@ -1,10 +1,15 @@
-export const names = {
-  TEXT_INPUT: 'Textová odpověď',
-  SINGLECHOICE: 'Jedna odpověď správně',
-  MULTICHOICE: 'Více odpovědí správně',
-}
 export default {
-  TEXT_INPUT: 'text_input',
-  SINGLECHOICE: 'singlechoice',
-  MULTICHOICE: 'multichoice',
+  // eslint-disable-next-line camelcase
+  text_input: {
+    id: 'text_input',
+    name: 'Textová odpověď',
+  },
+  singlechoice: {
+    id: 'singlechoice',
+    name: 'Jedna odpověď správně',
+  },
+  multichoice: {
+    id: 'multichoice',
+    name: 'Více odpovědí správně',
+  },
 }
