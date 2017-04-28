@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { fetchByUser, createTestReq, deleteTestReq } from '../../redux/testModels/tests.actions'
-import { initEditor } from '../../redux/editor/editor.actions'
+import { initEditor, selectTestModel } from '../../redux/editor/editor.actions'
 import { getTestsByOwner } from '../../redux/testModels/tests.selectors'
 import { Button } from 'react-bootstrap'
 
@@ -17,6 +17,7 @@ class EditorOverview extends Component {
     fetchByUser: PropTypes.func.isRequired,
     initEditor: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
+    selectTest: PropTypes.func.isRequired,
     testModels: PropTypes.object,
   }
   static defaultProps = {
@@ -48,6 +49,7 @@ class EditorOverview extends Component {
     this.props.createTest(this.props.router)
   }
   editTestHandler(testModelId) {
+    this.props.selectTest(testModelId)
     this.props.router.push(`/editor/${testModelId}`)
   }
   deleteTestHandler(testModelId) {
@@ -94,5 +96,6 @@ const mapDispatchToProps = {
   initEditor,
   deleteTest: deleteTestReq,
   createTest: createTestReq,
+  selectTest: selectTestModel,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EditorOverview)

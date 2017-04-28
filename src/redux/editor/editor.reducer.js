@@ -27,6 +27,10 @@ export default function editorReducer(state = initialState, action) {
     case editor.CREATE_TEST_MODEL:
       return state
         .set('isTestModelNew', true)
+    case editor.SET_TEST_REQ:
+      return state
+        .set('isTestModelNew', false)
+        .set('testModelId', action.payload.testModelId)
     case editor.SET_QUESTION_REQ:
       return state
         .set('questionModelId', action.payload.questionModelId)

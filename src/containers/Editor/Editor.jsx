@@ -71,6 +71,7 @@ class Editor extends Component {
           <Sidebar
             testModelId={this.props.params.test_model_id}
             isFormChanged={this.props.editor.isFormChanged}
+            isTestModelNew={this.props.editor.isTestModelNew}
             canCreateQuestions={this.canCreateQuestions}
             saveAndLeaveHandler={this.saveAndLeave}
             deleteTestHandler={this.deleteTestHandler}

@@ -9,6 +9,11 @@ export const createTestModel = () => ({
   type: editor.CREATE_TEST_MODEL,
 })
 
+export const selectTestModel = testModelId => ({
+  type: editor.SET_TEST_REQ,
+  payload: { testModelId },
+})
+
 export const clearEditor = () => ({
   type: editor.CLEAR,
 })
