@@ -70,6 +70,16 @@ class MultichoiceQuestion extends ContentForm {
             )}
             {hasError && <div className="help-block">{meta.error}</div>}
           </ul>
+          <Row>
+            <Col xs={4} xsOffset={8}>
+              <Button
+                bsStyle="success"
+                onClick={() => fields.push()}>
+                <FontAwesome name="plus" />
+                Přidat odpověď
+              </Button>
+            </Col>
+          </Row>
         </Grid>
       </div>
     )
