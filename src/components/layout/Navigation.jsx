@@ -18,10 +18,10 @@ const Navigation = () =>
       </Navbar.Header>
       <Nav>
         <LinkContainer to="/testy">
-          <NavItem eventKey={1}>Testy</NavItem>
+          <NavItem eventKey={1}>Všechny testy</NavItem>
         </LinkContainer>
         <LinkContainer to="/editor">
-          <NavItem eventKey={2}>Editor</NavItem>
+          <NavItem eventKey={2}>Moje testy</NavItem>
         </LinkContainer>
         <LinkContainer to="/historie">
           <NavItem eventKey={3}>Moje historie</NavItem>

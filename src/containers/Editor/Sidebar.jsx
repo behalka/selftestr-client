@@ -26,6 +26,7 @@ class EditorSidebar extends Component {
     deleteTestHandler: PropTypes.func.isRequired,
     displayGeneral: PropTypes.func.isRequired,
     isFormChanged: PropTypes.bool,
+    isTestModelNew: PropTypes.bool,
     reset: PropTypes.func.isRequired,
     saveAndLeaveHandler: PropTypes.func.isRequired,
     selectedQuestion: PropTypes.string,
@@ -38,6 +39,7 @@ class EditorSidebar extends Component {
       description: 'Popis není zadaný',
     },
     isFormChanged: false,
+    isTestModelNew: false,
     selectedQuestion: null,
   }
   constructor(props) {
@@ -58,7 +60,10 @@ class EditorSidebar extends Component {
     }
     this.props.canLeaveContent(this.props.createQuestion.bind(this, this.props.testModelId, data))
   }
-  editGeneralHandler() {
+  editGeneralHandler(event) {
+    if (event) {
+      event.preventDefault()
+    }
     this.props.canLeaveContent(this.props.displayGeneral)
   }
   displayOverview(event) {
@@ -94,7 +99,10 @@ class EditorSidebar extends Component {
     return (
       <nav className="editor__navbar">
         {deleteTestModal}
-        <a className="test-model__name" onClick={this.displayOverview} href="#">
+        <a className="test-model__name" onClick={
+          this.props.isTestModelNew
+          ? this.editGeneralHandler
+          : this.displayOverview} href="#">
             {testDetail.name || EditorSidebar.defaultProps.testDetail.name}
         </a>
         <LimitedText
@@ -120,7 +128,10 @@ class EditorSidebar extends Component {
           <Button
             block
             className={classnames(sidebarBtnClass, disabledClass)}
-            onClick={this.displayOverview}>Zobrazit přehled</Button>
+            onClick={this.displayOverview}>
+            <FontAwesome name="list-alt" />
+            Přehled testu
+          </Button>
           <Button block
             className={classnames(sidebarBtnClass, disabledClass)}
             onClick={this.props.saveAndLeaveHandler}>
