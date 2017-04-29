@@ -1,40 +1,13 @@
 import React, { PropTypes } from 'react'
 import { Breadcrumb } from 'react-bootstrap'
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { transformRoutes } from '../../redux/appState/appState.selectors'
 
-const transformPath = (routes, params) => {
-  if (!routes) {
-    return []
-  }
-  let names = []
-  let paths = []
-  for (const route of routes) {
-    if (!route || !route.path) {
-      continue
-    }
-    const semicolonIndex = route.path.indexOf(':')
-    if (semicolonIndex > -1 && params) {
-      const param = route.path.slice(semicolonIndex + 1)
-      if (semicolonIndex !== 0) {
-        const prev = route.path.slice(0, semicolonIndex - 1)
-        const result = params[param]
-        names = names.concat([prev, result])
-        paths = paths.concat([prev, `${prev}/${result}`])
-      } else {
-        const result = params[param]
-        names = names.concat([result])
-        paths = paths.concat([result])
-      }
-    } else {
-      names = names.concat([route.routeName || route.path])
-      paths = paths.concat([route.path])
-    }
-  }
-  return { names, paths }
-}
 const BreadcrumbsPanel = props => {
-  const { routes, params } = props
-  const { names, paths } = transformPath(routes, params)
+  const { routes, transformedRoutes } = props
+  // const { names, paths } = transformPath(routes, params)
+  const { names, paths } = transformedRoutes
   return (
     <Breadcrumb>
     {routes.map((route, index) =>
@@ -49,12 +22,15 @@ const BreadcrumbsPanel = props => {
   )
 }
 BreadcrumbsPanel.propTypes = {
-  params: PropTypes.object,
   routes: PropTypes.array,
+  transformedRoutes: PropTypes.object,
 }
 BreadcrumbsPanel.defaultProps = {
   routes: [],
-  params: {},
+  transformedRoutes: {},
 }
+const mapStateToProps = (state, props) => ({
+  transformedRoutes: transformRoutes(state, props),
+})
 
-export default BreadcrumbsPanel
+export default connect(mapStateToProps, {})(BreadcrumbsPanel)
