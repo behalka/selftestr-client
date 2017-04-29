@@ -26,16 +26,16 @@ function questionModelToForm(model) {
     return Object.assign(formData, model)
   }
   switch (model.type) {
-    case questionTypes.TEXT_INPUT:
+    case questionTypes.text_input.id:
       if (model.answerModels.length > 0) {
         formData.answer = model.answerModels[0].correctSolution
       }
       return Object.assign(formData, model)
-    case questionTypes.SINGLECHOICE:
+    case questionTypes.singlechoice.id:
       const isCorrectIndex = model.answerModels.findIndex(answer => answer.isCorrect)
       formData.isCorrectGroup = isCorrectIndex
       return Object.assign(formData, model)
-    case questionTypes.MULTICHOICE:
+    case questionTypes.multichoice.id:
       return Object.assign(formData, model)
     default:
       console.log('failed mapping to form')
@@ -45,7 +45,7 @@ function questionModelToForm(model) {
 function formToQuestionModel(formData) {
   const questionModel = Object.assign({}, formData)
   switch (formData.type) {
-    case questionTypes.TEXT_INPUT:
+    case questionTypes.text_input.id:
       const correctAnswer = formData.answer
       if (questionModel.answerModels.length > 0) {
         // nemohlo to byt v databazi pokud tohle chybi
@@ -62,7 +62,7 @@ function formToQuestionModel(formData) {
       }
       delete questionModel.answer
       return questionModel
-    case questionTypes.SINGLECHOICE:
+    case questionTypes.singlechoice.id:
       questionModel.answerModels = questionModel.answerModels.map((answer, ind) => {
         if (!answer.id) {
           answer.id = v1()
@@ -76,7 +76,7 @@ function formToQuestionModel(formData) {
       })
       delete questionModel.isCorrectGroup
       return questionModel
-    case questionTypes.MULTICHOICE:
+    case questionTypes.multichoice.id:
       questionModel.answerModels = questionModel.answerModels.map(answer => {
         if (!answer.id) {
           answer.id = v1()
@@ -141,11 +141,11 @@ class ContentWrapper extends Component {
       setFormChanged: this.setFormChanged,
     }
     switch (data.type) {
-      case questionTypes.TEXT_INPUT:
+      case questionTypes.text_input.id:
         return <TextInputQuestion {...formProps} onSubmit={this.submitHandler} />
-      case questionTypes.MULTICHOICE:
+      case questionTypes.multichoice.id:
         return <MultichoiceQuestion {...formProps} onSubmit={this.submitHandler} />
-      case questionTypes.SINGLECHOICE:
+      case questionTypes.singlechoice.id:
         return <SinglechoiceQuestion {...formProps} onSubmit={this.submitHandler} />
       default:
         return <GeneralForm {...formProps} onSubmit={this.submitGeneralHandler} />
@@ -158,6 +158,7 @@ class ContentWrapper extends Component {
     const renderGeneral = (editor.displayGeneralForm && hasModel) || editor.isTestModelNew
     const renderQuestion = !editor.displayGeneralForm && Boolean(questionModel) && hasModel
     const renderOverview = (!renderForm && hasModel) || editor.isTestModelNew
+    // fixme: nefunguje zobrazeni formulare, flagy jsou dobre
     return (
       <div>
         {!hasModel && <span>loading</span>}
