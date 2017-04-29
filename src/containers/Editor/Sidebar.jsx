@@ -124,7 +124,7 @@ class EditorSidebar extends Component {
             className={classnames(sidebarBtnClass, disabledClass)}
             onClick={this.editGeneralHandler}>
             <FontAwesome name="pencil" />
-            Editovat test</Button>
+            Upravit nastavení testu</Button>
           <Button
             block
             className={classnames(sidebarBtnClass, disabledClass)}
@@ -135,7 +135,7 @@ class EditorSidebar extends Component {
           <Button block
             className={classnames(sidebarBtnClass, disabledClass)}
             onClick={this.props.saveAndLeaveHandler}>
-            <FontAwesome name="angle-left" />
+            <FontAwesome name="arrow-left" />
             Opustit test</Button>
           <Button block
             onClick={() => this.setState({ deleteModal: true })}

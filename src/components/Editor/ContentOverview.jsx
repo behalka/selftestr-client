@@ -22,7 +22,6 @@ const ContentOverview = ({ testModel, isNew }) =>
           </li>
           <li>
             <strong>Časový limit testu:</strong>
-            {console.log(testModel)}
             {testModel.timeLimit !== null ? testModel.timeLimit : 'Bez limitu'}
           </li>
         </ul>
