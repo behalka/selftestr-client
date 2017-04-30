@@ -34,18 +34,18 @@ function initQuestionModel(question) {
   question.id = v1()
   question.answerModels = []
   switch (question.type) {
-    case questionTypes.TEXT_INPUT:
+    case questionTypes.text_input.id:
       question.answerModels.push({
         id: v1(),
         isCorrect: true,
       })
       return question
-    case questionTypes.MULTICHOICE:
+    case questionTypes.multichoice.id:
       for (let i = 0; i < 3; i++) {
         question.answerModels.push({ id: v1() })
       }
       return question
-    case questionTypes.SINGLECHOICE:
+    case questionTypes.singlechoice.id:
       for (let i = 0; i < 3; i++) {
         question.answerModels.push({ id: v1() })
       }
