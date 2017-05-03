@@ -3,6 +3,7 @@ import { call, put, take } from 'redux-saga/effects'
 import { auth } from '../actionTypes'
 import {
   loginSuccess,
+  loginFail,
   recoverFromTokenRes,
   recoverFromTokenFail,
   registerRes,
@@ -23,6 +24,7 @@ function * login(action) {
     yield put(addNotificationReq('Byl jste úspěšně přihlášen!', notifTypes.SUCCESS))
   } catch (err) {
     console.log(err.response)
+    yield put(loginFail())
     yield put(addNotificationReq('Nesprávně zadané jméno nebo heslo.', notifTypes.ERROR))
   }
 }
@@ -66,20 +68,33 @@ export function * registerWatcher() {
   yield takeLatest(auth.REGISTER_REQ, register)
 }
 
-export function * loginFlow() {
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    let action = yield take(auth.LOGIN_REQ)
-    yield login(action)
-    action = yield take(auth.LOGOUT_REQ, logout)
-    yield logout(action)
-  }
+// todo: tohle potrebuje mnohem rozsahlejsi refaktoring, muze nastat spousta okolnosti
+// export function * loginFlow() {
+//   // eslint-disable-next-line no-constant-condition
+//   while (true) {
+//     // fixme: tohle nefunguje spravne, login_req muze selhat a k logout se to vubec nedostane
+//     let action = yield take(auth.LOGIN_REQ)
+//     yield login(action)
+//     action = yield take(auth.LOGIN_FAIL)
+//     console.log(action, 'fail')
+//     action = yield take(auth.LOGOUT_REQ, logout)
+//     yield logout(action)
+//   }
+// }
+
+export function * loginWatcher() {
+  yield takeLatest(auth.LOGIN_REQ, login)
+}
+
+export function * logoutWatcher() {
+  yield takeLatest(auth.LOGOUT_REQ, logout)
 }
 
 export default function * () {
   yield [
     authFromTokenWatcher(),
-    loginFlow(),
+    loginWatcher(),
+    logoutWatcher(),
     registerWatcher(),
   ]
 }
