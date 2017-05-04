@@ -1,11 +1,9 @@
 import { takeEvery, takeLatest } from 'redux-saga'
-import { take, call, put, select } from 'redux-saga/effects'
+import { take, put } from 'redux-saga/effects'
 import { schema, normalize } from 'normalizr'
 import { v1 } from 'uuid'
 import { addNotificationReq } from '../appState/appState.actions'
-import { getAuth } from '../auth/auth.selectors'
 import { types as notifTypes } from '../../constants/notifications'
-import questionTypes from '../../constants/questionTypes'
 import { editor, questionModels, tests } from '../actionTypes'
 import { saveEntities, deleteEntity } from '../entities/entities.actions'
 import {
@@ -14,6 +12,7 @@ import {
   saveQuestionFail,
   deleteQuestionRes,
  } from '../questionModels/questionModels.actions'
+import { initQuestionModel } from '../../utils/questionModelHelper'
 import * as editorActions from './editor.actions'
 import * as client from '../restClientSaga'
 import * as testActions from '../testModels/tests.actions'
@@ -28,31 +27,6 @@ function transformQuestionModel(question) {
   delete res.updated_at
   delete res.created_at
   return res
-}
-
-function initQuestionModel(question) {
-  question.id = v1()
-  question.answerModels = []
-  switch (question.type) {
-    case questionTypes.text_input.id:
-      question.answerModels.push({
-        id: v1(),
-        isCorrect: true,
-      })
-      return question
-    case questionTypes.multichoice.id:
-      for (let i = 0; i < 3; i++) {
-        question.answerModels.push({ id: v1() })
-      }
-      return question
-    case questionTypes.singlechoice.id:
-      for (let i = 0; i < 3; i++) {
-        question.answerModels.push({ id: v1() })
-      }
-      question.answerModels[0].isCorrect = true
-      return question
-    default: throw new Error('Missing question.type param')
-  }
 }
 
 function * initEditor(action) {
