@@ -10,6 +10,7 @@ import questionTypes from '../../constants/questionTypes'
 
 // fixme: oddelat presentation komponentu
 import classnames from 'classnames'
+import ControlButton from '../../components/Editor/ControlButton'
 import { Button, Row, Col } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Modal from '../../components/Modal/Modal'
@@ -118,32 +119,32 @@ class EditorSidebar extends Component {
         buttonClasses={classnames(sidebarBtnClass, disabledClass)}
         />
         <div className="test-model__controls">
-          <Button
-            block
+          <ControlButton
+            submitHandler={this.editGeneralHandler}
+            isDisabled={isFormChanged}
+            content="Upravit nastavení testu"
+            iconName="pencil"
             bsStyle="primary"
-            className={classnames(sidebarBtnClass, disabledClass)}
-            onClick={this.editGeneralHandler}>
-            <FontAwesome name="pencil" />
-            Upravit nastavení testu</Button>
-          <Button
-            block
-            className={classnames(sidebarBtnClass, disabledClass)}
-            onClick={this.displayOverview}>
-            <FontAwesome name="list-alt" />
-            Přehled testu
-          </Button>
-          <Button block
-            className={classnames(sidebarBtnClass, disabledClass)}
-            onClick={this.props.saveAndLeaveHandler}>
-            <FontAwesome name="arrow-left" />
-            Opustit test</Button>
-          <Button block
-            onClick={() => this.setState({ deleteModal: true })}
-            className={sidebarBtnClass}
-            bsStyle="danger">
-            <FontAwesome name="trash-o" />
-            Smazat test
-          </Button>
+          />
+          <ControlButton
+            submitHandler={this.displayOverview}
+            iconName="list-alt"
+            content="Přehled testu"
+            isDisabled={isFormChanged}
+          />
+          <ControlButton
+            submitHandler={this.props.saveAndLeaveHandler}
+            iconName="arrow-left"
+            content="Opustit test"
+            isDisabled={isFormChanged}
+          />
+          <ControlButton
+            submitHandler={() => this.setState({ deleteModal: true })}
+            iconName="trash-o"
+            content="Smazat test"
+            isDisabled={false}
+            bsStyle="danger"
+          />
         </div>
       </nav>
     )
