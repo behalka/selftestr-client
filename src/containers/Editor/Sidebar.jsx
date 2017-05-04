@@ -5,21 +5,16 @@ import { reset } from 'redux-form'
 import { createQuestionReq } from '../../redux/questionModels/questionModels.actions'
 import { displayGeneral, clearForm } from '../../redux/editor/editor.actions'
 import { addNotificationReq } from '../../redux/appState/appState.actions'
-import { types } from '../../constants/notifications'
 import questionTypes from '../../constants/questionTypes'
 
-// fixme: oddelat presentation komponentu
 import classnames from 'classnames'
 import ControlButton from '../../components/Editor/ControlButton'
-import { Button, Row, Col } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
 import Modal from '../../components/Modal/Modal'
 import LimitedText from '../../components/LimitedText/LimitedText'
 import QuestionSelect from '../../components/Editor/QuestionSelect'
 
 class EditorSidebar extends Component {
   static propTypes = {
-    addNotification: PropTypes.func.isRequired,
     canCreateQuestions: PropTypes.func.isRequired,
     canLeaveContent: PropTypes.func.isRequired,
     clearForm: PropTypes.func.isRequired,
@@ -30,7 +25,6 @@ class EditorSidebar extends Component {
     isTestModelNew: PropTypes.bool,
     reset: PropTypes.func.isRequired,
     saveAndLeaveHandler: PropTypes.func.isRequired,
-    selectedQuestion: PropTypes.string,
     testDetail: PropTypes.object,
     testModelId: PropTypes.string.isRequired,
   }
